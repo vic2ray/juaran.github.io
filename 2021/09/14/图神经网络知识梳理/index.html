@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|0.8:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="传统机器学习关键在于手动设计有效的图特征。泛化能力差，不能对新的节点预测。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图神经网络知识梳理">
+<meta property="og:url" content="http://example.com/2021/09/14/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/index.html">
+<meta property="og:site_name" content="Juaran&#39;s Blog">
+<meta property="og:description" content="传统机器学习关键在于手动设计有效的图特征。泛化能力差，不能对新的节点预测。">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201034331.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201232400.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201725541.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911203159869.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911210607576.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911210952206.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911211659225.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911212314632.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144000584.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911213916779.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911215015180.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912141828869.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911223007280.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912104601445.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912114845916.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144104092.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144122895.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912134707725.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144144627.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144201665.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144821468.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912145106851.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912150239541.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912151228887.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912151942390.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912160323415.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912162718153.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911190706084.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912171739617.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912172622859.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912172730288.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912175628479.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912180300177.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912175400251.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912180432617.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912194523822.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912195329751.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912195520238.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912200315574.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912200736046.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912205135963.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912210515784.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912210937776.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912211408933.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912211743305.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912212215796.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912212739801.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913205207633.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913205411953.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913205831216.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913210511512.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913211038818.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914110819051.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914112033591.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914112945018.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914120635491.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914163725193.png">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914164035845.png">
+<meta property="article:published_time" content="2021-09-14T09:34:32.990Z">
+<meta property="article:modified_time" content="2021-09-14T09:35:40.178Z">
+<meta property="article:author" content="Juaran">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201034331.png">
+
+<link rel="canonical" href="http://example.com/2021/09/14/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>图神经网络知识梳理 | Juaran's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Juaran's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/14/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Juaran">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Juaran's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图神经网络知识梳理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-14 17:34:32 / 修改时间：17:35:40" itemprop="dateCreated datePublished" datetime="2021-09-14T17:34:32+08:00">2021-09-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="传统机器学习"><a href="#传统机器学习" class="headerlink" title="传统机器学习"></a>传统机器学习</h2><p>关键在于手动设计有效的图特征。泛化能力差，不能对新的节点预测。</p>
+<span id="more"></span>
+
+<h3 id="Node-level"><a href="#Node-level" class="headerlink" title="Node level"></a>Node level</h3><p>分为：基于重要性、基于结构的特征提取</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201034331.png" alt="image-20210911201034331" style="zoom:50%;" />
+
+<p>基于节点重要性：节点的度、节点中心性度量，用于获取图中较大影响力的节点</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201232400.png" alt="image-20210911201232400" style="zoom:50%;" />
+
+<p>基于节点结构：度、聚类系数、非同构子图集，用于获取图中特别部分（局部）</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911201725541.png" alt="image-20210911201725541" style="zoom:50%;" />
+
+<h3 id="Link-level"><a href="#Link-level" class="headerlink" title="Link level"></a>Link level</h3><p>目标是基于已有的连接（边）预测可能存在的（新的）边。关键在于捕获<strong>节点对</strong>的特征。方法有：</p>
+<ul>
+<li>基于节点距离：具有相同距离的节点间可能存在边</li>
+<li>局部和全局邻节点重叠：共享多个邻节点的节点间可能存在边</li>
+</ul>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911203159869.png" alt="image-20210911203159869" style="zoom:50%;" />
+
+<h3 id="Graph-level"><a href="#Graph-level" class="headerlink" title="Graph level"></a>Graph level</h3><p>对整个图进行预测。采用设计<strong>核</strong>的方法而不是提取特征向量。</p>
+<p>这些kenel的用来衡量两个图之间的相似性，从而做出预测。关键在于设计高效的核。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911210607576.png" alt="image-20210911210607576" style="zoom:50%;" />
+
+<h3 id="Summarize"><a href="#Summarize" class="headerlink" title="Summarize"></a>Summarize</h3><img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911210952206.png" alt="image-20210911210952206" style="zoom:50%;" />
+
+<h2 id="表示学习方法"><a href="#表示学习方法" class="headerlink" title="表示学习方法"></a>表示学习方法</h2><p>不再需要特征工程，自动学习特征。<strong>目标</strong>：进行高效的、与任务无关的图特征学习。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911211659225.png" alt="image-20210911211659225" style="zoom:50%;" />
+
+<h3 id="节点嵌入"><a href="#节点嵌入" class="headerlink" title="节点嵌入"></a>节点嵌入</h3><p>主要任务是自动学习图特征并映射（编码）到d维空间的向量表示。这个特征表示也被称为<strong>嵌入</strong>，这些特征向量用于下游预测任务，如：节点分类、链路预测、图分类、匿名节点检测等。</p>
+<p>通常对节点进行嵌入，即Node Embedding。启发是：图中相似的节点在嵌入空间中的位置也靠近。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911212314632.png" alt="image-20210911212314632" style="zoom:50%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144000584.png" alt="image-20210912144000584" style="zoom: 80%;" />
+
+<h4 id="Encoder-Decoder-Framework"><a href="#Encoder-Decoder-Framework" class="headerlink" title="Encoder+Decoder Framework"></a>Encoder+Decoder Framework</h4><p>将图节点编码到向量空间，并保持节点的相似性。编码前后节点的相似性表示：</p>
+<ul>
+<li>图空间中两个节点相似度函数<code>similarity(u,v)</code><strong>需要被定义</strong></li>
+<li>一般使用向量空间中的<strong>点积</strong><code>ZuT·Zv</code></li>
+</ul>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911213916779.png" alt="image-20210911213916779" style="zoom:50%;" />
+
+<p>以下是节点嵌入的编码和解码过程：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911215015180.png" alt="image-20210911215015180" style="zoom:50%;" />
+
+<p>优化相似度函数similarity以近似于向量点积。因此可以将Node Embbedding视为浅层编码（Shallow Encoding）网络。缺点是图节点很多时编码效率低，参数量大、泛化能力差。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912141828869.png" alt="image-20210912141828869" style="zoom: 50%;" />
+
+<h4 id="Random-Walk"><a href="#Random-Walk" class="headerlink" title="Random Walk"></a>Random Walk</h4><p>以上编解码框架中，关键在于如何定义图节点的相似性。</p>
+<p>采用基于随机的方法对两个节点的相似性进行定义。待补充相关知识……</p>
+<h4 id="Summarize-1"><a href="#Summarize-1" class="headerlink" title="Summarize"></a>Summarize</h4><img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911223007280.png" alt="image-20210911223007280" style="zoom:50%;" />
+
+<h3 id="集体分类"><a href="#集体分类" class="headerlink" title="集体分类"></a>集体分类</h3><p>根据邻节点标签、特征预测未知节点标签，本质工作是进行消息传递。启发是：节点间的<strong>相关性</strong>就存在于图结构中，即相似的节点总是相互连接。从社会科学的角度来讲：</p>
+<ul>
+<li><strong>同质性</strong>Homophily：相似特征的一类人趋向于聚集在一起（集体），例如：社交网络、论文引用网络</li>
+<li>影响力Influence：集体也会影响个体特征，例如：电商推荐系统</li>
+</ul>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912104601445.png" alt="image-20210912104601445" style="zoom:50%;" />
+
+<p>重要概念：<strong>集体分类</strong>，为图中所有节点分配标签。基于一阶马尔科夫假设，当前节点标签仅取决于邻节点标签。</p>
+<p>主要过程是：初始化标签，捕获邻节点相关性，传播相关性推断标签。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912114845916.png" alt="image-20210912114845916" style="zoom:50%;" />
+
+<h4 id="Relational-Classifier"><a href="#Relational-Classifier" class="headerlink" title="Relational Classifier"></a>Relational Classifier</h4><p>基本思想：未知节点所属标签概率是其邻节点的加权平均概率。缺点：没有利用邻节点的特征。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144104092.png" alt="image-20210912144104092" style="zoom:80%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144122895.png" alt="image-20210912144122895" style="zoom:80%;" />
+
+<h4 id="Iterative-Classification"><a href="#Iterative-Classification" class="headerlink" title="Iterative Classification"></a>Iterative Classification</h4><p>主要思想：基于自身节点特征和邻节点标签做出预测。</p>
+<h4 id="Belief-Propagation"><a href="#Belief-Propagation" class="headerlink" title="Belief Propagation"></a>Belief Propagation</h4><p>置信传播：信息message在邻节点之间传递收集，更新自身信息并发送到下一节点。</p>
+<p>缺陷：如果图中存在闭环，消息会重复传播。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912134707725.png" alt="image-20210912134707725" style="zoom:50%;" />
+
+<h2 id="GNN"><a href="#GNN" class="headerlink" title="GNN"></a>GNN</h2><p>本质是由浅层编码发展为多层非线性变换深度编码器，这些编码器用于自动学习节点相似性、收集并传递消息等。是前面两种表征学习方法的结合。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144144627.png" alt="image-20210912144144627" style="zoom:80%;" />
+
+<h3 id="GCN对比CNN"><a href="#GCN对比CNN" class="headerlink" title="GCN对比CNN"></a>GCN对比CNN</h3><p>网络基本结构：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144201665.png" alt="image-20210912144201665" style="zoom:80%;" />
+
+<p>图的基本内容：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912144821468.png" alt="image-20210912144821468" style="zoom:50%;" />
+
+<p><strong>数据输入</strong>：将图的邻接矩和节点特征组成增广矩阵，矩阵的每一行作为网络的输入。</p>
+<p>缺点是参数量太大；不适用于不同大小的图；对节点的次序敏感。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912145106851.png" alt="image-20210912145106851" style="zoom:50%;" />
+
+<p>泛化图的卷积操作：转换节点的位置、标签、特征向量信息成一条message，汇总到下一节点。主要思想是转换、聚合、传播消息。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912150239541.png" alt="image-20210912150239541" style="zoom:50%;" />
+
+<p>模型需要学习的是不同节点的消息<strong>转换函数</strong>、消息<strong>聚合函数</strong>。</p>
+<ul>
+<li>Transform：将节点标签、特征压缩为一条消息</li>
+<li>Aggregation：收集邻节点的消息</li>
+</ul>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912151228887.png" alt="image-20210912151228887" style="zoom:50%;" />
+
+<p>与传统卷积网络非常大的不同之处是：<strong>因为每个节点的邻节点情况都不同， 因此学习内容将是每个节点自身的网络模型表达！</strong>具有相似结构的节点则可能学习到相似的模型。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912151942390.png" alt="image-20210912151942390" style="zoom:50%;" />
+
+<p>网络的层数可以是任意的，K-层嵌入则代表节点可以获取到距离K-跳的节点的信息。</p>
+<p>基本方式：平均节点信息，并施加激活函数。初始层为节点特征向量。W、B权重和偏置矩阵，待优化参数。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912160323415.png" alt="image-20210912160323415" style="zoom:50%;" />
+
+<p>网络归纳能力（泛化能力）：所有相同结构的节点共享参数矩阵。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912162718153.png" alt="image-20210912162718153" style="zoom:50%;" />
+
+<h3 id="GNN结构"><a href="#GNN结构" class="headerlink" title="GNN结构"></a>GNN结构</h3><ul>
+<li><p><strong>节点消息转换和聚合方式</strong>的不同是不同架构的GNN网络的主要差异所在。</p>
+</li>
+<li><p>网络层数不是越多越好，层数堆叠意味着节点收集的<strong>信息相互重叠</strong>，同质化严重，最终得到相同的嵌入。</p>
+</li>
+<li><p>特征增强和结构增强是图增强的主要手段，图增强的目的是便于计算=&gt;<strong>输入图需要转为计算图</strong>。</p>
+</li>
+</ul>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210911190706084.png" alt="image-20210911190706084" style="zoom:50%;" />
+
+<h4 id="Single-layer"><a href="#Single-layer" class="headerlink" title="Single layer"></a>Single layer</h4><p>每一层网络都包含两个部分：消息转换和消息聚合。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912171739617.png" alt="image-20210912171739617" style="zoom:50%;" />
+
+<p><strong>消息函数</strong>：提取节点特征向量</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912172622859.png" alt="image-20210912172622859" style="zoom:50%;" />
+
+<p><strong>聚合函数</strong>：对邻节点消息进行求和、平均或取最大值。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912172730288.png" alt="image-20210912172730288" style="zoom:50%;" />
+
+<p>激活函数：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912175628479.png" alt="image-20210912175628479" style="zoom:50%;" />
+
+<p><strong>经典GCN</strong>公式：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912180300177.png" alt="image-20210912180300177" style="zoom:50%;" />
+
+<p><strong>GraphSAGE</strong>在GCN基础上聚合了节点自身消息，并使用了多种聚合函数进行消息聚合和L2正则化：</p>
+<ul>
+<li>Mean 加权平均</li>
+<li>Pool 对多个层进行平均或最大池化</li>
+<li>LSTM</li>
+</ul>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912175400251.png" alt="image-20210912175400251" style="zoom:50%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912180432617.png" alt="image-20210912180432617" style="zoom:50%;" />
+
+<p><strong>GAT</strong>注意力网络：之前的网络中每一个节点权重相同，GAT中将简单的度均分权重替换为<strong>注意力权重</strong>。</p>
+<p>启发是：并不是所有到节点对导向节点的影响力都相同，应该着重关注影响力大的少部分节点、忽略其余大部分。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912194523822.png" alt="image-20210912194523822" style="zoom:50%;" />
+
+<p><strong>注意力机制</strong>：计算两个节点对的注意力系数，然后归一化所有邻节点得到注意力权重</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912195329751.png" alt="image-20210912195329751" style="zoom:50%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912195520238.png" alt="image-20210912195520238" style="zoom:50%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912200315574.png" alt="image-20210912200315574" style="zoom:50%;" />
+
+<p>在实践中，很多深度学习的方法可以应用到GNN的layer中，如批归一化、Dropout、注意力、激活函数等。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912200736046.png" alt="image-20210912200736046" style="zoom:50%;" />
+
+<h4 id="Stack-layer"><a href="#Stack-layer" class="headerlink" title="Stack layer"></a>Stack layer</h4><p>标准的做法：线性地叠加GNN层。</p>
+<p>不同于CNN网络层，不是越深越好。多层GNN存在的问题：<strong>过度平滑</strong>，差异小，所有节点嵌入到同一个值。</p>
+<p>原因是：随着层数的加深，不同节点聚集的信息几乎都来自图中相同的节点（高度重叠）。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912205135963.png" alt="image-20210912205135963" style="zoom:50%;" />
+
+<p>谨慎设置GNN层数L：盲目增加层数并不有效</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912210515784.png" alt="image-20210912210515784" style="zoom:50%;" />
+
+<p>层数不深网络<strong>表达能力不强</strong>的补救措施：</p>
+<ol>
+<li>增强每一层的信息聚集、信息转换，让转换、聚集部分成为深度网络</li>
+<li>增加预处理层和后处理层</li>
+</ol>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912210937776.png" alt="image-20210912210937776" style="zoom:50%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912211408933.png" alt="image-20210912211408933" style="zoom:50%;" />
+
+<p>层数不能太深的第二个做法：增加<strong>跳过连接</strong>，在早期选择性的跳过一些层。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912211743305.png" alt="image-20210912211743305" style="zoom:50%;" />
+
+<p>实际上增加短路连接使得网络获得了<strong>不同层网络的混合</strong>，使得表达能力提升。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912212215796.png" alt="image-20210912212215796" style="zoom:50%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210912212739801.png" alt="image-20210912212739801" style="zoom:50%;" />
+
+<h3 id="图增强"><a href="#图增强" class="headerlink" title="图增强"></a>图增强</h3><p>原因：原始图可能缺乏特征，图结构过于稀疏或密集、或太大，不能直接用于网络输入（计算代价高）。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913205207633.png" alt="image-20210913205207633" style="zoom:50%;" />
+
+<p>增强方法：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913205411953.png" alt="image-20210913205411953" style="zoom:50%;" />
+
+<p>为节点赋值常量或One-hot编码（增强节点特征）：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913205831216.png" alt="image-20210913205831216" style="zoom:50%;" />
+
+<p>对稀疏图增加虚拟节点和虚拟边；对密集图和大图进行采样以减少计算量：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913210511512.png" alt="image-20210913210511512" style="zoom:50%;" />
+
+<h3 id="图训练"><a href="#图训练" class="headerlink" title="图训练"></a>图训练</h3><img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210913211038818.png" alt="image-20210913211038818" style="zoom:50%;" />
+
+<ul>
+<li>Prediction head：区分为节点级别 or 链路级别 or 图级别的训练任务</li>
+</ul>
+<p>==待补充图训练pipeline==</p>
+<h3 id="表达能力"><a href="#表达能力" class="headerlink" title="表达能力"></a>表达能力</h3><p>GNN的本质是通过多层非线性感知器聚合局部邻节点信息来生成当前节点的嵌入。经典网络：</p>
+<ul>
+<li>GCN 采用平均池化（mean-pool）的方式聚合信息：邻居具有相同权重</li>
+<li>GraphSAGE 采用最大池化（max-pool）的方式聚合信息：采样大部分邻居</li>
+</ul>
+<p>以上两种聚合方式都存在缺陷，将导致某些情况下模型的表达能力欠缺。以下进行GNN理论分析：</p>
+<p>假设在以下情况中，讨论GNN是否能<strong>区分不同子节点的局部图结构</strong>：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914110819051.png" alt="image-20210914110819051" style="zoom:50%;" />
+
+<p>根据GNN的聚合信息的思想，引入<strong>计算图</strong>（Computational Graph）的概念，每个节点的最终嵌入是由不同层的邻节点的信息聚合计算得到。显然，节点1和2的计算图是相同的，GNN最终无法区分：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914112033591.png" alt="image-20210914112033591" style="zoom:50%;" />
+
+<p>因此，GNN学习的是不同<strong>节点子树结构</strong>的表达。对于相同子树结构的节点，训练得到相同参数的模型；不同子树结构节点的网络模型汇总了GNN的整体表达能力。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914112945018.png" alt="image-20210914112945018" style="zoom:50%;" />
+
+<p>所以，多层感知的聚合函数能够增强GNN表达能力；而将所有类型的子树结构映射到嵌入空间中，将发挥GNN的最大表达能力。还需要一个<strong>单射函数</strong>用于区分不同的子树结构，能够最大程度地保留所有节点信息。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914120635491.png" alt="image-20210914120635491" style="zoom:50%;" />
+
+<p>GCN采用平均池化聚合信息时的丢失邻节点数量信息：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914163725193.png" alt="image-20210914163725193" style="zoom:50%;" />
+
+<p>GraphSAGE采用最大池化聚合信息时丢失比例信息：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210914164035845.png" alt="image-20210914164035845" style="zoom:50%;" />
+
+<p>以上两种网络对于不同结构的子树得到了相同的嵌入（非单映射），必然导致网络的表达能力下降。基于此理论分析产生了“最具有表达能力”的同构图神经网络GIN。</p>
+<blockquote>
+<p>论文：HOW POWERFUL ARE GRAPH NEURAL NETWORKS?<br>作者：Keyulu Xu,Weihua Hu, Jure Leskovec<br>来源：ICLR 2019</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/14/%E5%BC%82%E6%9E%84%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%81%B6%E6%84%8F%E8%B4%A6%E6%88%B7%E6%A3%80%E6%B5%8B/" rel="prev" title="异构图神经网络恶意账户检测">
+      <i class="fa fa-chevron-left"></i> 异构图神经网络恶意账户检测
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">传统机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-level"><span class="nav-number">1.1.</span> <span class="nav-text">Node level</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Link-level"><span class="nav-number">1.2.</span> <span class="nav-text">Link level</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Graph-level"><span class="nav-number">1.3.</span> <span class="nav-text">Graph level</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summarize"><span class="nav-number">1.4.</span> <span class="nav-text">Summarize</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">表示学习方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E5%B5%8C%E5%85%A5"><span class="nav-number">2.1.</span> <span class="nav-text">节点嵌入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Encoder-Decoder-Framework"><span class="nav-number">2.1.1.</span> <span class="nav-text">Encoder+Decoder Framework</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Random-Walk"><span class="nav-number">2.1.2.</span> <span class="nav-text">Random Walk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Summarize-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">Summarize</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E4%BD%93%E5%88%86%E7%B1%BB"><span class="nav-number">2.2.</span> <span class="nav-text">集体分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Relational-Classifier"><span class="nav-number">2.2.1.</span> <span class="nav-text">Relational Classifier</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Iterative-Classification"><span class="nav-number">2.2.2.</span> <span class="nav-text">Iterative Classification</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Belief-Propagation"><span class="nav-number">2.2.3.</span> <span class="nav-text">Belief Propagation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GNN"><span class="nav-number">3.</span> <span class="nav-text">GNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GCN%E5%AF%B9%E6%AF%94CNN"><span class="nav-number">3.1.</span> <span class="nav-text">GCN对比CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GNN%E7%BB%93%E6%9E%84"><span class="nav-number">3.2.</span> <span class="nav-text">GNN结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Single-layer"><span class="nav-number">3.2.1.</span> <span class="nav-text">Single layer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stack-layer"><span class="nav-number">3.2.2.</span> <span class="nav-text">Stack layer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%A2%9E%E5%BC%BA"><span class="nav-number">3.3.</span> <span class="nav-text">图增强</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E8%AE%AD%E7%BB%83"><span class="nav-number">3.4.</span> <span class="nav-text">图训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E8%83%BD%E5%8A%9B"><span class="nav-number">3.5.</span> <span class="nav-text">表达能力</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Juaran</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Juaran</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
