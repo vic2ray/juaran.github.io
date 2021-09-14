@@ -81,7 +81,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
+    <div class="toggle" aria-label="Toggle navigation bar">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -110,27 +110,27 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -182,11 +182,17 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2021-08-19 16:39:07 / 修改时间：17:02:51" itemprop="dateCreated datePublished" datetime="2021-08-19T16:39:07+08:00">2021-08-19</time>
+              <time title="Created: 2021-08-19 16:39:07" itemprop="dateCreated datePublished" datetime="2021-08-19T16:39:07+08:00">2021-08-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-14 15:45:27" itemprop="dateModified" datetime="2021-09-14T15:45:27+08:00">2021-09-14</time>
+              </span>
 
           
 
@@ -200,77 +206,14 @@
 
       
           <p><img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210403105546569.png" alt="image-20210403105546569"></p>
-<p>统一登录地址：<a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/login">http://id.fzu.edu.cn/authserver/login</a></p>
-<h2 id="登录流程分析"><a href="#登录流程分析" class="headerlink" title="登录流程分析"></a>登录流程分析</h2><h3 id="1-验证是否需要验证码"><a href="#1-验证是否需要验证码" class="headerlink" title="1. 验证是否需要验证码"></a>1. 验证是否需要验证码</h3><p>在输入框输入用户名后，触发请求：</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/needCaptcha.html?username=200320105&amp;pwdEncrypt2=pwdEncryptSalt&amp;_=1617419933902">http://id.fzu.edu.cn/authserver/needCaptcha.html?username=200320105&amp;pwdEncrypt2=pwdEncryptSalt&amp;_=1617419933902</a></p>
-<p>true</p>
-</blockquote>
-<p>返回true代表需要验证码，返回false代表不需要验证码。当尝试登录一次或几次失败时将触发验证，一般属于后端验证，前端无法绕过。</p>
-<p>请求参数中包含<code>pwdEncrypt2=pwdEncryptSalt</code>，搜索pwdEncryptSalt定位到<code>login.js?v=1.0</code>文件：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _t = username.val();  <span class="comment">// 获取用户名</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">// AES加密，arg1=用户名，arg2=获取动态密码加密salt</span></span><br><span class="line">    _t = encryptAES(_t,$(<span class="string">&quot;#casDynamicLoginForm&quot;</span>).find(<span class="string">&quot;#dynamicPwdEncryptSalt&quot;</span>).val()); </span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>查看js文件，其中包含<code>encryptAES.js</code>，直接调用进行加密。定位到网页元素<code>#pwdDefaultEncryptSalt</code>:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;lt&quot;</span> <span class="attr">value</span>=<span class="string">&quot;LT-506399-2RS0W7HbXbGvLdU2oHx3n1xjeeAnj21617415016564-eM0e-cas&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;dllt&quot;</span> <span class="attr">value</span>=<span class="string">&quot;dynamicLogin&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;execution&quot;</span> <span class="attr">value</span>=<span class="string">&quot;e2s4&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;_eventId&quot;</span> <span class="attr">value</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;rmShown&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">id</span>=<span class="string">&quot;dynamicPwdEncryptSalt&quot;</span> <span class="attr">value</span>=<span class="string">&quot;xWicniCy1PKSfia7&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这几个字段均为隐藏表单元素，猜测在后面登录时用到。每次刷新页面动态生成这些value。</p>
-<p><strong>PS</strong>：后来发现<code>#dynamicPwdEncryptSalt</code>是用于“动态验证码登录”表单加密用的，而<code>#pwdDefaultEncryptSalt</code>才是“用户登录”表单用到的。</p>
-<h3 id="2-获取验证码"><a href="#2-获取验证码" class="headerlink" title="2. 获取验证码"></a>2. 获取验证码</h3><p>验证码图片请求：</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/captcha.html?ts=174">http://id.fzu.edu.cn/authserver/captcha.html?ts=174</a></p>
-</blockquote>
-<p>后面ts应该是随机数？不过没关系，在网页中同样可以找到，是动态生成的：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;captchaImg&quot;</span> <span class="attr">class</span>=<span class="string">&quot;captcha-img&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;验证码&quot;</span> <span class="attr">title</span>=<span class="string">&quot;验证码&quot;</span> <span class="attr">src</span>=<span class="string">&quot;captcha.html?ts=844&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>搜索js文件找到<code>login-wisedu_v1.0.js?v=1.0</code>：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 绑定换验证码的点击事件</span></span><br><span class="line">$(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#changeCaptcha&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#captchaImg&quot;</span>).attr(<span class="string">&quot;src&quot;</span>, <span class="string">&quot;captcha.html?ts=&quot;</span> + <span class="keyword">new</span> <span class="built_in">Date</span>().getMilliseconds());</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-<p>发现<code>ts</code>是当前时间的毫秒数（0-999ms）。一张验证码如下所示：</p>
-<p><img src="https://gitee.com/juaran/typora-image/raw/master/typora/captcha.html" alt="验证码"></p>
-<p>验证码中有很多背景噪声，可以使用tesserocr等神经网络框架进行识别。</p>
-<h3 id="3-发起登录请求"><a href="#3-发起登录请求" class="headerlink" title="3. 发起登录请求"></a>3. 发起登录请求</h3><blockquote>
-<p>Request URL: <a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/login">http://id.fzu.edu.cn/authserver/login</a><br>Request Method: POST</p>
-<p>username: 200320105<br>password:ivhgyjNGNWoHVBhUmlrXwMns8Vg81NMhZ%2FAl8RVs%2BNomMk7gP4ETOQf8Fwn7svB8fwa7yzJvhxmQS51XFP%2FbRAYrGXToe4yuLmwrbRScWGM%3D<br>captchaResponse: aqe8<br>lt: LT-506399-2RS0W7HbXbGvLdU2oHx3n1xjeeAnj21617415016564-eM0e-cas<br>dllt: userNamePasswordLogin<br>execution: e2s5<br>_eventId: submit<br>rmShown: 1</p>
-</blockquote>
-<p>其中<code>password</code>做了加密处理，<code>captchaResponse</code>是输入验证码。POST表单后五个在隐藏表单域内可以找到。</p>
-<p>搜索password关键词定位到发送登录请求的代码段(<code>login-wisedu_v1.0.js?v=1.0</code>)：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 帐号登陆提交banding事件</span></span><br><span class="line"><span class="keyword">var</span> casLoginForm = $(<span class="string">&quot;#casLoginForm&quot;</span>);</span><br><span class="line">casLoginForm.submit(doLogin);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doLogin</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> username = casLoginForm.find(<span class="string">&quot;#username&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> password = casLoginForm.find(<span class="string">&quot;#password&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> captchaResponse = casLoginForm.find(<span class="string">&quot;#captchaResponse&quot;</span>);</span><br><span class="line">    <span class="comment">// ... 省略判空代码</span></span><br><span class="line">    _etd2(password.val(),casLoginForm.find(<span class="string">&quot;#pwdDefaultEncryptSalt&quot;</span>).val());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>分别获取到了用户名、密码、验证码三个框框的输入，最后一步加密密码。第一参数是密码明文，第二参数是密码加密颜值（密钥K），与前面找到的<code>#dynamicPwdEncryptSalt</code>不同（不是同一个表单）。搜索网页可以找到：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">id</span>=<span class="string">&quot;pwdDefaultEncryptSalt&quot;</span> <span class="attr">value</span>=<span class="string">&quot;9NSeYHbjUn7df6Y5&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>当前js文件内搜索<code>_estd2</code>找到一行代码展开后：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_etd</span>(<span class="params">_p0</span>) </span>&#123;  <span class="comment">// 这个加密函数好像没有用到</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> _p2 = encryptAES(_p0, pwdDefaultEncryptSalt);</span><br><span class="line">        $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p2);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_etd2</span>(<span class="params">_p0, _p1</span>) </span>&#123;  <span class="comment">// 调用的是这个加密函数，参数分别是密码明文和加密salt</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> _p2 = encryptAES(_p0, _p1);</span><br><span class="line">        $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p2);</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        $(<span class="string">&quot;#casLoginForm&quot;</span>).find(<span class="string">&quot;#passwordEncrypt&quot;</span>).val(_p0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个加密函数调用了encryptAES加密后，将值赋给了<code>#passwordEncrypt</code>这个元素，找一下发现：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;密码&quot;</span> <span class="attr">class</span>=<span class="string">&quot;auth_input&quot;</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;passwordEncrypt&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:none;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;passwordError&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:none;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;auth_error&quot;</span>&gt;</span>请输入密码<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>第一个表单域是密码输入，第二个是加密密码表单域，<code>display:none</code>隐藏起来了，发起POST请求时获取的是这个值。</p>
-<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><ol>
-<li>当前登录请求是否需要验证码</li>
-<li>获取隐藏表单域<code>#pwdDefaultEncryptSalt</code>的值，进行<code>AES(password, salt)</code>加密得到密文</li>
-<li>获取其他隐藏表单域的值，发起登录请求</li>
-</ol>
-<h2 id="Python模拟登录"><a href="#Python模拟登录" class="headerlink" title="Python模拟登录"></a>Python模拟登录</h2><h3 id="1-获取隐藏字段"><a href="#1-获取隐藏字段" class="headerlink" title="1. 获取隐藏字段"></a>1. 获取隐藏字段</h3><p>使用HTTP请求库requests和解析库lxml，解析隐藏表单域的值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"> </span><br><span class="line">username = <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">password = <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">session = requests.session()</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,en;q=0.8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;id.fzu.edu.cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Origin&quot;</span>: <span class="string">&quot;http://id.fzu.edu.cn&quot;</span>,</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 登录主页</span></span><br><span class="line">authserver_login_url = <span class="string">&quot;http://id.fzu.edu.cn/authserver/login&quot;</span></span><br><span class="line">res = session.get(authserver_login_url, headers=headers)</span><br><span class="line">tree = etree.HTML(res.text)</span><br><span class="line">form_data = <span class="built_in">dict</span>()</span><br><span class="line">form_data[<span class="string">&#x27;username&#x27;</span>] = username</span><br><span class="line">form_data[<span class="string">&#x27;lt&#x27;</span>] = tree.xpath(<span class="string">&#x27;//*[@id=&quot;casLoginForm&quot;]/input[1]/@value&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">form_data[<span class="string">&#x27;dllt&#x27;</span>] = tree.xpath(<span class="string">&#x27;//*[@id=&quot;casLoginForm&quot;]/input[2]/@value&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">form_data[<span class="string">&#x27;execution&#x27;</span>] = tree.xpath(<span class="string">&#x27;//*[@id=&quot;casLoginForm&quot;]/input[3]/@value&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">form_data[<span class="string">&#x27;_eventId&#x27;</span>] = tree.xpath(<span class="string">&#x27;//*[@id=&quot;casLoginForm&quot;]/input[4]/@value&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">form_data[<span class="string">&#x27;rmShown&#x27;</span>] = tree.xpath(<span class="string">&#x27;//*[@id=&quot;casLoginForm&quot;]/input[5]/@value&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">pwd_default_encryptSalt = tree.xpath(<span class="string">&#x27;//*[@id=&quot;pwdDefaultEncryptSalt&quot;]/@value&#x27;</span>)[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="2-获取验证码-1"><a href="#2-获取验证码-1" class="headerlink" title="2. 获取验证码"></a>2. 获取验证码</h3><p>请求验证码，如果返回false则不需要添加表单字段，否则请求验证码并识别，添加验证码表单字段。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlencode</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"> </span><br><span class="line">timestamp = <span class="built_in">str</span>(<span class="built_in">round</span>(time.time() * <span class="number">1000</span>))</span><br><span class="line">params = &#123;</span><br><span class="line">    <span class="string">&quot;username&quot;</span>: username,</span><br><span class="line">    <span class="string">&quot;pwdEncrypt2&quot;</span>: <span class="string">&quot;pwdEncryptSalt&quot;</span>,</span><br><span class="line">    <span class="string">&quot;timestamp&quot;</span>: timestamp</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 是否需要验证码</span></span><br><span class="line">needCaptcha_url = <span class="string">&quot;http://id.fzu.edu.cn/authserver/needCaptcha.html?&quot;</span> + urlencode(params)</span><br><span class="line">res = session.get(needCaptcha_url, headers=headers)</span><br><span class="line"><span class="keyword">if</span> res.text == <span class="string">&#x27;true&#x27;</span>:</span><br><span class="line">    ts = <span class="built_in">round</span>(datetime.now().microsecond / <span class="number">1000</span>)  <span class="comment"># get milliseconds</span></span><br><span class="line">    captcha_url = <span class="string">&quot;http://id.fzu.edu.cn/authserver/captcha.html?&quot;</span> + urlencode(&#123;<span class="string">&quot;ts&quot;</span>: ts&#125;)</span><br><span class="line">    res = session.get(captcha_url, headers=headers)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;captcha.png&#x27;</span>, mode=<span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(res.content)</span><br><span class="line">    form_data[<span class="string">&#x27;captchaResponse&#x27;</span>] = <span class="built_in">input</span>()</span><br></pre></td></tr></table></figure>
-<p>PS：这里手动输入验证码~~. 后面可以替换为验证码识别接口调用。</p>
-<h3 id="3-模拟登陆"><a href="#3-模拟登陆" class="headerlink" title="3. 模拟登陆"></a>3. 模拟登陆</h3><p>安装pyexecjs库进行AES加密。在console中调用encryptAES发现其加密结果为108位，</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AES password</span></span><br><span class="line"><span class="keyword">import</span> execjs</span><br><span class="line"> </span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;encrypt.js&#x27;</span>, mode=<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    ctx = execjs.<span class="built_in">compile</span>(f.read())</span><br><span class="line">    encrypt_pwd = ctx.call(<span class="string">&#x27;encryptAES&#x27;</span>, password, pwd_default_encryptSalt)</span><br><span class="line">form_data[<span class="string">&#x27;password&#x27;</span>] = encrypt_pwd</span><br><span class="line"> </span><br><span class="line"><span class="comment"># login</span></span><br><span class="line">login_url = <span class="string">&quot;http://id.fzu.edu.cn/authserver/login&quot;</span></span><br><span class="line">res = session.post(login_url, headers=headers, data=form_data)</span><br><span class="line"><span class="comment"># print(res.text)  # 登录后自动跳转页面内容</span></span><br><span class="line"> </span><br><span class="line">requests.utils.dict_from_cookiejar(session.cookies)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>{<br>‘iPlanetDirectoryPro’:’AQIC5wM2LY4Sfcx486iwX4F%2BGMxutOP%2FprhoWzJcS%2FledKo%3D%40AAJTSQACMDE%3D%23’,<br>‘JSESSIONID_auth’: ‘gdqWjJ_vOsVUEq-MJayGuSj2675NiJ2ORJlEr2NQAJgYitiEjo-Z!1673517085’,<br> ‘route’: ‘31b1acb26967d981571bca691c13c483’,<br> ‘CASTGC’: ‘TGT-51442-AE7gZhhfdF1y1YYwpNIHUbFFu3NzhMweMeSdqffxXztxWBcf2w1617434050431-KVIm-cas’</p>
-<p>}</p>
-</blockquote>
-<p>至此，成功获取到登录后Cookies信息。</p>
-<h2 id="验证码识别"><a href="#验证码识别" class="headerlink" title="验证码识别"></a>验证码识别</h2><p>用到Python的图像处理库pillow，数值分析库numpy，绘图库matplotlib，光学符号识别库pytesseract。</p>
-<p>思路是先将验证码转为灰度图，再转换为ndarray的二维数组，删除背景噪声像素（与文字像素相比值更大，颜色更浅偏白）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"> </span><br><span class="line">img = Image.<span class="built_in">open</span>(<span class="string">&#x27;captcha2.jpg&#x27;</span>)</span><br><span class="line">img = img.convert(<span class="string">&#x27;L&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"> </span><br><span class="line">img = np.array(img)</span><br><span class="line">plt.imshow(img, cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210403191739099.png" alt="image-20210403191739099"></p>
-<p>遍历像素，将超过灰度值超过120的置为255，即白色；灰度值低于120的置为0，即黑色：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">height = img.shape[<span class="number">0</span>]</span><br><span class="line">width = img.shape[<span class="number">1</span>]</span><br><span class="line">threshold = <span class="number">120</span>  <span class="comment"># 像素阈值</span></span><br><span class="line"><span class="keyword">for</span> h <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">        <span class="keyword">if</span> img[h][w] &gt; threshold:</span><br><span class="line">            img[h][w] = <span class="number">255</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            imgp[h][w] = <span class="number">0</span></span><br><span class="line">plt.imshow(img, cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210403210530113.png"></p>
-<p>效果看起来不错，存在锯齿现象，但问题不大。</p>
-<p>在使用pyteserract前需要先安装好tesseract，其带有识别程序和文字数据，自带有eng.traindata代表英文数字识别数据包。在使用前先设置可执行teserract的安装路径。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"> </span><br><span class="line">pytesseract.pytesseract.tesseract_cmd = <span class="string">r&quot;C:\Users\TempProgram\Tesserocr\tesseract.exe&quot;</span></span><br><span class="line">pytesseract.image_to_string(im).strip().lower()</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>‘z2zh’</p>
-</blockquote>
-<p>能准确识别出Z和2，下载几张新的图片均能够准确识别。看来这验证码难度不大，不需要再做CNN神经网络训练任务。</p>
-<p>将以上验证码处理识别程序和前面的模拟登录结合，唯一的遗憾是整个Python程序外还需要安装tesseract软件。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/19/%E9%87%91%E6%99%BA%E6%95%99%E8%82%B2%E7%BB%9F%E4%B8%80%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -311,9 +254,9 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">发表于</span>
+              <span class="post-meta-item-text">Posted on</span>
 
-              <time title="创建时间：2021-08-19 15:26:42" itemprop="dateCreated datePublished" datetime="2021-08-19T15:26:42+08:00">2021-08-19</time>
+              <time title="Created: 2021-08-19 15:26:42" itemprop="dateCreated datePublished" datetime="2021-08-19T15:26:42+08:00">2021-08-19</time>
             </span>
 
           
@@ -399,10 +342,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          文章目录
+          Table of Contents
         </li>
         <li class="sidebar-nav-overview">
-          站点概览
+          Overview
         </li>
       </ul>
 
@@ -422,7 +365,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">2</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
   </nav>
@@ -455,7 +398,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Juaran</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
         
