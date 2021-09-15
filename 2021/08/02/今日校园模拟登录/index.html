@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|0.8:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Cpdaily今日校园目标：今日校园获取签到任务。此地无：自动签到 实现路线：  模拟登录 获取签到信息 自动签到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="今日校园模拟登录">
+<meta property="og:url" content="http://example.com/2021/08/02/%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/index.html">
+<meta property="og:site_name" content="Juaran&#39;s Blog">
+<meta property="og:description" content="Cpdaily今日校园目标：今日校园获取签到任务。此地无：自动签到 实现路线：  模拟登录 获取签到信息 自动签到">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/b96812be8bec471687ed90bbd8a2532.jpg">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/28343d83580cd81b73a0e2d0114dc5d.jpg">
+<meta property="og:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210802115323960.png">
+<meta property="article:published_time" content="2021-08-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-15T01:48:12.140Z">
+<meta property="article:author" content="Juaran">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/juaran/typora-image/raw/master/typora/b96812be8bec471687ed90bbd8a2532.jpg">
+
+<link rel="canonical" href="http://example.com/2021/08/02/%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>今日校园模拟登录 | Juaran's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Juaran's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/02/%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Juaran">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Juaran's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          今日校园模拟登录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-02T00:00:00+08:00">2021-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-15 09:48:12" itemprop="dateModified" datetime="2021-09-15T09:48:12+08:00">2021-09-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Cpdaily今日校园"><a href="#Cpdaily今日校园" class="headerlink" title="Cpdaily今日校园"></a>Cpdaily今日校园</h2><p><strong>目标</strong>：今日校园获取签到任务。此地无：<del>自动签到</del></p>
+<p><strong>实现路线</strong>：</p>
+<ol>
+<li>模拟登录</li>
+<li>获取签到信息</li>
+<li><del>自动签到</del></li>
+</ol>
+<span id="more"></span>
+
+<h3 id="模拟登录"><a href="#模拟登录" class="headerlink" title="模拟登录"></a>模拟登录</h3><p><strong>方式一</strong>：账号密码登录</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/login?service=https://fzu.campusphere.net/portal/login">http://id.fzu.edu.cn/authserver/login?service=https%3A%2F%2Ffzu.campusphere.net%2Fportal%2Flogin</a></p>
+</blockquote>
+<p><strong>方式二</strong>：扫码登录</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/login?display=qrLogin&amp;service=https://fzu.campusphere.net/portal/login">http://id.fzu.edu.cn/authserver/login?display=qrLogin&amp;service=https%3A%2F%2Ffzu.campusphere.net%2Fportal%2Flogin</a></p>
+</blockquote>
+<ul>
+<li><p>请求QRcode-uuid:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/qrCode/get?ts=1627191854081">http://id.fzu.edu.cn/authserver/qrCode/get?ts=1627191854081</a>    –&gt; QR-oWtUtosFhn7OTvCYQR2</p>
+</blockquote>
+</li>
+<li><p>请求QRcode图片：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/qrCode/code?uuid=QR-oWtUtosFhn7OTvCYQR2">http://id.fzu.edu.cn/authserver/qrCode/code?uuid=QR-oWtUtosFhn7OTvCYQR2</a></p>
+</blockquote>
+</li>
+<li><p>扫码状态查询：</p>
+<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/qrCode/status?ts=1627191855083&amp;uuid=QR-oWtUtosFhn7OTvCYQR2">http://id.fzu.edu.cn/authserver/qrCode/status?ts=1627191855083&amp;uuid=QR-oWtUtosFhn7OTvCYQR2</a></p>
+<ul>
+<li>0 未扫</li>
+<li>1 登录成功</li>
+<li>2 已扫描</li>
+<li>3 二维码失效/过期</li>
+</ul>
+</li>
+<li><p>登录：当扫码状态为2时POST请求</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://id.fzu.edu.cn/authserver/login?display=qrLogin&amp;service=https://fzu.campusphere.net/portal/login">http://id.fzu.edu.cn/authserver/login?display=qrLogin&amp;service=https%3A%2F%2Ffzu.campusphere.net%2Fportal%2Flogin</a></p>
+</blockquote>
+<p>获取302跳转响应头中的Location地址，请求得到重要cookie：<strong>MOD_AUTH_CAS</strong></p>
+<blockquote>
+<p> <a target="_blank" rel="noopener" href="https://fzu.campusphere.net/portal/login?ticket=ST-2685077-cAT3xOG21d1HXgnAMPpY1627192330448-DaeF-cas">https://fzu.campusphere.net/portal/login?ticket=ST-2685077-cAT3xOG21d1HXgnAMPpY1627192330448-DaeF-cas</a></p>
+</blockquote>
+<p>==2021/08/01更新==：系统增加了多重跳转。</p>
+</li>
+</ul>
+<h3 id="签到任务"><a href="#签到任务" class="headerlink" title="签到任务"></a>签到任务</h3><h4 id="1-获取签到任务"><a href="#1-获取签到任务" class="headerlink" title="1. 获取签到任务"></a>1. 获取签到任务</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://fzu.campusphere.net/wec-counselor-sign-apps/stu/sign/getStuSignInfosInOneDay">https://fzu.campusphere.net/wec-counselor-sign-apps/stu/sign/getStuSignInfosInOneDay</a></p>
+</blockquote>
+<p>响应内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;code&quot;</span>:<span class="string">&quot;0&quot;</span>,</span><br><span class="line"><span class="attr">&quot;datas&quot;</span>:&#123;</span><br><span class="line">     <span class="attr">&quot;codeRcvdTasks&quot;</span>:[],</span><br><span class="line">     <span class="attr">&quot;unSignedTasks&quot;</span>:[],</span><br><span class="line">     <span class="attr">&quot;leaveTasks&quot;</span>:[],</span><br><span class="line">     <span class="attr">&quot;dayInMonth&quot;</span>:<span class="string">&quot;2021-08-02&quot;</span>,</span><br><span class="line">     <span class="attr">&quot;signedTasks&quot;</span>:[&#123;<span class="attr">&quot;rateSignDate&quot;</span>:<span class="string">&quot;2021-08-02 (周一)&quot;</span>,<span class="attr">&quot;rateTaskBeginTime&quot;</span>:<span class="string">&quot;06:00&quot;</span>,<span class="attr">&quot;isLeave&quot;</span>:<span class="literal">null</span>,<span class="attr">&quot;signStatus&quot;</span>:<span class="string">&quot;1&quot;</span>,<span class="attr">&quot;leaveMobileUrl&quot;</span>:<span class="literal">null</span>,<span class="attr">&quot;signWid&quot;</span>:<span class="string">&quot;1017xxx&quot;</span>,<span class="attr">&quot;senderUserName&quot;</span>:<span class="string">&quot;xxx与xxx学院(xxx)&quot;</span>,<span class="attr">&quot;isMalposition&quot;</span>:<span class="string">&quot;0&quot;</span>,<span class="attr">&quot;signRate&quot;</span>:<span class="string">&quot;1&quot;</span>,<span class="attr">&quot;currentTime&quot;</span>:<span class="string">&quot;2021-08-02 10:03&quot;</span>,<span class="attr">&quot;taskType&quot;</span>:<span class="string">&quot;1&quot;</span>,<span class="attr">&quot;singleTaskEndTime&quot;</span>:<span class="literal">null</span>,<span class="attr">&quot;singleTaskBeginTime&quot;</span>:<span class="literal">null</span>,<span class="attr">&quot;signInstanceWid&quot;</span>:<span class="string">&quot;162xxx&quot;</span>,<span class="attr">&quot;rateTaskEndTime&quot;</span>:<span class="string">&quot;17:00&quot;</span>,<span class="attr">&quot;taskName&quot;</span>:<span class="string">&quot;健康监测—xxx---xxx&quot;</span>,<span class="attr">&quot;stuSignWid&quot;</span>:<span class="string">&quot;26344xxx&quot;</span>,<span class="attr">&quot;leavePcUrl&quot;</span>:<span class="literal">null</span>&#125;]&#125;,</span><br><span class="line"><span class="attr">&quot;message&quot;</span>:<span class="string">&quot;SUCCESS&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关键参数：</p>
+<ul>
+<li>signWid</li>
+<li>signInstanceWid</li>
+</ul>
+<h4 id="2-获取任务详情"><a href="#2-获取任务详情" class="headerlink" title="2. 获取任务详情"></a>2. 获取任务详情</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://fzu.campusphere.net/wec-counselor-sign-apps/stu/sign/detailSignInstance">https://fzu.campusphere.net/wec-counselor-sign-apps/stu/sign/detailSignInstance</a></p>
+</blockquote>
+<p>请求参数：上一步取得的signWid、signInstanceWid</p>
+<p>响应内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;code&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;datas&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;signAddress&quot;</span>: <span class="string">&quot;xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;rateTaskBeginTime&quot;</span>: <span class="string">&quot;06:00&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;signStatus&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;latitude&quot;</span>: <span class="string">&quot;xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;downloadUrl&quot;</span>: <span class="string">&quot;https://img.cpdaily.com/ldy/index.html&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;signMode&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;signPlaceSelected&quot;</span>: [],</span><br><span class="line">        <span class="attr">&quot;signPhotoUrl&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;taskType&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;changeActorName&quot;</span>: <span class="string">&quot;xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;rateTaskEndTime&quot;</span>: <span class="string">&quot;17:00&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;signType&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">&quot;extraFieldItemVos&quot;</span>: [],</span><br><span class="line">        <span class="attr">&quot;longitude&quot;</span>: <span class="string">&quot;xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;rateSignDate&quot;</span>: <span class="string">&quot;2021-08-02 (周一)&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;signTime&quot;</span>: <span class="string">&quot;2021-08-02 xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;extraField&quot;</span>: [],</span><br><span class="line">        <span class="attr">&quot;leaveAppUrl&quot;</span>: <span class="string">&quot;/wec-counselor-leave-apps/leave/home/index.html&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;isNeedExtra&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">&quot;isPhoto&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;isAllowUpdate&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">&quot;senderUserName&quot;</span>: <span class="string">&quot;xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;isMalposition&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;signedStuInfo&quot;</span>: &#123;&#125;,</span><br><span class="line">        <span class="attr">&quot;signRate&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;taskDesc&quot;</span>: <span class="string">&quot;https://wecres.cpdaily.com/counselor/1018615892395240/content/8e23766b22d54953b14b7c9dc4ce70f7.html&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;currentTime&quot;</span>: <span class="string">&quot;2021-08-02 10:xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;changeTime&quot;</span>: <span class="string">&quot;2021-08-02 10:xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;singleTaskEndTime&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">&quot;photograph&quot;</span>: [],</span><br><span class="line">        <span class="attr">&quot;leftNum&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">&quot;singleTaskBeginTime&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">&quot;updateLimit&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">&quot;signInstanceWid&quot;</span>: <span class="string">&quot;162400&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;catQrUrl&quot;</span>: <span class="string">&quot;https://cat.cpdaily.com/erweima&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;signCondition&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;taskName&quot;</span>: <span class="string">&quot;xx&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;qrCodeRcvdUsers&quot;</span>: []</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;message&quot;</span>: <span class="string">&quot;SUCCESS&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-执行签到任务"><a href="#3-执行签到任务" class="headerlink" title="3. 执行签到任务"></a><del>3. 执行签到任务</del></h4><p>==【WARNING】该项内容不在本项目范围内，以下内容仅供学习参考，其内容来源于其他github项目==</p>
+<p><strong>配置签到信息</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;abnormalReason&quot;</span> : <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;position&quot;</span> : <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;longitude&quot;</span> : xx,</span><br><span class="line">  <span class="attr">&quot;isNeedExtra&quot;</span> : <span class="number">1</span>,</span><br><span class="line">  <span class="attr">&quot;signVersion&quot;</span> : <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;latitude&quot;</span> : xx,</span><br><span class="line">  <span class="attr">&quot;isMalposition&quot;</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;extraFieldItems&quot;</span> : [</span><br><span class="line">&#123;</span><br><span class="line">   <span class="attr">&quot;extraFieldItemWid&quot;</span> : xx,</span><br><span class="line">   <span class="attr">&quot;extraFieldItemValue&quot;</span> : <span class="string">&quot;小于37.3度&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">   <span class="attr">&quot;extraFieldItemWid&quot;</span> : xx,</span><br><span class="line">   <span class="attr">&quot;extraFieldItemValue&quot;</span> : <span class="string">&quot;否&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;signPhotoUrl&quot;</span> : <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;uaIsCpadaily&quot;</span> : <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;signInstanceWid&quot;</span> : <span class="string">&quot;154294&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>发送签到请求</strong></p>
+<p>关键请求头参数：<strong>Cpdaily-Extension</strong></p>
+<p>来源：DES加密学号、位置、版本号信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">extension = &#123;</span><br><span class="line">    <span class="string">&quot;lon&quot;</span>: <span class="string">&#x27;xx&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;model&quot;</span>: <span class="string">&quot;PCRT00&quot;</span>,</span><br><span class="line">    <span class="string">&quot;appVersion&quot;</span>: <span class="string">&quot;8.0.8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;systemVersion&quot;</span>: <span class="string">&quot;4.4.4&quot;</span>,</span><br><span class="line">    <span class="string">&quot;userId&quot;</span>: user[<span class="string">&#x27;username&#x27;</span>],</span><br><span class="line">    <span class="string">&quot;systemName&quot;</span>: <span class="string">&quot;android&quot;</span>,</span><br><span class="line">    <span class="string">&quot;lat&quot;</span>: <span class="string">&#x27;xx&#x27;</span>,</span><br><span class="line">    <span class="string">&quot;deviceId&quot;</span>: uuid.uuid1()</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">CpdailyInfo = DESEncrypt(json.dumps(extension))</span><br></pre></td></tr></table></figure>
+
+<p>其中DESEncrypt函数在currency/encrypt.py。密钥要改成b3L26XNL。</p>
+<p>==以上内容参考==：<a target="_blank" rel="noopener" href="https://github.com/ZimoLoveShuang/auto-submit/issues/33#issuecomment-756525862">https://github.com/ZimoLoveShuang/auto-submit/issues/33#issuecomment-756525862</a></p>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><ul>
+<li>Java后端：Springboot提供接口服务<ul>
+<li>/login    学号+密码登录</li>
+<li>/qrLoginCode 获取二维码</li>
+<li>/qrLoginStatus 扫码状态</li>
+<li>/qrLogin 扫码登录</li>
+<li>/signInfos 获取签到任务</li>
+<li>/signDetails/{signWid}/{signInstanceWid} 查看签到任务详情</li>
+</ul>
+</li>
+<li>Web前端：Vue框架高仿今日校园APP<ul>
+<li>/ 首页，签到任务列表</li>
+<li>/login 扫码登录页，微信或今日校园APP扫码登录</li>
+<li>/signDetails 任务详情页，查看签到状态</li>
+</ul>
+</li>
+</ul>
+<h3 id="页面展示"><a href="#页面展示" class="headerlink" title="页面展示"></a>页面展示</h3><img src="https://gitee.com/juaran/typora-image/raw/master/typora/b96812be8bec471687ed90bbd8a2532.jpg" alt="b96812be8bec471687ed90bbd8a2532" style="zoom: 33%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/28343d83580cd81b73a0e2d0114dc5d.jpg" alt="28343d83580cd81b73a0e2d0114dc5d" style="zoom: 25%;" />
+
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20210802115323960.png" alt="image-20210802115323960" style="zoom: 33%;" />
+
+<h3 id="结术语"><a href="#结术语" class="headerlink" title="结术语"></a>结术语</h3><p>陆陆续续花了一周时间完成了项目雏形，主要目的是学习和巩固Springboot框架、Java网络请求、Vue前端页面设计、路由跳转等基础知识，并参考了github上相关项目。最初的愿景是想结合前后端实现全自动签到，因为其他同类项目均以Python脚本方式运行，辅以Linux-Crontab定时任务或腾讯云函数，需要手动配置相关参数，希望有缘人能够继续下一步的开发。</p>
+<p>鉴于目前疫情日益严峻，以安卓虚拟定位派为代表的同学已“锒铛入狱”，而Python脚本派的同学依旧能够在每早6:00时刻准时登上排行榜，但殊途同归，技术的目的不是为了投机取巧、瞒报疫情、隐匿行踪，希望每一位同学认真对待日签，不要抱有侥幸心理！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/16/%E5%BD%93%E5%BD%93%E7%BD%91%E7%94%B5%E5%AD%90%E4%B9%A6%E8%8E%B7%E5%8F%96/" rel="prev" title="当当网电子书获取">
+      <i class="fa fa-chevron-left"></i> 当当网电子书获取
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/09/%E5%BC%82%E6%9E%84%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%81%B6%E6%84%8F%E8%B4%A6%E6%88%B7%E6%A3%80%E6%B5%8B/" rel="next" title="异构图神经网络恶意账户检测">
+      异构图神经网络恶意账户检测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cpdaily%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD"><span class="nav-number">1.</span> <span class="nav-text">Cpdaily今日校园</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">模拟登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%BE%E5%88%B0%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">签到任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%8E%B7%E5%8F%96%E7%AD%BE%E5%88%B0%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 获取签到任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%8E%B7%E5%8F%96%E4%BB%BB%E5%8A%A1%E8%AF%A6%E6%83%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 获取任务详情</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%89%A7%E8%A1%8C%E7%AD%BE%E5%88%B0%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 执行签到任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA"><span class="nav-number">1.4.</span> <span class="nav-text">页面展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9C%AF%E8%AF%AD"><span class="nav-number">1.5.</span> <span class="nav-text">结术语</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Juaran</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Juaran</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
