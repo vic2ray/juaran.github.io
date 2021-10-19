@@ -160,6 +160,129 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/12/Transport%20Layer(2)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Juaran">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Juaran's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/12/Transport%20Layer(2)/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-10-12 11:52:09" itemprop="dateCreated datePublished" datetime="2021-10-12T11:52:09+08:00">2021-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-14 15:46:06" itemprop="dateModified" datetime="2021-10-14T15:46:06+08:00">2021-10-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>内容摘自：<em>Computer Networking: A Top-Down Approach, 6th</em> <em>ed.,</em> J.F. Kurose and K.W. Ross</p>
+<p>Chapter 3: <strong>Transport Layer</strong></p>
+</blockquote>
+<h3 id="3-4-可靠数据传输原则"><a href="#3-4-可靠数据传输原则" class="headerlink" title="3.4 可靠数据传输原则"></a>3.4 可靠数据传输原则</h3><p>我们考虑一般情况下可靠数据传输问题。实现可靠的数据传输的问题不仅发生在传输层，而且还发生在链路层和应用层。为了实现上层实体的抽象服务，必须保证下层传输数据的可靠通道——没有数据位损坏或丢失，所有数据位都按发送顺序传递，这正是TCP向调用它的网络应用程序提供的服务模型。</p>
+<p>但实现此抽象服务是建立在可靠传输上的，当前抽象服务提供者的下一层可能并不可靠，这是协议需要解决的问题。例如，TCP是一种可靠的数据传输协议，它可以在一个不可靠的(IP)端到端网络层上实现。以下表格总结了一般的可靠数据传输机制及使用：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20211011102105697.png" alt="image-20211011102105697" style="zoom:80%;" />
+
+<p>以上这些机制会在接下来的TCP具体实现中详细说明。（PPT上这部分rdt理论内容没有）</p>
+<h3 id="3-5-面向连接传输：TCP"><a href="#3-5-面向连接传输：TCP" class="headerlink" title="3.5 面向连接传输：TCP"></a>3.5 面向连接传输：TCP</h3><h4 id="3-5-1-TCP连接"><a href="#3-5-1-TCP连接" class="headerlink" title="3.5.1 TCP连接"></a>3.5.1 TCP连接</h4><p>TCP是面向连接的，是因为一个应用程序在开始发送数据到另一个应用程序前，两个进程必须先相互“握手”，也就是说它们必须相互发送一些初始segments，以建立随后数据传输的参数。这些参数也就是连接双方在主机上维护的初始化TCP状态变量——不同于时分复用、频分复用电路交换，这些连接状态完全存在在两个端系统中，而不存在于路由、链路交换机等中间网络设备中。再次强调我们之前尝试建立的view：在TCP/IP网络体系中，中间路由只知道传输的是IP数据报，完全不知道封装的TCP连接、TCP内容。TCP存在网络端系统中，而IP存在中间路由。</p>
+<p>TCP连接提供了全双工服务(full-deuplex service)：如果一个主机上的进程A和另一个主机上的进程B之间存在TCP连接，那么应用层数据可以从流程A流到流程B，同时应用层数据可以从进程B流到流程A。TCP连接也总是点对点的(point-to-point)，多播、广播是不存在的，TCP始终是单个发送方和单个接收方。</p>
+<p>接下来我们看看TCP是如何建立连接的。首先，客户端应用程序进程通知客户端传输层，它希望建立与服务器中的进程的连接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clientSocket.connect((serverName,serverPort))</span><br></pre></td></tr></table></figure>
+
+<p>然后客户端传输层和服务端传输层建立连接。这个过程总的来说就是，客户端首先发送一个特殊的TCP段，服务端响应一个特殊的TCP段，最后客户端再次响应一个特殊的TCP段，这样连接就建立好了。前两个段没有携带有效负载(payload)信息，第三个段可能携带有负载信息。这样的连接建立方式称为三次握手，详细过程将在后续展开。</p>
+<p>一旦TCP连接建立，两个应用程序可以相互发送数据，不妨看看客户端是如何发送数据的。客户端进程将数据流发送到本地socket接口中，一旦数据进入到socket门内，TCP便接管了这些数据。如下图所示，TCP将这些数据存储在<strong>TCP连接的发送缓冲区</strong>(connection’s send buffer)中，这个缓冲区是三次握手时预留的。TCP会不时地从发送缓冲区中抓取数据块，并将数据传递到网络层。有趣的是，TCP规范[RFC793]在指定TCP何时实际发送缓冲数据方面非常悠闲，声明TCP应该“在自己方便的时候以段发送这些数据”。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20211011111908672.png" alt="image-20211011111908672" style="zoom: 67%;" />
+
+<p> 那么，一个TCP段能最多传输多少数据呢？这是由<strong>最大段大小</strong>(MSS, maximum segment size)决定的。MSS通常是先通过确定本地发送主机可以发送的<strong>最大链接层帧长度</strong>(MTU，maximum transmission unit)来设置的，MSS保证一个TCP段封装在IP数据报中、加上TCP/IP header长度，不会超过单个链路层帧的最大长度（一般是1500字节）。注意，MSS是段中应用层数据的最大量，而不是包括报头在内的TCP段的最大大小。</p>
+<p>TCP将每个客户端数据块与一个TCP头配对（实现进程到主机的复用），从而形成TCP段。这些段被传递到网络层，在那里它们被分别封装在网络层IP数据报中。网络另一头的TCP将收到段存TCP连接的<strong>接收缓冲区</strong>（receive buffer）中，然后应用进程从socket接口中读取缓冲区中的数据流。两个终端都维护各自的接收和发送缓冲区。</p>
+<p>以上连接过程再次证实了中间网络设备（路由器、交换机等）不存储任何用于TCP连接的缓冲区或变量，TCP连接的实现就是通过socket、TCP缓冲区、标识变量和另一个主机进程中的socket、缓冲区、变量组成。</p>
+<h4 id="3-5-2-TCP段结构"><a href="#3-5-2-TCP段结构" class="headerlink" title="3.5.2 TCP段结构"></a>3.5.2 TCP段结构</h4><p>TCP段由段头和数据段组成，前面提到，MSS决定了Data字段的最大长度。因此，当需要发送大文件时，如图像，通常被切分成数个MSS大小的块。实际情况是，交互式应用程序通常传输比MSS更小得多的块，比如Telnet远程连接时，数据字段可能只需要1个字节，整个TCP段的大小一共是头部20字节+1字节数据。大部分情况下应用程序交互消息长度不会超过MSS。除了与UDP相同的源和目的端口、校验和字段，TCP报文结构如图所示：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20211011201543538.png" alt="image-20211011201543538" style="zoom:67%;" />
+
+<ul>
+<li>32位序列号Sequence number和确认号Acknowledgment number，用于建立握手</li>
+<li>16位接收窗口Receive window，用于流控制，表明接受者愿意接收的字节数</li>
+<li>4位TCP段header长度，通常为20字节，最大为2**4=60字节，因为有Options字段存在</li>
+<li>可选且可变长度的Options字段用于当发送方和接收方协商MSS或窗口缩放因子(?)</li>
+<li>6位标志位用于标记当前TCP段的状态。ACK=1表示已经确认收到了上一个段（确认段）；RST、SYN、FIN用于握手和挥手，分别代表：重新建立连接的复位段、请求建立连接的同步段、通知关闭连接的FIN段；PSH标志，提示接收端应用进程应该立即从TCP接收缓冲区中读走数据，为接收后续数据腾出空间（如果应用程序不将接收到的数据读走，它们就会一直停留在TCP接收缓冲区中）；URG位用于表示该段中存在发送端上层实体标记为“紧急”的数据，如果紧急，则由16位的Urgent紧急数据指针字段指向数据地址（在实际应用中，不使用PSH、URG和紧急数据指针）。</li>
+</ul>
+<p><strong>序列号和确认号</strong>是TCP段头部中最重要的两个字段，是TCP提供可靠数据传输服务的关键部分。TCP将数据视为非结构化但<strong>有序</strong>的字节流，序列号标识的是字节流的顺序而不是所传输段的顺序。因此，一个TCP段的序列号是段数据中首字节的字节流号。假设应用程序要传输一个50w字节的数据，TCP的MSS为1000字节，则数据被切分成50个数据块，每个数据块的每个字节都有个隐式的“地址”序号表示，每个块首字节的索引即Sequence number：</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20211012203517109.png" alt="image-20211012203517109" style="zoom: 80%;" />
+
+<p>Acknowledgment number是跟TCP的全双工通信有关的。A在接收B的数据时，也可以同时向B发送数据，确认号就是A在发给B数据时，A期望得到的下一个序列号数据块。例如：A已经接收到0-535字节的数据块，A同时也有另一数据块发给B，于是A在发给B的段中确认号填上536，即期望B收到数据后立即发出536序列号的数据块。当某一段中间序列的数据未收到时，确认号可用于寻回丢失数据。</p>
+<p>由于数据分块产生了数据接收有序和无序的问题。后面序列号的数据块先到达，前面缺失的数据块需要发送确认号后才能补齐数据。TCP应用程序可以选择丢失无序的数据块，也可以选择保留无序的字节，并等待缺失的字节来填补空白。显然，后一种选择在网络带宽方面更有效，也是在实践中采用的方法。</p>
+<p>在上图中，序列号是从0开始的，实际上两边TCP连接会选择一个随机初始化的序列号，为了减少段冲突的可能。</p>
+<p>以Telnet协议为例，客户端输入的每一个字符将被传输到远程主机上，远程主机将发送回每个字符的副本并显示在客户端的屏幕上，这样确保服务端收到了每一个字符的输入。注意，SSH的机制基本是一样，用户输入的每条远程命令实际上在网络中传播了两次，一次是发送到远程主机，一次是回显在本机屏幕。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20211012221726788.png" alt="image-20211012221726788" style="zoom:67%;" />
+
+<p>假设使用Telnet通信的两台主机A和主机B，在TCP连接建立完成后，主机A向B发送一个字符C，在A发出第一个段时，Seq=42和ACK=79分别是A和B初始化的随机序号，数据段中是字符C的ASCII码，占用一个字节，即，A期望下一个字节的序号ACK=79，B期望得到序号Seq=42的数据；第二个段从B发往A，首先B收到了期望数据Seq=42，数据为一个字节的C，因此下一个字节序号期望ACK=43，其次段Seq=79代表当前段正是A期望得到的ACK=79的数据，数据内容为字符C的拷贝；第三个段再次从A发往B，它的唯一目的是承认它从B收到了数据，因此该段数据为空，为了保持连续性，Seq和ACK继续增加。</p>
+<p>通过以上过程可以知道，TCP通过序列号和确认号保持数据的完整性和有序性，序列号是发给对方的数据（字节）起始地址，确认号是期望得到的数据（字节）起始地址，因此后一个段的Seq总是前一个段的ACK。</p>
+<h4 id="3-5-3-RTT估计和Timeout"><a href="#3-5-3-RTT估计和Timeout" class="headerlink" title="3.5.3 RTT估计和Timeout"></a>3.5.3 RTT估计和Timeout</h4><p>为了可靠数据传输，TCP使用了超时重传机制恢复丢失的段。这个概念看起来简单，但实际上有很多细节问题需要考虑。最明显的问题就是一个段超时时间（Timeout）如何判定？显然，这个超时时间要比一个往返时延（RTT）要长，即至少要超过段发出直到收到确认的时间。但是应该超出RTT多久呢？首先应该如何估计一个RTT？这个计时器（timer）应该应用在每一个段上吗？接下来我们讨论TCP的解决方案。</p>
+<p>令SampleRTT为一个普通段发送到确认的往返时间，由于路由器的拥塞和终端系统的不同负载，SampleRTT值会随不同段而波动。因此，任意时刻的SampleRTT都不具有代表性，自然地，取一段时间内的SampleRTT值的平均值作为估计EstimatedRTT，使用以下加权公式计算当前时刻的EstimatedRTT：</p>
+<blockquote>
+<p>EstimatedRTT = (1 – alpha) • EstimatedRTT + alpha• SampleRTT</p>
+</blockquote>
+<p>其中alpha的值规定为0.128，因此当前时刻的估计EstimatedRTT主要由之前的值决定，也受当前波动值影响。在统计学中，这种平均值被称为指数加权移动平均值(EWMA)。</p>
+<img src="https://gitee.com/juaran/typora-image/raw/master/typora/image-20211013155639135.png" alt="image-20211013155639135" style="zoom: 67%;" />
+
+<p>除了评估TCP段的平均往返时间，一个段的超时时间还应该与RTT的波动程度相关。当前段的SampleRTT偏离凭据EstimatedRTT的估计量DevRTT定义为：</p>
+<blockquote>
+<p>DevRTT = (1 – beta) • DevRTT + beta •| SampleRTT – EstimatedRTT |</p>
+</blockquote>
+<p>Beta的推荐值为0.25，SampleRTT的值越接近EstimatedRTT，代表波动程度越小，DevRTT值也越小。给定某一时刻的估计时延和波动时延，超时时间显然应该大于估计时延，但也不能超出太多，否则当段丢失时不及时重传会导致较大的数据传输延迟。因此，考虑估计时延和波动时延，超时时间TimeoutInterval定义为：</p>
+<blockquote>
+<p>TimeoutInterval = EstimatedRTT + 4 • DevRTT</p>
+</blockquote>
+<h4 id="3-5-4-可靠数据传输"><a href="#3-5-4-可靠数据传输" class="headerlink" title="3.5.4 可靠数据传输"></a>3.5.4 可靠数据传输</h4><p>由于网络层IP协议不保证数据的可靠交付，基于IP协议的传输层协议报文也面临网络层不可靠传输的问题，这些问题包括：IP数据报的完整性、有序性、位损坏等。TCP在IP的不可靠服务之上创建了一个可靠的数据传输服务。TCP可靠的数据传输服务<strong>确保进程从TCP接收缓冲区读取的数据流不损坏、没有间隙、没有重复和乱顺</strong>；也就是说，字节流与连接另一边端系统发送的字节流完全相同。在可靠传输理论中，对单个段指派计时器Timer将带来巨大的开销。因此，在TCP中只使用一个重传计时器，即使有多个传输但未确认的段。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/09/Transport%20Layer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -871,87 +994,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/02/%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Juaran">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Juaran's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/02/%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/" class="post-title-link" itemprop="url">今日校园模拟登录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-08-02T00:00:00+08:00">2021-08-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-15 09:55:25" itemprop="dateModified" datetime="2021-09-15T09:55:25+08:00">2021-09-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>项目地址：<a target="_blank" rel="noopener" href="https://gitee.com/juaran/cpdaily-qd">https://gitee.com/juaran/cpdaily-qd</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/02/%E4%BB%8A%E6%97%A5%E6%A0%A1%E5%9B%AD%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1021,14 +1063,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
