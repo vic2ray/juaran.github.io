@@ -1,48 +1,44 @@
-# workflow name
-name: Hexo Blog CI
+name: Deploy
 
-# master branch on push, auto run
-on: 
-  push:
-    branches:
-      - hexo
-      
+on: [push]
+
 jobs:
-  build: 
-    runs-on: ubuntu-latest 
-        
+  build:
+    runs-on: ubuntu-latest
+    name: A job to deploy blog.
     steps:
-    # check it to your workflow can access it
-    # from: https://github.com/actions/checkout
-    - name: Checkout Repository master branch
-      uses: actions/checkout@master 
-      
-    # from: https://github.com/actions/setup-node  
-    - name: Setup Node.js 10.x 
-      uses: actions/setup-node@master
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
-        node-version: "10.x"
-    
-    - name: Setup Hexo Dependencies
-      run: |
-        npm install hexo-cli -g
-        npm install
-    
-    - name: Setup Deploy Private Key
+        submodules: true # Checkout private submodules(themes or something else).
+
+    # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12' #超过12的版本有几个warning，我不想处理
+
+    # Deploy hexo blog website.
+    - name: Setup Hexo
       env:
-        HEXO_DEPLOY_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+        # 定义了一个变量 secrets里面添加的名字
+        ACTION_DEPLOY_KEY: ${{ secrets.HEXO_DEPLOY_KEY }} 
       run: |
-        mkdir -p ~/.ssh/
-        echo "$HEXO_DEPLOY_PRIVATE_KEY" > ~/.ssh/id_rsa 
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        
-    - name: Setup Git Infomation
-      run: | 
-        git config --global user.name 'Juaran' 
-        git config --global user.email 'juaran@foxmail.com'
-    - name: Deploy Hexo 
+          # 创建了一个ssh文件夹
+          mkdir -p ~/.ssh/
+          # 把key复制进去
+          echo "$hexo_deploy_pub" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          # 配置git
+          git config --global user.email "juaran@foxmail.com"
+          git config --global user.name "Juaran"
+          # 安装hexo
+          npm install hexo-cli -g
+          npm install
+
+    - name: Deploy
       run: |
         hexo clean
-        hexo generate 
         hexo deploy
