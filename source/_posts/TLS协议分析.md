@@ -174,7 +174,7 @@ TLS协议包括两个协议组：TLS记录协议(TLS Record)和TLS握手协议(T
 
 <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/notion/Untitled 8.png" style="zoom:67%;" />
 
-# TLS图示
+# 图示
 
 <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/notion/Untitled 9.png" style="zoom: 50%;" />
 
