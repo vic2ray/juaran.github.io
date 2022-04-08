@@ -11,7 +11,7 @@ category: 计算机网络
 > 在 HTTP 协议中，**`CONNECT`** 方法可以开启一个客户端与所请求资源之间的双向沟通的通道。它可以用来创建隧道（tunnel）。
 > 例如，**`CONNECT`** 可以用来访问采用了 [SSL (en-US)](https://developer.mozilla.org/en-US/docs/Glossary/SSL)([HTTPS](https://developer.mozilla.org/zh-CN/docs/Glossary/https))  协议的站点。客户端要求代理服务器将 TCP 连接作为通往目的主机隧道。之后该服务器会代替客户端与目的主机建立连接。连接建立好之后，代理服务器会面向客户端发送或接收 TCP 消息流。
 
-<!--more-->
+<!-- more -->
 
 ## RFC7231
 
