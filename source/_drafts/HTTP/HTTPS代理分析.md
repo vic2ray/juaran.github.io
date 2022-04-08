@@ -1,8 +1,9 @@
 ---
 title: {{ title }}
-date: 2022-04-08 12:19:03
-tags: 计算机网络
+date: 2022-04-08 14:09:37
+tags:
 ---
+
 ## Mozilla
 
 [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT)
@@ -50,7 +51,7 @@ CONNECT请求消息中的有效负载没有定义的语义；在CONNECT请求上
 
 ## Wikipedia
 
-[](https://zh.wikipedia.org/wiki/HTTP%E9%9A%A7%E9%81%93)[https://zh.wikipedia.org/wiki/HTTP隧道](https://zh.wikipedia.org/wiki/HTTP%E9%9A%A7%E9%81%93)
+[https://zh.wikipedia.org/wiki/HTTP隧道](https://zh.wikipedia.org/wiki/HTTP%E9%9A%A7%E9%81%93)
 
 **HTTP隧道**用于在被限制的网络连接（包括[防火墙](https://zh.wikipedia.org/wiki/%E9%98%B2%E7%81%AB%E5%A2%99)、[NAT](https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2)和[ACL](https://zh.wikipedia.org/wiki/%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E4%B8%B2%E5%88%97)）以及其他限制的情况下在两台计算机之间建立网络链接。该隧道通常由位于[DMZ](https://zh.wikipedia.org/wiki/DMZ)中的[代理服务器](https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8)中介创建。
 
@@ -185,11 +186,11 @@ requests.get(url, proxies=proxies)
 
 * HTTP代理
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/45806c57-b3f4-4beb-8c7b-2cb973110996/Untitled.png)
+![](https://cdn.jsdelivr.net/gh/Juaran/juaran.github.io@image/notion/20220408141204.png)
 
 * HTTPS代理
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/026d403a-6b9a-47af-9355-b99eb545fc43/Untitled.png)
+![](https://cdn.jsdelivr.net/gh/Juaran/juaran.github.io@image/notion/20220408141426.png)
 
 **[HTTP、HTTPS代理分析及原理](https://lilywei739.github.io/2017/01/25/principle_for_http_https.html)
 [HTTP代理原理分析](https://www.cnblogs.com/xugongzi007/p/12802819.html)**
+
