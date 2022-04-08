@@ -1,19 +1,18 @@
 ---
 title: {{ title }}
 date: 2022-04-08 12:19:03
-tags:
+tags: 计算机网络
 ---
-
 ## Mozilla
 
-[](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT)[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT)
+[https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT)
 
 > 在 HTTP 协议中，**`CONNECT`** 方法可以开启一个客户端与所请求资源之间的双向沟通的通道。它可以用来创建隧道（tunnel）。
 > 例如，**`CONNECT`** 可以用来访问采用了 [SSL (en-US)](https://developer.mozilla.org/en-US/docs/Glossary/SSL)([HTTPS](https://developer.mozilla.org/zh-CN/docs/Glossary/https))  协议的站点。客户端要求代理服务器将 TCP 连接作为通往目的主机隧道。之后该服务器会代替客户端与目的主机建立连接。连接建立好之后，代理服务器会面向客户端发送或接收 TCP 消息流。
 
 ## RFC7231
 
-[](https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6)[https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6](https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6)
+[https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6](https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6)
 
 > CONNECT方法要求接收方建立一个隧道到由请求-目标确定的目的源服务器，如果成功，此后限制其行为，在两个方向上盲目转发数据包，直到隧道关闭。 隧道通常用于创建一个端到端的虚拟连接，通过一个或多个代理，然后可以使用TLS（传输层安全）来确保安全。
 > CONNECT只适用于向代理发出的请求。 一个源服务器可能会回应一个 2xx (Successful)状态代码来表示连接已经建立。然而，大多数源服务器并没有实现CONNECT。
@@ -194,4 +193,3 @@ requests.get(url, proxies=proxies)
 
 **[HTTP、HTTPS代理分析及原理](https://lilywei739.github.io/2017/01/25/principle_for_http_https.html)
 [HTTP代理原理分析](https://www.cnblogs.com/xugongzi007/p/12802819.html)**
-
