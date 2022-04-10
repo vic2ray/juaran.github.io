@@ -1,21 +1,22 @@
 ---
-title: 自制SYN扫描
+title: 构建一个SYN扫描器
 date: 2021-03-25
 category: 计算机网络
 tag: TCP
 ---
+
+# 构造SYN
+
+## pack
 
 * [Python3 socket模块官方文档](https://docs.python.org/zh-cn/3/library/socket.html#creating-sockets )
 * [python3 struct模块 处理二进制 pack unpack用法](https://blog.csdn.net/whatday/article/details/100559721 )
 * [python 使用raw socket进行TCP SYN扫描](https://blog.csdn.net/Jeanphorn/article/details/45226947 )
 * [IP协议首部详细分析](https://blog.csdn.net/zhangdaisylove/article/details/47147991 )
 
-
-<!-- more -->
-
 大致过程是：根据IP首部格式，使用`pack`打包成二进制形式的数据报，在通过`socket`发送。
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20150730120353079" alt="img" style="zoom: 60%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20150730120353079" alt="img" style="zoom: 50%;" />
 
 在pack中打包数据到二进制的格式fmt为：
 
