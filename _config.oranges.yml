@@ -44,12 +44,12 @@ comments:
 
   gitalk:
     # https://github.com/gitalk/gitalk#usage查看官方教程
-    enable: false
+    enable: true
     clientID:
     clientSecret:
-    repo:
-    owner:
-    admin:
+    repo: juaran.github.io
+    owner: Juaran
+    admin: Juaran
     id: location.pathname
     distractionFreeMode: false
 
