@@ -1,14 +1,13 @@
 ---
 title: 当当网电子书获取
 date: 2021-04-16 10:53:29
-category: JS逆向
+category: project
+tags: [反爬虫,toy]
 ---
 
 ## 一、引言
 
 > ​        根据相关法律法规，为了保护作者及版权方的正当权益，当当网电子书目前在PC端不支持下载功能，只能在线阅读。若您订购的电子书支持iPhone、iPad、Android、E-ink设备阅读，请您使用当当读书客户端登陆您的当当账户，之后点击页面左上角图书下载按钮，之后页面中会显示您已购买未下载的图书，请您点击下载即可。
-
-<!--more-->
 
 ​        [当当云阅读](http://e.dangdang.com/)是当当网旗下的电子书阅读平台，具有丰富的正版图书资源。为了保护读物作者和版权方的正当权益，应最大限度地防止相关电子书在互联网上非法传播。当当云阅读在PC端不支持下载，只能在线阅读；在智能手机、平板上需安装当当云阅读客户端进行在线阅读或缓存。
 
@@ -125,7 +124,7 @@ API返回内容：
 
 通过浏览器元素定位发现，每一个`<span class="fs-86b73afd-302" style="left:155px; bottom:392px; ">到</span>`标签对应页面上的一个文字，并通过样式`style="left:155px; bottom:392px; "`进行定位，这意味着`<span>`标签并非按照在HTML文档中的顺序排列，而是在浏览器中渲染后得到正确的显示顺序。效果如下图：
 
-![image-20210416113326354](https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210416113326354.png)
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210416113326354.png" alt="image-20210416113326354" style="zoom:50%;" />
 
 利用爬虫虽然能够直接解析API响应取到所有文字，但这是乱序的，必须利用定位信息`left`和`bottom`重新排列文字，否则所得结果毫无意义。
 
@@ -167,12 +166,9 @@ for col.px in col_list:    // 遍历列
 示例：
 
 > row_text： ['3', '第', '1', '章']
->
-> row_list ： [85, 45, 71, 99]
->
+>row_list ： [85, 45, 71, 99]
 > order ： [1, 2, 0, 3]
->
-> order_row_text：第13章
+>order_row_text：第13章
 
 解释：
 
@@ -256,7 +252,7 @@ for i in range(0, 35):
     get_page(16, i, 252+i)
 ```
 
-![image-20210416143823445](https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210416143823445.png)
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210416143823445.png" alt="image-20210416143823445" style="zoom:50%;" />
 
 ## 四、结语
 

@@ -2,6 +2,7 @@
 title: Transport Layer(3)
 date: 2021-10-22
 category: 计算机网络
+tag: TCP
 ---
 
 
@@ -9,8 +10,6 @@ category: 计算机网络
 > 内容摘自：*Computer Networking: A Top-Down Approach, 6th* *ed.,* J.F. Kurose and K.W. Ross
 >
 > Chapter 3: **Transport Layer**
-
-<!-- more -->
 
 ### 3.5.5 流控制
 

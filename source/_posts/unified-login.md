@@ -1,11 +1,10 @@
 ---
 title: 金智教育统一登录系统
 date: 2021-04-03 10:53:29
-category: JS逆向
+category: 逆向分析
+tag: 反爬虫
 ---
-![image-20210403105546569](https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403105546569.png)
-
-<!--more-->
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403105546569.png" alt="image-20210403105546569" style="zoom: 50%;" />
 
 统一登录地址：http://id.fzu.edu.cn/authserver/login
 
@@ -70,7 +69,7 @@ $("#casLoginForm").find("#changeCaptcha").bind("click", function () {
 
 发现`ts`是当前时间的毫秒数（0-999ms）。一张验证码如下所示：
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/captcha2.jpg" alt="captcha2" style="zoom: 200%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/captcha2.jpg" alt="captcha2"  />
 
 验证码中有很多背景噪声，可以使用tesserocr等神经网络框架进行识别。
 
@@ -262,7 +261,7 @@ img = np.array(img)
 plt.imshow(img, cmap='gray')
 ```
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403191739099.png" alt="image-20210403191739099" style="zoom:50%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403191739099.png" alt="image-20210403191739099" style="zoom: 33%;" />
 
 遍历像素，将超过灰度值超过120的置为255，即白色；灰度值低于120的置为0，即黑色：
 
@@ -279,7 +278,7 @@ for h in range(height):
 plt.imshow(img, cmap='gray')
 ```
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403210530113.png" style="zoom:50%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403210530113.png" style="zoom: 33%;" />
 
 效果看起来不错，存在锯齿现象，但问题不大。
 

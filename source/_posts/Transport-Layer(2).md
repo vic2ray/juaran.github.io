@@ -1,15 +1,13 @@
-
 ---
 title: Transport Layer(2)
 date: 2021-10-14
 category: 计算机网络
+tag: TCP
 ---
 
 > 内容摘自：*Computer Networking: A Top-Down Approach, 6th* *ed.,* J.F. Kurose and K.W. Ross
 >
 > Chapter 3: **Transport Layer**
-
-<!-- more -->
 
 ### 3.4 可靠数据传输原则
 
@@ -17,7 +15,7 @@ category: 计算机网络
 
 但实现此抽象服务是建立在可靠传输上的，当前抽象服务提供者的下一层可能并不可靠，这是协议需要解决的问题。例如，TCP是一种可靠的数据传输协议，它可以在一个不可靠的(IP)端到端网络层上实现。以下表格总结了一般的可靠数据传输机制及使用：
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211011102105697.png" alt="image-20211011102105697" style="zoom:80%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211011102105697.png" alt="image-20211011102105697" style="zoom:60%;" />
 
 以上这些机制会在接下来的TCP具体实现中详细说明。（PPT上这部分rdt理论内容没有）
 
@@ -51,7 +49,7 @@ TCP将每个客户端数据块与一个TCP头配对（实现进程到主机的�
 
 TCP段由段头和数据段组成，前面提到，MSS决定了Data字段的最大长度。因此，当需要发送大文件时，如图像，通常被切分成数个MSS大小的块。实际情况是，交互式应用程序通常传输比MSS更小得多的块，比如Telnet远程连接时，数据字段可能只需要1个字节，整个TCP段的大小一共是头部20字节+1字节数据。大部分情况下应用程序交互消息长度不会超过MSS。除了与UDP相同的源和目的端口、校验和字段，TCP报文结构如图所示：
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211011201543538.png" alt="image-20211011201543538" style="zoom:67%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211011201543538.png" alt="image-20211011201543538" style="zoom:60%;" />
 
 * 32位序列号Sequence number和确认号Acknowledgment number，用于建立握手
 * 16位接收窗口Receive window，用于流控制，表明接受者愿意接收的字节数
@@ -71,7 +69,7 @@ Acknowledgment number是跟TCP的全双工通信有关的。A在接收B的数据
 
 以Telnet协议为例，客户端输入的每一个字符将被传输到远程主机上，远程主机将发送回每个字符的副本并显示在客户端的屏幕上，这样确保服务端收到了每一个字符的输入。注意，SSH的机制基本是一样，用户输入的每条远程命令实际上在网络中传播了两次，一次是发送到远程主机，一次是回显在本机屏幕。
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211012221726788.png" alt="image-20211012221726788" style="zoom:67%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211012221726788.png" alt="image-20211012221726788" style="zoom:60%;" />
 
 假设使用Telnet通信的两台主机A和主机B，在TCP连接建立完成后，主机A向B发送一个字符C，在A发出第一个段时，Seq=42和ACK=79分别是A和B初始化的随机序号，数据段中是字符C的ASCII码，占用一个字节，即，A期望下一个字节的序号ACK=79，B期望得到序号Seq=42的数据；第二个段从B发往A，首先B收到了期望数据Seq=42，数据为一个字节的C，因此下一个字节序号期望ACK=43，其次段Seq=79代表当前段正是A期望得到的ACK=79的数据，数据内容为字符C的拷贝；第三个段再次从A发往B，它的唯一目的是承认它从B收到了数据，因此该段数据为空，为了保持连续性，Seq和ACK继续增加。
 

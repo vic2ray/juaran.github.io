@@ -2,10 +2,9 @@
 title: 从Wireshark开始
 date: 2021-09-14 21:10:00
 category: 计算机网络
+tag: proxy
 ---
 通过”观察协议的运作“和“玩转协议”可以大大加深我们对网络协议（network protocol）的理解——观察两个协议体（protocol entity）之间消息序列的交换、深入研究协议操作的细节、控制协议完成特定的行为并观察这些行为产生的后果。这个过程可以在沙箱环境中进行，也可以在正式网络环境中完成。通过Wireshark近距离地观察协议，与互联网中其他协议实体交互和交换信息。
-
-<!-- more -->
 
 Hackers经常使用**包嗅探**工具（packet sniffer）窥视网络中发送的消息。Wireshark将获取从你电脑发出或接收到的每一个链路层帧（link-layer frame）的**拷贝**。由HTTP、FTP、TCP、UDP、DNS、或IP交换的消息最终都封装在链接层帧中，这些帧通过以太网电缆等物理媒体传输。
 

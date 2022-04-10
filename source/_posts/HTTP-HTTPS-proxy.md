@@ -2,16 +2,15 @@
 title: HTTP(S)代理分析
 date: 2022-04-08 14:09:37
 category: 计算机网络
+Tags: [HTTP,proxy]
 ---
 
 ## Mozilla
 
 [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/CONNECT)
 
-> 在 HTTP 协议中，**`CONNECT`** 方法可以开启一个客户端与所请求资源之间的双向沟通的通道。它可以用来创建隧道（tunnel）。
-> 例如，**`CONNECT`** 可以用来访问采用了 [SSL (en-US)](https://developer.mozilla.org/en-US/docs/Glossary/SSL)([HTTPS](https://developer.mozilla.org/zh-CN/docs/Glossary/https))  协议的站点。客户端要求代理服务器将 TCP 连接作为通往目的主机隧道。之后该服务器会代替客户端与目的主机建立连接。连接建立好之后，代理服务器会面向客户端发送或接收 TCP 消息流。
-
-<!-- more -->
+> 在 HTTP 协议中，`CONNECT` 方法可以开启一个客户端与所请求资源之间的双向沟通的通道。它可以用来创建隧道（tunnel）。
+> 例如，`CONNECT` 可以用来访问采用了 [SSL (en-US)](https://developer.mozilla.org/en-US/docs/Glossary/SSL)([HTTPS](https://developer.mozilla.org/zh-CN/docs/Glossary/https))  协议的站点。客户端要求代理服务器将 TCP 连接作为通往目的主机隧道。之后该服务器会代替客户端与目的主机建立连接。连接建立好之后，代理服务器会面向客户端发送或接收 TCP 消息流。
 
 ## RFC7231
 
@@ -72,7 +71,7 @@ HTTP隧道的常见形式是标准[HTTP CONNECT](https://zh.wikipedia.org/wiki/%
 
 [Evolution of HTTP — HTTP/0.9, HTTP/1.0, HTTP/1.1, Keep-Alive, Upgrade, and HTTPS](https://medium.com/platform-engineer/evolution-of-http-69cfe6531ba0)
 
-# 迷惑
+### 迷惑
 
 为什么Chrome浏览器打开network查看数据包看不到HTTPS站点的CONNECT请求？反之，为什么使用抓包工具如Charles、Fiddler等**代理抓包**软件能够看到HTTP-CONNECT连接？为什么抓包软件需要安装并信任本地证书后才能解析出HTTPS数据包？
 
@@ -109,7 +108,7 @@ Proxy-Connection: Keep-Alive
 > http1.0 时代的产物。老旧的代理，如果设置 connection: keepalive，代理原样转发给服务器，服务器会以为要建立长久连接，但是代理并不支持，这样就出问题了。
 > 所以改为设置 proxy-connection: keepalive，如果是新的代理，支持 keepalive，它会认得这个头，并改成 connection: keepalive 转发给服务器，顺利建立持久连接；如果是老的代理，它不认识，会原样转发，这时候服务器也不会建立持久连接。完美。
 
-参考：****[浏览器什么时候会在 http 请求头中添加 proxy-connection: keepalive](https://www.v2ex.com/t/411098)****
+参考：**[浏览器什么时候会在 http 请求头中添加 proxy-connection: keepalive](https://www.v2ex.com/t/411098)**
 
 1. 代理服务器收到这个GET请求后，重新组装这个数据包为标准的HTTP-GET并发送：
 
@@ -184,14 +183,15 @@ requests.get(url, proxies=proxies)
 
 [http 代理和 https 代理的区别](https://www.v2ex.com/t/593765)
 
-# 代理图示
+### 图示
 
 * HTTP代理
 
-![](https://cdn.jsdelivr.net/gh/Juaran/juaran.github.io@image/notion/20220408141204.png)
+<img src="https://cdn.jsdelivr.net/gh/Juaran/juaran.github.io@image/notion/20220408141204.png" style="zoom: 50%">
 
 * HTTPS代理
-  ![](https://cdn.jsdelivr.net/gh/Juaran/juaran.github.io@image/notion/20220408141426.png)
+  
+  <img src="https://cdn.jsdelivr.net/gh/Juaran/juaran.github.io@image/notion/20220408141426.png" style="zoom: 40%" />
 
 **[HTTP、HTTPS代理分析及原理](https://lilywei739.github.io/2017/01/25/principle_for_http_https.html)
 [HTTP代理原理分析](https://www.cnblogs.com/xugongzi007/p/12802819.html)**

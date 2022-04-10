@@ -1,12 +1,9 @@
 ---
-
 title: TLS协议分析
-date: 2022-4-4
+date: 2022-4-3
 category: 计算机网络
-
+tag: TLS
 ---
-
-
 
 # TLS
 
@@ -22,8 +19,6 @@ TLS协议包括两个协议组：TLS记录协议(TLS Record)和TLS握手协议(T
 - 密码套件列表
 - 压缩方法列表
 - 扩展列表
-
-<!--more-->
 
 <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/notion/Untitled.png" style="zoom:67%;" />
 
@@ -176,7 +171,7 @@ TLS协议包括两个协议组：TLS记录协议(TLS Record)和TLS握手协议(T
 
 # TLS图示
 
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/notion/Untitled 9.png" style="zoom: 50%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/notion/Untitled 9.png" style="zoom: 40%;" />
 
 Wireshark抓包未能成功获取完整的握手建立过程，因为在浏览器访问目标站点时已经有了证书和Session ID缓存。在下一次连接时，客户端只需要发送Client Hello包，并携带Session ID和Session Tickets信息即可访问服务器
 

@@ -5,9 +5,7 @@ category: 计算机网络
 tag: TCP
 ---
 
-# 构造SYN
-
-## pack
+### 构造SYN
 
 * [Python3 socket模块官方文档](https://docs.python.org/zh-cn/3/library/socket.html#creating-sockets )
 * [python3 struct模块 处理二进制 pack unpack用法](https://blog.csdn.net/whatday/article/details/100559721 )

@@ -1,15 +1,15 @@
-
 ---
 title: DNS——互联网的目录
 date: 2021-10-04
 category: 计算机网络
+tag: DNS
 ---
+
+
 
 > 内容摘自：*Computer Networking: A Top-Down Approach, 6th* *ed.,* J.F. Kurose and K.W. Ross
 >
 > Chapter **2.5** **DNS—The Internet’s Directory Service**
-
-<!-- more -->
 
 网络中计算机的身份证：
 

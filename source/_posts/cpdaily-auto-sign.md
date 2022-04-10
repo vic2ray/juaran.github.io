@@ -1,14 +1,9 @@
 ---
 title: 今日校园模拟登录
 date: 2021-08-02
-category: Java
+category: project
+tag: toy
 ---
-
-项目地址：https://gitee.com/juaran/cpdaily-qd
-
-<!-- more -->
-
-## Cpdaily今日校园
 
 **目标**：今日校园获取签到任务。此地无：~~自动签到~~
 
@@ -53,11 +48,7 @@ category: Java
 
   >  https://fzu.campusphere.net/portal/login?ticket=ST-2685077-cAT3xOG21d1HXgnAMPpY1627192330448-DaeF-cas
 
- 
-
-  ==2021/08/01更新==：系统增加了多重跳转。
-
- 
+  2021/08/01更新：系统增加了多重跳转。
 
 ### 签到任务
 
@@ -224,3 +215,5 @@ CpdailyInfo = DESEncrypt(json.dumps(extension))
 陆陆续续花了一周时间完成了项目雏形，主要目的是学习和巩固Springboot框架、Java网络请求、Vue前端页面设计、路由跳转等基础知识，并参考了github上相关项目。最初的愿景是想结合前后端实现全自动签到，因为其他同类项目均以Python脚本方式运行，辅以Linux-Crontab定时任务或腾讯云函数，需要手动配置相关参数，希望有缘人能够继续下一步的开发。
 
 鉴于目前疫情日益严峻，以安卓虚拟定位派为代表的同学已“锒铛入狱”，而Python脚本派的同学依旧能够在每早6:00时刻准时登上排行榜，但殊途同归，技术的目的不是为了投机取巧、瞒报疫情、隐匿行踪，希望每一位同学认真对待日签，不要抱有侥幸心理！
+
+项目地址：https://gitee.com/juaran/cpdaily-qd
