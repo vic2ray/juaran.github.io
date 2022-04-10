@@ -1,41 +1,29 @@
-
 ---
-title: Creating a SYN port scanner
+title: 自制SYN扫描
 date: 2021-03-25
 category: 计算机网络
+tag: TCP
 ---
 
-* Python3 socket模块官方文档
+* [Python3 socket模块官方文档](https://docs.python.org/zh-cn/3/library/socket.html#creating-sockets )
+* [python3 struct模块 处理二进制 pack unpack用法](https://blog.csdn.net/whatday/article/details/100559721 )
+* [python 使用raw socket进行TCP SYN扫描](https://blog.csdn.net/Jeanphorn/article/details/45226947 )
+* [IP协议首部详细分析](https://blog.csdn.net/zhangdaisylove/article/details/47147991 )
 
-https://docs.python.org/zh-cn/3/library/socket.html#creating-sockets
-
-* python3 struct模块 处理二进制 pack unpack用法
-
-https://blog.csdn.net/whatday/article/details/100559721
-
-* python 使用raw socket进行TCP SYN扫描
-
-https://blog.csdn.net/Jeanphorn/article/details/45226947
-
-* IP协议首部详细分析
-
-https://blog.csdn.net/zhangdaisylove/article/details/47147991
 
 <!-- more -->
 
-大致过程是：根据IP首部格式，使用pack打包成二进制形式的数据报，在通过socket发送。
+大致过程是：根据IP首部格式，使用`pack`打包成二进制形式的数据报，在通过`socket`发送。
 
 <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20150730120353079" alt="img" style="zoom: 60%;" />
 
 在pack中打包数据到二进制的格式fmt为：
 
-B：代表byte一个字节，8个bit即8位
+* B：代表byte一个字节，8个bit即8位
+* H：代表2字节，16位
+* s：代表一个字符，8位。4s即32位字符4字节32位。格式化对象需为字节类型
 
-H：代表2字节，16位
-
-s：代表一个字符，8位。4s即32位字符4字节32位。格式化对象需为字节类型
-
-``` python
+```python
 # IP 首部构造
 Version = 4        # IPv4，版本号
 IHL = 5 # IP报文首部长度，20byte = 4byte * 5
@@ -56,18 +44,17 @@ IP_Header = pack('!BBHHHBBH4s4s', Version_IHL, TOS, TL, Id, FFO, TTL, protocol, 
 IHL解释：
 
 > IHL(Internet Header Length 报头长度)是计算机名词，位于IP报文的第二个字段，4位，表示IP报文头部按32位字长（32位，4字节）计数的长度，也即报文头的长度等于IHL的值乘以4。
->
+> 
 > 由于IPv4的头部为变长，所以需要用该字段来标示IP报文头的长度，也等同于数据字段的偏移量。最小为5，即5×32 = 160位 = 20字节。最大为15，表示15×32 bits = 480位 = 60字节。
 
-* Python socket编程之构造IP首部和ICMP首部 https://www.ktanx.com/blog/p/3082
-* python 使用raw socket进行TCP SYN扫描 https://blog.csdn.net/Jeanphorn/article/details/45226947
-
-* TCP报文段的首部格式 https://blog.csdn.net/qq_32998153/article/details/79680704
-* TCP校验和（Checksum）的原理和实现 https://blog.csdn.net/qq_15437629/article/details/79183076
+* [Python socket编程之构造IP首部和ICMP首部](https://www.ktanx.com/blog/p/3082)
+* [python 使用raw socket进行TCP SYN扫描](https://blog.csdn.net/Jeanphorn/article/details/45226947)
+* [TCP报文段的首部格式 ](https://blog.csdn.net/qq_32998153/article/details/79680704)
+* [TCP校验和（Checksum）的原理和实现 ](https://blog.csdn.net/qq_15437629/article/details/79183076)
 
 <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20180324192146298" alt="img" style="zoom: 50%;" />
 
-``` python
+```python
 # TCP 首部创建
 source_port = random.randint(30000, 65535)  # 本地随机端口
 dest_port = 3306
@@ -110,7 +97,7 @@ tcp_header = pack('!HHLLBBHHH', source_port, dest_port, seq_number, ack_number, 
 
 计算校验和：可能是错误的
 
-``` python
+```python
 def check_sum(msg):
     """
     计算TCP校验和
@@ -128,13 +115,9 @@ def check_sum(msg):
     return s
 ```
 
-* 一个更为准确的构造：https://gist.github.com/fffaraz/57144833c6ef8bd9d453
-
-* python2.7和python3.4中的ord函数不同？https://www.cnpython.com/qa/128974
-
+* 一个更为准确的构造：[https://gist.github.com/fffaraz/57144833c6ef8bd9d453](https://gist.github.com/fffaraz/57144833c6ef8bd9d453)
+* [ python2.7和python3.4中的ord函数不同？](https://www.cnpython.com/qa/128974)
 * [SYN数据包没有回复（Python）原始套接字](https://stackoverflow.com/questions/44380251/syn-packet-getting-no-replies-python-raw-sockets)
-
- 
 
 终于让我找到了！
 
@@ -149,7 +132,7 @@ https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-4-creating-a-syn-p
 > Port 80 is: closed
 > Port 8080 is: closed
 
-``` python
+```python
 import socket
 from struct import *
 import binascii
@@ -288,4 +271,5 @@ tcpdump抓包：https://blog.csdn.net/qq_36119192/article/details/84996511
 
 ### 总结
 
-在Windows下发不了Raw Socket，不知道什么傻逼原因，协议族什么的设置不对。Linux下发包很快，但最后发现结果不准确，有些响应是端口开放的ip实际上并没有开放！所以，失败！
+在Windows下发不了Raw Socket，不知道什么傻原因，协议族什么的设置不对。Linux下发包很快，但最后发现结果不准确，有些响应是端口开放的ip实际上并没有开放！所以，失败！
+
