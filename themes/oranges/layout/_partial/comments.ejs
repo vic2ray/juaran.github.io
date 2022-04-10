@@ -73,7 +73,7 @@
       repo: '<%- theme.comments.gitalk.repo %>',
       owner: '<%- theme.comments.gitalk.owner %>',
       admin: ['<%- theme.comments.gitalk.admin %>'],
-      id: location.pathname,
+      id: decodeURI(location.pathname),
       distractionFreeMode: false
     })
 
