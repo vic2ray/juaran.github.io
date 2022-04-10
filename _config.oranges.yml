@@ -45,8 +45,8 @@ comments:
   gitalk:
     # https://github.com/gitalk/gitalk#usage查看官方教程
     enable: true
-    clientID: 8713612a21018d34cecb
-    clientSecret: 93c680b9a204d7b3be33c69b5bd73faf59121678
+    clientID: 5701baa041ba27d28c94
+    clientSecret: 87f7280a5901e8c3d5f84bd9ee65f993bdf43640
     repo: juaran.github.io
     owner: Juaran
     admin: Juaran
