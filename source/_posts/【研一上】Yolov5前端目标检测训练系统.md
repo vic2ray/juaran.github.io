@@ -1,20 +1,21 @@
-
-title: Yolov5前端目标检测训练系统
-date: 2020-12-02
-category: Vue
 ---
+title: 【研一上】Yolov5前端目标检测训练系统
+date: 2020-12-02
+category: project
+tag: 周报
+---
+
+
 
 项目地址：https://gitee.com/juaran/yolov5_train_system
 
 以下仅是系统检测、训练、部署说明。
 
-<!-- more -->
-
 # 一、物体识别（检测）
 
 ### 1. 选择权重
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/0ffbddc1-1743-42db-9c28-056d99ef3778.png' />
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/0ffbddc1-1743-42db-9c28-056d99ef3778.png' style="zoom: 33%;" />
 
 说明：
 
@@ -23,7 +24,7 @@ category: Vue
 
 ### 2. 上传识别
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/8f0620aa-0ba7-42a9-b899-26e6a11102f4.jpg' />
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/8f0620aa-0ba7-42a9-b899-26e6a11102f4.jpg' style="zoom: 50%;" />
 
 # 二、物体训练
 
@@ -31,27 +32,27 @@ category: Vue
 
 ### 1.1 新建数据集
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/cc8f0e2d-f745-44ee-88dc-5f6918781ea9.png' style="zoom:67%;" >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/cc8f0e2d-f745-44ee-88dc-5f6918781ea9.png' style="zoom: 50%;" >
 
 注意：尽量不使用中文！
 
 ### 1.2 上传图片
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/c069c6ce-424b-45fb-9fc5-bd619c05a15f.jpg' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/c069c6ce-424b-45fb-9fc5-bd619c05a15f.jpg' style="zoom: 50%;"  >
 
 注意：图片名称不能出现中文！
 
 ### 1.3 选择标注数据集
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/250c4dbe-bf13-41ab-9f58-3751e0e69f5b.jpg' style="zoom: 67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/250c4dbe-bf13-41ab-9f58-3751e0e69f5b.jpg' style="zoom: 50%;"  >
 
 1.4 新建标注类
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/95939f32-ca6e-4150-924c-a9855a417f00.jpg' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/95939f32-ca6e-4150-924c-a9855a417f00.jpg' style="zoom: 50%;"  >
 
 ### 1.5 进行标注
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/49ff9b9d-0e7b-40da-9fb7-1261c4a743ef.jpg' style="zoom: 67%;" >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/49ff9b9d-0e7b-40da-9fb7-1261c4a743ef.jpg' style="zoom: 33%;" >
 
 注意，每次标注完当前图片后必须进行保存！
 
@@ -59,37 +60,37 @@ category: Vue
 
 ### 2.1 选择数据集
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/a31f0b33-a2c8-4482-a8a8-3830468519a7.png' style="zoom:67%;" >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/a31f0b33-a2c8-4482-a8a8-3830468519a7.png' style="zoom: 50%;" >
 
 注意：数据集必须标注完全，即每一张图片都需要有对应标注信息。
 
 ### 2.2 选择预训练权重
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/e878e512-f46b-4721-b53d-34347e1210f1.png' style="zoom:67%;" >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/e878e512-f46b-4721-b53d-34347e1210f1.png' style="zoom: 50%;" >
 
 ### 2.3 其他训练参数
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/d5bddf82-f0e1-4a76-9ad0-bd3f09f5a135.png' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/d5bddf82-f0e1-4a76-9ad0-bd3f09f5a135.png' style="zoom: 50%;"  >
 
 ### 2.4 开始训练
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/2a27ca61-a4c1-454f-b0ac-281ad48964ce.png' style="zoom:67%;" >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/2a27ca61-a4c1-454f-b0ac-281ad48964ce.png' style="zoom: 33%;" >
 
 如果训练日志输出超出内存限制，请适当降低 Batch size 参数：
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/6b3aafec-bd3d-4a13-ae5b-9f6fa6fc518b.png' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/6b3aafec-bd3d-4a13-ae5b-9f6fa6fc518b.png' style="zoom: 50%;"  >
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/85bb76a0-ef44-45e9-9aac-db67aaa5d58b.png' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/85bb76a0-ef44-45e9-9aac-db67aaa5d58b.png' style="zoom: 50%;"  >
 
 ## 3. 性能和损失
 
 ### 3.1 训练日志查看
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/34dc1892-8798-435e-ae53-d0f0b8cbe083.png' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/34dc1892-8798-435e-ae53-d0f0b8cbe083.png' style="zoom: 33%;"  >
 
 ### 3.2 训练权重检测
 
-<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/fd68201c-7bb7-4305-b9c1-8bd86cd5b441.jpg' style="zoom:67%;"  >
+<img src='https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/fd68201c-7bb7-4305-b9c1-8bd86cd5b441.jpg' style="zoom: 50%;"  >
 
 # 三、项目部署
 
