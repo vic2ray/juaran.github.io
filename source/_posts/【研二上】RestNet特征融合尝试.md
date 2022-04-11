@@ -1,8 +1,9 @@
 ---
 
-title: RestNet特征融合尝试
+title: 【研二上】RestNet特征融合尝试
 date: 2021-11-10
-category: 内部威胁检测
+category: 机器学习
+tag: 周报
 
 ---
 
@@ -17,8 +18,6 @@ category: 内部威胁检测
 > *Anomaly Detection with Graph Convolutional Networks for Insider Threat and Fraud Detection*
 
 使用KNN计算topK个特征相似（余弦相似度）的近邻作为当前节点的邻节点，图的大小：<330452x330452>
-
-<!-- more -->
 
 输入GCN进行实验，实验结果如下：
 

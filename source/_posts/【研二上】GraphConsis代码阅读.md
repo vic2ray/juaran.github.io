@@ -1,13 +1,12 @@
 ---
-title: GraphConsis代码阅读
+title: 【研二上】GraphConsis代码阅读
 date: 2021-10-04
-category: 图神经网络
+category: 机器学习
+tag: 周报
 ---
 
 * 论文：*Alleviating the Inconsistency Problem of Applying Graph Neural Network to Fraud Detection.*
 * 代码：https://github.com/safe-graph/DGFraud-TF2/tree/main/algorithms/GraphConsis
-
-<!-- more -->
 
 ### 1. 数据集
 

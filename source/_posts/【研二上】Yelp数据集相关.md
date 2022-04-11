@@ -1,17 +1,15 @@
-
 ---
-title: Yelp数据集相关
+title: 【研二上】Yelp数据集相关
 date: 2021-09-29
-category: 图神经网络
+category: 机器学习
+tag: 周报
 ---
 
 ### Yelp
 
 美国最大的点评网站，成立于2004年，从2005年便开始应用过滤系统移除可疑或虚假的评论，门店主页显示系统推荐的评论，同时也可以通过页面底部的链接查看过滤/不推荐的评论：
 
-<!-- more -->
-
-<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210927093754046.png" alt="image-20210927093754046" style="zoom: 67%;" />
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210927093754046.png" alt="image-20210927093754046" style="zoom: 50%;" />
 
 > *[What Yelp fake review filter might be doing?](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiwj-vJo-rOAhUH2BoKHX7IA0UQFggcMAA&url=https%3A%2F%2Fwww.aaai.org%2Focs%2Findex.php%2FICWSM%2FICWSM13%2Fpaper%2Fdownload%2F6006%2F6380&usg=AFQjCNEaT55wVWuin3v07jJBFjybxOFT4g)* A. Mukherjee, V. Venkataraman, B. Liu, and N. S. Glance, ICWSM, 2013.
 

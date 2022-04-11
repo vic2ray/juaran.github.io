@@ -1,9 +1,9 @@
 ---
 
-title: 回顾研究现状及ResNet尝试
-category: 内部威胁检测
+title: 【研二上】回顾研究现状及ResNet尝试
+category: 机器学习
 date: 2021-11-14
-
+tag: 周报
 ---
 
 
@@ -17,8 +17,6 @@ date: 2021-11-14
 由于数据集的极度不平衡性质，大部分提出的方法采用**无监督学习**范式进行内部威胁检测。对于检测粒度，大多数论文侧重于检测**恶意子序列**（如24小时内的活动）或恶意会话
 
 目前的主要文献所采用的的深度学习架构有：DNN、RNN、CNN、GNN
-
-<!-- more -->
 
 <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211114120805630.png" alt="image-20211114120805630" style="zoom:60%;" />
 
