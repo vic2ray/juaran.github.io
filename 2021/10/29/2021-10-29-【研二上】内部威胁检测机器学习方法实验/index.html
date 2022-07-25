@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】内部威胁检测机器学习方法实验 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】内部威胁检测机器学习方法实验</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-10-29 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>[1]林玲莉. 基于深度信念网络的信息系统内部威胁检测方法[D].  2018.</p>
+</blockquote>
+<p>为了解决内部威胁数据多域信息难以有效利用的问题，本文使用深度置信网络进一步提取审计日志的特征，以获取不同类型日志数据间的高维隐含特征，然后输入到SVM进行训练。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211030100512408.png" alt="image-20211030100512408" style="zoom:67%;" />
+
+<p>使用数据集：CERT r4.2，1000个用户，502天操作日志记录</p>
+<p>数据统计：总323,510日记录，974异常行为记录，占0.3%</p>
+<p>进一步地，在输入模型前对DBN特征进行聚类，以学习不同行为模式下的分类模型：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211030105352912.png" alt="image-20211030105352912" style="zoom: 60%;" />
+
+<p>实验使用2&#x2F;3数据作为训练集，评估指标为：Accuracy Rate、Detection Rate、False Positive Rate</p>
+<p>使用DBN得到80.49%的检出率，使用DBN+聚类可以达到92.81%的检出率。说明特征聚类非常有效。</p>
+<p>上周论文“<em>内部威胁数据上的细粒度分级机器学习检测</em>”结果如下（50%训练集）：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211030180415993.png" alt="image-20211030180415993"></p>
+<h3 id="Random-Forest-Classifier"><a href="#Random-Forest-Classifier" class="headerlink" title="Random Forest Classifier"></a>Random Forest Classifier</h3><p>使用按天进行实例分类的CERT r4.2数据集：</p>
+<ul>
+<li><p>数据统计：总实例330,452，异常实例966</p>
+</li>
+<li><p>实例特征维数：500</p>
+</li>
+</ul>
+<p>参数设置：300棵决策树，每棵树最大深度25</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实例数据加载，分离特征和标签</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"> </span><br><span class="line">day_instance_file = <span class="string">&#x27;../dayr4.2.csv&#x27;</span></span><br><span class="line">day_instance_data = pd.read_csv(day_instance_file)</span><br><span class="line">day_instance_data.head()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 数据表前7列是时间、user信息</span></span><br><span class="line"><span class="comment"># 中间500列是按日划分的特征数据</span></span><br><span class="line"><span class="comment"># 最后一列insider是标签：[0,1,2,3]，代表正常实例和3种恶意行为</span></span><br><span class="line"><span class="comment"># 将三种场景的恶意行为标签重新为：1</span></span><br><span class="line"> </span><br><span class="line">feature_data = day_instance_data.iloc[:,<span class="number">7</span>:-<span class="number">1</span>].values</span><br><span class="line">label_data = day_instance_data.iloc[:,-<span class="number">1</span>:].values</span><br><span class="line">label_data[label_data&gt;<span class="number">0</span>] = <span class="number">1</span>  <span class="comment"># 将恶意行为统一标签为 1</span></span><br><span class="line">label_data = label_data.ravel()  <span class="comment"># 转置列--&gt;行</span></span><br><span class="line"> </span><br><span class="line">feature_data.shape    <span class="comment"># (330452, 500)</span></span><br><span class="line">label_data.shape</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 进行数据集划分</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"> </span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(feature_data, label_data,</span><br><span class="line">                                        test_size=<span class="number">0.3</span>, random_state=<span class="number">66</span>,   <span class="comment"># 70%训练集</span></span><br><span class="line">                                        stratify=label_data)  <span class="comment"># 按照良性:恶性比例得到相同分布</span></span><br><span class="line">X_train.shape  <span class="comment"># (231316, 500)</span></span><br><span class="line">X_test.shape     <span class="comment"># (99136, 500)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 实例化随机森林分类器</span></span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"> </span><br><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">300</span>,</span><br><span class="line">                             max_depth=<span class="literal">None</span>, random_state=<span class="number">66</span>)  <span class="comment"># 设置随机森林参数</span></span><br><span class="line">rfc.fit(X_train, y_train)  <span class="comment"># 进行模型拟合</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 进行预测及评估</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> recall_score, accuracy_score, precision_score, f1_score, confusion_matrix</span><br><span class="line"> </span><br><span class="line">fpr, tpr, thresholds = roc_curve(y_test, y_pred, pos_label=<span class="number">1</span>)</span><br><span class="line">auc_score = auc(fpr, tpr)</span><br><span class="line">Pr = precision_score(y_test, y_pred)</span><br><span class="line">DR = recall_score(y_test, y_pred)</span><br><span class="line">F1 = f1_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Detect rate: <span class="subst">&#123;DR&#125;</span>\r\nPr: <span class="subst">&#123;Pr&#125;</span>\r\nF1: <span class="subst">&#123;F1&#125;</span>\r\nAUC: <span class="subst">&#123;auc_score&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># print(classification_report(y_test, y_pred))</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">0       1.00      1.00      1.00     98846</span><br><span class="line">1       1.00      0.47      0.64       290</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>实验结果接近“数据粒度分级”论文的实验结果，检出异常数据47%。接下来使用XGBoost方法进行实验</p>
+<h3 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h3><h4 id="集成学习-提升方法"><a href="#集成学习-提升方法" class="headerlink" title="集成学习-提升方法"></a>集成学习-提升方法</h4><p>参数设置：300棵提升树，每棵树最大深度25</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用XGBoost进行分类预测</span></span><br><span class="line"><span class="keyword">from</span> xgboost <span class="keyword">import</span> XGBClassifier</span><br><span class="line"> </span><br><span class="line">XGB = XGBClassifier(n_estimators=<span class="number">300</span>, max_dept=<span class="number">25</span>, random_state=<span class="number">66</span>)</span><br><span class="line">XGB.fit(X_train, y_train)</span><br><span class="line"> </span><br><span class="line">y_pred = XGB.predict(X_test)</span><br><span class="line"> </span><br><span class="line">fpr, tpr, thresholds = roc_curve(y_test, y_pred, pos_label=<span class="number">1</span>)</span><br><span class="line">auc_score = auc(fpr, tpr)</span><br><span class="line">Pr = precision_score(y_test, y_pred)</span><br><span class="line">DR = recall_score(y_test, y_pred)</span><br><span class="line">F1 = f1_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Detect rate: <span class="subst">&#123;DR&#125;</span>\r\nPr: <span class="subst">&#123;Pr&#125;</span>\r\nF1: <span class="subst">&#123;F1&#125;</span>\r\nAUC: <span class="subst">&#123;auc_score&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># print(classification_report(y_test, y_pred))</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">0       1.00      1.00      1.00     98846</span><br><span class="line">1       1.00      0.88      0.94       290</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>实验结果比”数据粒度分级”论文结果(75%)稍好（训练集更多），检出88%异常。接近DBN+聚类+SVM分类的最优结果（92%）</p>
+<h4 id="模型交叉验证"><a href="#模型交叉验证" class="headerlink" title="模型交叉验证"></a>模型交叉验证</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对XGBoost模型进行交叉验证、绘制学习曲线</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold</span><br><span class="line"> </span><br><span class="line">cv = KFold(n_splits=<span class="number">5</span>, shuffle=<span class="literal">True</span>, random_state=<span class="number">66</span>)</span><br><span class="line">estimator = XGBClassifier(n_estimators=<span class="number">300</span>, max_dept=<span class="literal">None</span>, random_state=<span class="number">66</span>)</span><br><span class="line">train_sizes, train_scores, test_scores = learning_curve(estimator, X_train, y_train, shuffle=<span class="literal">True</span>, cv=cv, n_jobs=-<span class="number">1</span>, random_state=<span class="number">66</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.set_title(<span class="string">&quot;XGBoost&quot;</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">&quot;Training examples&quot;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&quot;Score&quot;</span>)</span><br><span class="line">ax.grid()</span><br><span class="line">ax.plot(train_sizes, np.mean(train_scores, axis=<span class="number">1</span>), <span class="string">&#x27;o-&#x27;</span>, color=<span class="string">&#x27;r&#x27;</span>, label=<span class="string">&quot;Training score&quot;</span>)</span><br><span class="line">ax.plot(train_sizes, np.mean(test_scores, axis=<span class="number">1</span>), <span class="string">&#x27;o-&#x27;</span>, color=<span class="string">&#x27;g&#x27;</span>, label=<span class="string">&quot;Cross val score&quot;</span>)</span><br><span class="line">ax.legend(loc=<span class="string">&quot;best&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>K折交叉验证结果：XGBoost模型在训练集上的表现能力较好</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211031133841133.png" alt="image-20211031133841133" style="zoom: 80%;" />
+
+<h3 id="重要特征筛选"><a href="#重要特征筛选" class="headerlink" title="重要特征筛选"></a>重要特征筛选</h3><p>CERT r4.2数据集按天进行实例划分后，每个实例包含500维特征，导致模型训练很慢，希望按照特征重要性去除对分类结果不重要的特征。分别提取6类日志数据的Top 10重要的特征，组成60维特征的数据进行实验：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按列分割6类特征</span></span><br><span class="line">user_feature = feature_data[:,:<span class="number">26</span>]  <span class="comment"># 用户特征</span></span><br><span class="line">logon_feature = feature_data[:,<span class="number">26</span>:<span class="number">41</span>]  <span class="comment"># 登录特征</span></span><br><span class="line">device_feature = feature_data[:,<span class="number">41</span>:<span class="number">59</span>]  <span class="comment"># 设备特征</span></span><br><span class="line">file_feature = feature_data[:,<span class="number">59</span>:<span class="number">269</span>]  <span class="comment"># 文件特征</span></span><br><span class="line">mail_feature = feature_data[:,<span class="number">269</span>:<span class="number">311</span>]  <span class="comment"># 邮件特征</span></span><br><span class="line">http_feature = feature_data[:,<span class="number">311</span>:]  <span class="comment"># HTTP特征  </span></span><br><span class="line">http_feature.shape  <span class="comment"># (330452, 189)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 分析每一类特征下子特征的重要性排名</span></span><br><span class="line">XGB = XGBClassifier(n_estimators=<span class="number">50</span>, max_depth=<span class="number">25</span>, random_state=<span class="number">66</span>)</span><br><span class="line">XGB.fit(http_feature, label_data)  <span class="comment"># 每次运行调换不同参数</span></span><br><span class="line">fig,ax = plt.subplots(figsize=(<span class="number">10</span>,<span class="number">15</span>))</span><br><span class="line">plot_importance(XGB,height=<span class="number">0.5</span>, max_num_features=<span class="number">10</span>,ax=ax, importance_type=<span class="string">&#x27;gain&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 按照筛选出的n个重要特征筛选数据</span></span><br><span class="line">important_feature_data = feature_data[:,n_important_feature]</span><br><span class="line">important_feature_data.shape  <span class="comment"># (330452, 60)</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211031164642970.png" alt="image-20211031164642970" style="zoom:67%;" />
+
+<p>筛选出6类别60个重要的特征，先进行随机森林训练测试：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">0       1.00      1.00      1.00     98846</span><br><span class="line">1       0.99      0.78      0.87       290</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>检测结果(78%)比论文(44%)有很大提高，验证了多维数据中的噪声对RF分类影响较大。再进行XGBoost训练测试：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   precision    recall  f1-score   support</span><br><span class="line"></span><br><span class="line">0       1.00      1.00      1.00     98846</span><br><span class="line">1       0.98      0.91      0.94       290</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>实验结果(91%)比全部特征测试结果(88%)有一点提升，且训练时间缩短很多，几乎接近DBN+聚类+SVM最优结果(92%)，且错检率更低、精度更高</p>
+<h3 id="Inspire"><a href="#Inspire" class="headerlink" title="Inspire"></a>Inspire</h3><p>虽然浅层机器学习(随机森林、XGBoost等)能够在内部威胁检测问题上表现出良好的性能，但瓶颈在于难以充分利用多域、高维、复杂的用户行为数据（后来的实验表明，提取出对分类问题有效的n个重要特征后，XGBoost表现优异）。深度学习方法能够利用隐含层提取复杂数据的多重、不同层次的隐藏特征，因此在内部威胁检测上能够发现更多的恶意行为的表达。</p>
+<p>由于内部威胁数据是由员工（实体）及其行为（实例）组成的，因此检测问题也分为：基于实体的检测和基于实例的检测。近年来，主要的深度学习方法包括：深度前馈神经网络、卷积神经网络、递归神经网络和图神经网络。</p>
+<p>就GNN而言，基本方法是通过实体关系构建图，输入到图卷积网络中强化节点特征做出分类。上周阅读了首篇基于GCN的威胁检测论文，文章通过员工邮件关系和特征相似度构建图，经过两层GCN对实体进行分类，但最后实验的训练和测试过程仅取400个良性实体数据，其中包含70个恶性实体。这与真实情况偏差过大，真实的内部威胁仅有很少部分为恶性。个人认为，目前的GNN威胁检测方法并不能经受考验，其一是图的构建大多利用员工邮件联系、上下级关系，这样构造出的图结构对于要解决的图问题并没有很大帮助，原因是恶意实体大部分时候的行为是良性的，当恶意行为发生时，员工与其上下级、邮件接受者之间并无相关性，因此聚集邻节点信息时反而降低自身被检测的风险；其二，恶意员工往往是独立的，并不与其他恶意员工具有关联，所以不应该使用员工构建图，而应该使用恶意行为，因为同一类的恶意行为往往是相似的。</p>
+<p>另一个观点是，日志文件是属于不同域的，也就是数据包含6类特征，目前的方法在训练时都是将全部特征简单的进行concat，从而丢失了不同域特征之间的关联性。如果使用图网络对问题建模，应该将不同域作为节点（异构图节点），聚集不同域的特征信息后进行分类，可能会有更好的表现。其次，受开篇文章的启发，尝试特征融合方法、特征聚类方法，在输入模型之前（早期）融合关键特征信息。</p>
+<p>另外，参考“细粒度分级威胁检测”论文的实验结果，使用50%以上的数据作为训练集是在理想实验环境下进行的，尽管能够取得很好的表现。作者提出，<strong>随机抽取20%的实验数据用于训练，在整个数据集上进行测试</strong>，更能接近实际问题。下周将阅读该作者的最新论文：<em>使用无监督集成方法解决内部威胁异常检测(2021)</em></p>
+<blockquote>
+<p>Le, D. C., &amp; Zincir-Heywood, N. (2021). <em>Anomaly Detection for Insider Threats Using Unsupervised Ensembles. IEEE Transactions on Network and Service Management, 18(2), 1152–1164.</em> doi:10.1109&#x2F;tnsm.2021.3071928</p>
+</blockquote>
+<p>以及特征融合文章：*内部威胁检测的多域信息融合(2013)*：</p>
+<blockquote>
+<p>Eldardiry, H., Bart, E., Juan Liu, Hanley, J., Price, B., &amp; Brdiczka, O. (2013). <em>Multi-Domain Information Fusion for Insider Threat Detection. 2013 IEEE Security and Privacy Workshops.</em><br>doi:10.1109&#x2F;spw.2013.14</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/10/24/2021-10-24-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B-%E7%B2%92%E5%BA%A6%E5%88%86%E6%9E%90/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-10-29 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/11/09/2021-11-09-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91RestNet%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88%E5%B0%9D%E8%AF%95/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Forest-Classifier"><span class="toc-text">Random Forest Classifier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XGBoost"><span class="toc-text">XGBoost</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0-%E6%8F%90%E5%8D%87%E6%96%B9%E6%B3%95"><span class="toc-text">集成学习-提升方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"><span class="toc-text">模型交叉验证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%89%B9%E5%BE%81%E7%AD%9B%E9%80%89"><span class="toc-text">重要特征筛选</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Inspire"><span class="toc-text">Inspire</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

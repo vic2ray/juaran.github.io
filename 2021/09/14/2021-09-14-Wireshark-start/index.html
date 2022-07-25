@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      从Wireshark开始 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">从Wireshark开始</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-09-14 13:10:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                    <b>#</b> 计算机网络
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/proxy/" title="proxy">
+                    <b>#</b> proxy
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>通过”观察协议的运作“和“玩转协议”可以大大加深我们对网络协议（network protocol）的理解——观察两个协议体（protocol entity）之间消息序列的交换、深入研究协议操作的细节、控制协议完成特定的行为并观察这些行为产生的后果。这个过程可以在沙箱环境中进行，也可以在正式网络环境中完成。通过Wireshark近距离地观察协议，与互联网中其他协议实体交互和交换信息。</p>
+<p>Hackers经常使用<strong>包嗅探</strong>工具（packet sniffer）窥视网络中发送的消息。Wireshark将获取从你电脑发出或接收到的每一个链路层帧（link-layer frame）的<strong>拷贝</strong>。由HTTP、FTP、TCP、UDP、DNS、或IP交换的消息最终都封装在链接层帧中，这些帧通过以太网电缆等物理媒体传输。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210914200427447.png" alt="image-20210914200427447" style="zoom: 80%;" />
+
+<p>因为计算机已经实现了所有不同层的协议，所以您将可以访问链路层包，例如一个以太网包。Wireshark可以嗅探到这些包，然后从中提取IP数据报（IP datagram），提取传输层段（transport layer segment），如TCP段等。</p>
+<p>观察正在执行的协议实体之间交换的消息的基本工具称为数据包嗅探器。顾名思义，包嗅探器会捕获从计算机发送&#x2F;接收到的（“嗅探”）消息；它通常还会存储或在这些捕获的消息中显示各种协议字段的内容。数据包嗅探器本身是<strong>被动</strong>（passive）的。<strong>它只观察在计算机上运行的应用程序和某种协议正在发送和接收的消息，但不发送数据包本身。类似地，接收到的数据包从未显式地发送到数据包嗅探器。相反，数据包嗅探器接收的是在机器上执行的应用程序的协议发送&#x2F;接收的数据包的副本。</strong></p>
+<p>下图是包嗅探器的工作模式。虚线上方是计算机的应用层，常用的应用如web浏览器、ftp客户端；虚线下方是操作系统层，pcap（package capture）是用于捕获计算机链路层数据帧的操作系统级API。假设物理传输介质是以太网，所有的上层协议最终都被封装在以太网框架中。</p>
+<blockquote>
+<p>Windows系统：WinPcap；Unix系统：libpcap</p>
+</blockquote>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210914201510795.png" alt="image-20210914201510795" style="zoom:80%;" />
+
+<p>包嗅探器的第二个部分是数据包分析器（packet analyzer），用于显示协议消息中的所有字段的内容。为了显示协议字段内容，分析器必须能够”理解“所有通过协议传输的消息的结构。例如，要读懂一个HTTP协议报文消息，分析器必须了解以太网帧（Ethernet frames）的协议格式，并识别以太网帧内的IP数据包（IP datagram）的格式，从中提取出TCP段（segment），最后根据TCP协议结构提取出HTTP消息，理解HTTP协议，开头字节将是“GET”、“POST”等请求方法。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210914204934434.png" alt="image-20210914204934434" style="zoom:80%;" />
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/09/14/2021-09-14-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-09-14 13:10:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                        <b>#</b> 计算机网络
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/proxy/" title="proxy">
+                        <b>#</b> proxy
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/09/24/2021-10-12-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E8%99%9A%E5%81%87%E8%AF%84%E8%AE%BA%E6%A3%80%E6%B5%8B%E8%AE%BA%E6%96%87/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

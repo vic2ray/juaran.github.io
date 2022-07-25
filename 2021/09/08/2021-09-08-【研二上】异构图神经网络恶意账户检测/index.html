@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】异构图神经网络恶意账户检测 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】异构图神经网络恶意账户检测</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-09-08 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="论文阅读"><a href="#论文阅读" class="headerlink" title="论文阅读"></a>论文阅读</h2><blockquote>
+<p>Liu, Z., Chen, C., Yang, X., Zhou, J., Li, X., &amp; Song, L. (2018). <strong><a target="_blank" rel="noopener" href="https://sci-hub.se/10.1145/3269206.3272010">Heterogeneous Graph Neural Networks for Malicious Account Detection.</a></strong> Proceedings of the 27th ACM International Conference on Information and Knowledge Management - CIKM ’18.* doi:10.1145&#x2F;3269206.3272010</p>
+</blockquote>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>实际问题：Gmail、Facebook、Alipay等大型邮件、社交、金融系统中广泛存在用于非法牟利的恶意注册账户，高效、准确的检测方法非常重要。</p>
+<p>研究现状：现有的区分恶意账户和正常用户的的检测方法主要基于账户的<strong>攻击特征</strong>(attack characteristics)</p>
+<ol>
+<li>Rule based methods 基于规则：人工提取特征、正则表达式</li>
+<li>Graph-based methods 基于图的方法：考虑账户之间的连通性，通过构建账户连通图来分析异常子图</li>
+<li>Machine learning-based methods 基于机器学习方法：基于图属性提取特征，构建监督学习分类器</li>
+</ol>
+<p>现有方法缺陷：模型误判率低，正常账户和可疑账户数据交叉，导致可疑账户被识别的概率低。</p>
+<hr>
+<p>文章分析了攻击者（恶意账户）的两个主要行为模式：</p>
+<ul>
+<li>Device aggregation <strong>设备聚集</strong>：攻击者的计算机设备和网络资源固定且少量</li>
+<li>Activity aggregation <strong>活动聚集</strong>：恶意账户倾向于在短时间内批量执行特定任务</li>
+</ul>
+<p>文章所作贡献：</p>
+<ul>
+<li>提出了一种新的基于神经网络的图表示方法(GEM)，同时考虑设备和活动聚集行为来识别恶意帐户。首次将GNN方法应用于欺诈检测。</li>
+<li>该方法被应用在支付宝上，每天可以检测到数万个恶意账户。</li>
+</ul>
+<h3 id="提出的方法"><a href="#提出的方法" class="headerlink" title="提出的方法"></a>提出的方法</h3><h4 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h4><p>研究了支付宝中真实账户的“设备聚集”和“行为聚集”特性：</p>
+<ul>
+<li>设备聚集性：如果同一设备上注册或登录了多个账户，则视为可疑账户。计算<strong>设备-账户图</strong>的连通子图的规模度量账户风险度。</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210902192736235.png" alt="image-20210902192736235" style="zoom:67%;" />
+
+<p>上图展示了支付宝中连续7天的account-device活动图。对于正常账户，动点均匀分散在不同设备，设备之间平行；对于恶意账户，点的强相关性表明特定的设备连接了大量账户。</p>
+<ul>
+<li>活动聚集性：如果在同一设备上进行<strong>批量</strong>注册或登录，则视为可以用户。使用同一设备不同账户的活动内积衡量账户间的关联性，可以进一步划分连通子图，提高检测准确率。</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210902194442682.png" alt="image-20210902194442682" style="zoom:67%;" />
+
+<p>上图展示了正常账户注册后登录行为在未来几天均匀分布，而恶意账户只在短时间内产生行为。</p>
+<h4 id="连通子图模型"><a href="#连通子图模型" class="headerlink" title="连通子图模型"></a>连通子图模型</h4><ol>
+<li>构建账户<code>i</code>和设备<code>j</code>的图<code>G(V,E)</code>，<code>&#123;(i, j)&#125;</code>代表账户<code>i</code>在设备<code>j</code>上有登录行为。若账户<code>i</code>和<code>i&#39;</code>都在设备<code>j</code>上进行登录，则连接边<code>(i, i&#39;)</code>，最终形成同质图<code>Ga(Va,Ea)</code>，图中的连通子图越大，表明设备聚集越明显，恶意账户可能性越大；</li>
+<li>为了降低对正常用户的误判，需要减少一些边。计算两个账户之间的关联性（短时间内登录同一设备），如果小于某个超参阈值，则删去边；</li>
+<li>按照账户所属子图大小进行评分，子图越大，账户可疑性越高。</li>
+</ol>
+<p>&#x3D;&#x3D;缺陷&#x3D;&#x3D;：以上模型仅使用了图的方法直观地检测大的连通子图中的恶意账户，但是在较小子图中效果不佳。</p>
+<p>接下来考虑使用机器学习的方法，账户间的连接性既取决于子图大小（设备聚合），也取决于边的内积（活动聚合），因此需要学习一个函数<code>f</code>从图结构中学习这些特征并预测。</p>
+<h4 id="异构图模型"><a href="#异构图模型" class="headerlink" title="异构图模型"></a>异构图模型</h4><p>异构图：由多种不同类型的节点和边组成的图。</p>
+<p>假设N个由帐户和设备的节点构成的图G，每个设备对应一种类型d∈D，这里的设备可能是IP地址、MAC地址、IMEI、手机型号等，观察一段时间T内账户-设备之间的边的情况（账户活动情况）。以下是一个连通图的例子：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210903104837838.png" alt="image-20210903104837838" style="zoom: 67%;" />
+
+<p>其中蓝色节点是正常账户，黄色节点是异常账户，其余是不同类型的设备，红色节点可能是局域网下同一公网IP。</p>
+<h4 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h4><p>数据集：支付宝新注册账号的一周活动记录</p>
+<p>数据处理：使用前6天的数据构建图模型，对第7天注册的账户进行预测</p>
+<p>对比方法：</p>
+<ol>
+<li>连通子图</li>
+<li>GBDT+Graph：一种基于机器学习的方法，GBDT全称为Gradient Boosting Decision Tree</li>
+<li>GBDT+Node2Vec：基于随机游走的节点嵌入方法</li>
+<li>GCN：经典的图卷积网络方法</li>
+</ol>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>从这篇文章学习了如何对一个图应用问题进行理解、分析和建模，重点在于<strong>构建图</strong>和<strong>邻居信息聚合</strong>。在设计图结构时，选取关联性强的特征作为节点信息。</p>
+<p>类似问题还有：欺诈检测、虚假评论（网络水军）识别、网络犯罪识别、恶意程序</p>
+<p>可能的问题：恶意爬虫（异常流量检测）</p>
+<h2 id="下周学习"><a href="#下周学习" class="headerlink" title="下周学习"></a>下周学习</h2><p>发现一个仓库：<a target="_blank" rel="noopener" href="https://github.com/safe-graph">https://github.com/safe-graph</a></p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210906115045592.png" alt="image-20210906115045592" style="zoom: 50%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210907104530997.png" alt="image-20210907104530997" style="zoom: 50%;" />
+
+<p>学习课程：<a target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs224w/">CS224W: Machine Learning with Graphs</a></p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210908095423810.png" alt="image-20210908095423810" style="zoom: 33%;" />
+
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/08/01/2021-08-01-cpdaily-auto-sign/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-09-08 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/09/14/2021-09-14-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-text">论文阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%87%BA%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">提出的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-text">数据分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E9%80%9A%E5%AD%90%E5%9B%BE%E6%A8%A1%E5%9E%8B"><span class="toc-text">连通子图模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B"><span class="toc-text">异构图模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E5%91%A8%E5%AD%A6%E4%B9%A0"><span class="toc-text">下周学习</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

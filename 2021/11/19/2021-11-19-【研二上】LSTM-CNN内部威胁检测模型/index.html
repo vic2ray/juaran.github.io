@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】LSTM-CNN内部威胁检测模型 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】LSTM-CNN内部威胁检测模型</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-11-19 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="LSTM-CNN模型"><a href="#LSTM-CNN模型" class="headerlink" title="LSTM-CNN模型"></a><strong>LSTM-CNN模型</strong></h3><blockquote>
+<p>Yuan, F., Cao, Y., Shang, Y., Liu, Y., Tan, J., &amp; Fang, B. (2018). Insider Threat Detection with Deep Neural Network. Computational Science – ICCS 2018, 43–54.</p>
+<p>doi:10.1007&#x2F;978-3-319-93698-7_4</p>
+</blockquote>
+<ul>
+<li>首先，与自然语言建模类似，我们使用长短期记忆(LSTM)通过用户动作来学习用户行为的语言，并提取抽象的时间特征</li>
+<li>其次，将提取出的特征转换为固定大小的特征矩阵，卷积神经网络(CNN)利用这些固定大小的特征矩阵来检测内部威胁</li>
+</ul>
+<p>这篇文章受之前文章中聚合用户一天内所有行为的启发，观察到直接聚合所有行为很可能会掩盖其中的异常行为，因此使用LSTM来建模用户行为序列，考虑到了对时间的建模。正常行为序列是普遍的，偏离这些正常动作序列则被视为异常行为</p>
+<p>方法概述：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211121105547749.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211121105547749.png" style="zoom: 50%;" />
+
+<p>类似于自然语言建模，将user action视为word，动作序列组成的user behavior即sentence，输入LSTM提取用户行为的特征。具体地，每个用户<code>k</code>共有<code>J</code>天的行为序列构成序列矩阵<code>S</code>，LSTM训练得到行为特征提取器，输出隐含高级特征表示的固定大小的特征矩阵用于CNN分类</p>
+<p>以上方法在数据预处理阶段工作量较大，需要将所有用户每天的操作日志转换为序列并编码向量表示，与当前工作直接提取日数据特征不同</p>
+<p>实验结果：</p>
+<p>论文对比了不同LSTM隐层数量、不同CNN卷积核大小的模型ROC曲线，最优模型达到AUC&#x3D;<strong>0.9449</strong>，但是感觉实验结果不太靠谱（接近完美分类器），其他模型最优结果仅为0.8左右。猜测是因为训练和测试数据集没有按照标签比例划分，导致测试集内很少异常样本</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211123194707598.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211123194707598.png" style="zoom:67%;" />
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/11/13/2021-11-13-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E7%A0%94%E7%A9%B6%E7%8E%B0%E7%8A%B6%E5%8F%8AResNet%E5%B0%9D%E8%AF%95/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-11-19 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/11/22/2021-11-22-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E4%B8%8EGCN%E6%A8%A1%E5%9E%8B%E5%AE%9E%E9%AA%8C%E5%AF%B9%E6%AF%94/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#LSTM-CNN%E6%A8%A1%E5%9E%8B"><span class="toc-text">LSTM-CNN模型</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】无监督集成学习方法实验 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】无监督集成学习方法实验</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-12-11 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>Le D C, Zincir-Heywood N. Anomaly detection for insider threats using unsupervised ensembles[J]. IEEE Transactions on Network and Service Management, 2021, 18(2): 1152-1164.</p>
+</blockquote>
+<h3 id="无监督集成学习方法"><a href="#无监督集成学习方法" class="headerlink" title="无监督集成学习方法"></a><strong>无监督集成学习方法</strong></h3><blockquote>
+<p>本研究提出了一种基于无监督学习的内部威胁检测异常检测方法。采用了四种具有不同原理的无监督学习方法，并探索具有时间信息的数据的各种表示。评估结果表明，该方法能够从未标记数据中进行内部威胁检测，有较高的检测率和低假阳性率。最后，研究结果表明，一种基于投票的异常检测集成可用于提高检测性能和鲁棒性。</p>
+</blockquote>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211212100622248.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211212100622248.png" style="zoom: 67%;" />
+
+<ul>
+<li>无监督异常检测方法：自动编码器、孤立森林、 轻型异常在线检测、局部异常因子</li>
+<li>异常分数：由检测算法得到，一般在[0,1]范围</li>
+<li>调查预算(IB)：可以确定有异常行为的数据量(%)</li>
+<li>异常阈值：根据选定的调查预算，计算出一个决策阈值，具有高异常分数的数据样本为异常行为</li>
+</ul>
+<p>无监督异常检测的思想如下：</p>
+<ol>
+<li>假设恶意行为（异常）是罕见的，偏离正常用户行为，且正常行为占数据的绝大部分</li>
+<li>虽然没有使用标签信息，训练好的异常检测模型能够根据异常分数区分正常数据和异常数据</li>
+<li>所得分数超出异常阈值即异常行为</li>
+</ol>
+<p>实验设置：</p>
+<ul>
+<li>数据集：CERT r4.2，异常966&#x2F;正常329466</li>
+<li>训练阶段：随机抽取200个用户前50%的数据。大约35161条，占总数据量<strong>10%</strong></li>
+<li>测试阶段：整个数据集上进行评估，重复十次取平均</li>
+</ul>
+<p>无监督异常检测方法实现库：PyOD，包含了30多种异常检测算法的实现：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211212115152606.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211212115152606.png" style="zoom: 50%;" />
+
+<p>接下来进行实验。使用10%的数据训练，在整个数据集上的评估结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>Pricision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LF</td>
+<td>0.01</td>
+<td>0.42</td>
+</tr>
+<tr>
+<td>LODA</td>
+<td>0.01</td>
+<td>0.41</td>
+</tr>
+<tr>
+<td>LOF</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>实验结果与论文中的结果接近。对比之前的实验结果，发现这几种无监督方法能够达到较高的检测率，但检测精度较低。</p>
+<p>但是，如果<strong>增加</strong>训练数据比例（70%），拟合模型在整个数据集上的评估结果并没有很大提升（43%）（如果是监督学习，训练样本越多，模型性能总是会有所提升）。然后我尝试把训练样本比例**降为2%<strong>（约6609条），得到检测率为</strong>37%**，该结果并没有因为数据量很少而下降很大。</p>
+<p><strong>思考</strong>：以上实验结果表明无监督方法能够在仅看过很少数据的情况下，也能检测出可观数量的异常。但是对于同一种异常检测算法，增加数据量拟合得到的模型并不能显著提升异常检测性能，因为模型最终是按照异常阈值来判定异常行为，如果有一些异常值与正常值所在域十分接近，增加训练样本是徒劳的。下面是以上猜测的可视化表示：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211213205825208.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211213205825208.png" style="zoom:67%;" />
+
+<p>所以，无监督学习往往是在全局数据上进行建模的，并不需要额外的数据来训练模型（需要数据拟合模型）。</p>
+<p>因此，为了提高检测率，一方面是使用更好的异常检测算法，另一方面是想办法让数据变得更容易区分开，比如主成分分析、PCA降维、或使用深度网络提取高维特征。</p>
+<hr>
+<h3 id="下周计划"><a href="#下周计划" class="headerlink" title="下周计划"></a><strong>下周计划</strong></h3><ul>
+<li>尝试使用Resnet提取高维特征，然后再结合异常检测算法进行分类</li>
+<li>DNN&amp;RNN无监督方法</li>
+</ul>
+<blockquote>
+<p>Tuor A, Kaplan S, Hutchinson B, et al. Deep learning for unsupervised insider threat detection in structured cybersecurity data streams[C]&#x2F;&#x2F;Workshops at the Thirty-First AAAI Conference on Artificial Intelligence. 2017.</p>
+<p>提出了一种在线无监督深度学习方法来实时检测系统日志中的异常网络活动。结果表明，DNN和RNN模型优于主成分分析、支持向量机和基于隔离森林的异常检测基线。</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/11/30/2021-11-30-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E5%9F%BA%E4%BA%8EResnet%E7%9A%84%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E5%BC%80%E9%A2%98/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-12-11 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/12/16/2021-12-16-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91Resnet%E9%87%8D%E6%96%B0%E5%AE%9E%E9%AA%8C/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%9B%91%E7%9D%A3%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="toc-text">无监督集成学习方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%91%A8%E8%AE%A1%E5%88%92"><span class="toc-text">下周计划</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

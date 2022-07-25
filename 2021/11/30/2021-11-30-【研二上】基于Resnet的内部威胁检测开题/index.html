@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】基于Resnet的内部威胁检测开题 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】基于Resnet的内部威胁检测开题</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-11-30 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="一、论文选题依据"><a href="#一、论文选题依据" class="headerlink" title="一、论文选题依据"></a><strong>一、论文选题依据</strong></h3><h3 id="1-1-研究背景"><a href="#1-1-研究背景" class="headerlink" title="1.1 研究背景"></a><strong>1.1 研究背景</strong></h3><p>内部威胁是各组织、公司和政府机构所面临的最危险和最普遍的网络安全威胁之一，其恶意行为由组织内部授权人员执行。由于内部人员被授权访问组织的网络系统，并了解其结构和安全程序，内部威胁是最昂贵、最难检测的攻击类型之一。据2020年中国互联网网络安全报告[1]，我国许多企业正在遭受内部威胁。这些威胁包括信息系统破坏、知识产权盗窃、用户数据泄露和国家安全犯罪[2]。</p>
+<p>在CERT内部威胁中心最近的一份技术报告中，内部威胁被定义为：由授权访问组织的网络、系统和数据的恶意或无意的内部人员实施，对组织信息、信息系统或员工的机密性、完整性、可用性或身体健康产生负面影响的威胁[3]。与内部威胁有关的恶意活动既可以由恶意的内部人士故意进行，如信息系统破坏、知识产权盗窃和泄露机密信息等，也可以由无意的内部人士进行，如用户在使用授权资源时的疏忽等。与传统的入侵检测任务不同，内部威胁检测的挑战来自于内部人员被授权访问组织的计算机系统，并熟悉组织的安全层[4]。</p>
+<p>此外，在大多数组织中，内部人员带有恶意的活动很少发生。因此，可用于描述活动的数据通常很少，而且没有很好的记录。内部威胁检测的挑战还包括需要处理和调研组织环境中的各种数据，从网络流量、Web和文件访问日志，到电子邮件历史或员工信息等。可用的数据也因组织机构的不同而有显著的不同。因此，只有少部分组织拥有工具和（人力）资源从收集的监控数据中解释用户的行为和意图[5]。</p>
+<h3 id="1-2-国内外研究现状"><a href="#1-2-国内外研究现状" class="headerlink" title="1.2 国内外研究现状"></a><strong>1.2 国内外研究现状</strong></h3><p>内部威胁检测作为网络空间中最具挑战性的攻击防御手段之一，在过去的十年中引起了广泛的关注。考虑到任何组织每天都能获得大量数据，使用统计学习方法审计数据并分析用户行为来实现内部威胁检测，在实际应用中具有良好的检测性能。但传统的浅层机器学习模型由于其高维性、复杂性、异质性和稀疏性，无法充分利用用户行为数据[6]。深度学习作为表示学习算法，基于其深度结构能够从复杂的数据中学习多个层次的隐藏表示，可以作为一个强大的工具来分析用户行为并识别内部人士潜在的恶意活动。目前基于深度学习的内部威胁检测模型主要有：深度前馈神经网络(DNN)、递归神经网络(RNN)和图神经网络(GNN)。</p>
+<p><strong>1.2.1 深度前馈神经网络模型</strong></p>
+<p>深度前馈神经网络是一种经典的深度学习模型。各种深度学习模型都是前馈神经网络，如深度自编码器、深度信念网络和深度玻尔兹曼机器[7]。这些深度神经网络能够从基于多层结构的输入数据中学习不同层次的表示。一些研究已经提出利用深度前馈神经网络进行内部威胁检测。深度自动编码器由编码器和解码器组成，其中编码器将输入数据编码为隐藏表示，而解码器的目标是基于隐藏表示重构输入数据。深度自动编码器的目的是使重构后的输入接近原始输入。[8]使用深度自动编码器来检测内部威胁，由于组织中的大多数活动都是良性的，因此带有内部威胁的输入应该有相对较高的重构错误，从而深度自动编码器的重构误差可以作为识别内部威胁的异常评分。利用自动编码器结构的另一个想法是，在学习了基于重构误差的隐藏表示后，可以使用一类分类器，[9]使用一类SVM应用于学习到的隐藏表示，以识别内部威胁。</p>
+<p><strong>1.2.2 递归神经网络模型</strong></p>
+<p>递归神经网络(RNN)主要用于对序列数据进行建模，通过自循环连接保持隐藏状态，对序列中的信息进行编码[10]。由于梯度消失或梯度爆炸问题，标准的RNN很难在长序列上进行训练[11]。目前，标准RNN的两种变体：长短期记忆(LSTM)[12]和门控循环单元(GRU)[13]，被广泛用于对长序列进行建模，并通过结合门机制捕获长时间依赖。计算机上的用户活动可以被自然地建模为顺序数据。因此，许多基于RNN的方法已经被提出来建模用户活动[14,15,16,17]，以进行内部威胁检测。其基本思想是训练一个RNN模型来预测用户的下一个活动或活动周期。只要预测结果和用户的实际活动没有明显的差异，我们就认为用户遵循正常的行为。否则，用户活动是可疑的。[15]提出了一种堆叠的LSTM结构来捕获一天内的用户活动，并采用用户活动的负对数概率作为异常分数来识别恶意会话，而不是只使用活动类型。与只使用活动类型进行检测的方法不同，[17]提出了一个分层神经时间点过程模型捕获活动类型和时间信息在用户会话，然后根据预测结果之间的差异和实际活动的类型推导一个异常分数和时间。</p>
+<p><strong>1.2.3 图神经网络模型</strong></p>
+<p>图神经网络能够建模节点之间的关系，在图分析方法中应用越来越广泛。其中使用最多的GNN模型是利用图卷积层提取节点信息的图卷积网络(GCN)。图卷积层具有与典型卷积层相似的性质，如局部连接和共享权值，适用于图分析。例如，图中的节点通常是局部连接的，以便卷积层能够从相邻节点中聚合节点的特征信息。除了GCN之外，旨在学习网络中节点的低维潜在表示的图嵌入也引起了广泛关注。学习到的节点表示可以作为各种图分析任务的特征，如分类、聚类、链路预测和可视化[18]。最近的研究[19]中采用了一个GCN模型来检测内部威胁。由于组织中的用户经常通过电子邮件或在同一设备上的操作相互连接，所以很自然地使用图结构来捕获用户之间的相互依赖关系。GCN除了以结构信息的邻接矩阵作为输入外，还将用户丰富的轮廓信息作为节点的特征向量。GCN应用基于图结构的卷积层进行信息传播后，采用交叉熵作为目标函数来预测图中的恶意节点（用户）。受图嵌入方法的启发，[20]的研究提出了log2vec来检测恶意活动。Log2vec首先通过将审计数据中的各种活动表示为节点，并将活动之间的丰富关系表示为边，然后训练节点嵌入来编码活动关系。最后，通过对节点嵌入应用聚类算法，log2vec能够将恶意活动和良性活动分成不同的聚类，并识别恶意活动。</p>
+<h3 id="1-3-研究的现实意义"><a href="#1-3-研究的现实意义" class="headerlink" title="1.3 研究的现实意义"></a><strong>1.3 研究的现实意义</strong></h3><p>内部威胁检测是一个具有挑战性的研究问题，不仅对研究界，对政府机构和网络安全公司也是如此。2018年美国网络犯罪状况调查显示，25%的网络攻击是由内部人士实施的，且这个频率正在逐年上升，30%的受访者表示，由内部攻击引起的事件比外部人士攻击更昂贵或 更具破坏性[21]。相比外部攻击，内部人员更容易对组织造成重大损失，因为内部人员有使用组织资源的权限，且了解组织的结构和安全程序。简而言之，任何组织的一个组成部分都是网络系统，其中的员工和客户的知识产权和敏感数据等数据被存储、共享和处理。因此，内部威胁构成了严重的网络安全挑战，需要高度优先解决这些问题，以确保此类系统的持续安全，从而确保组织的运作。</p>
+<h3 id="二、论文的研究内容、研究目标，以及拟解决的关键问题"><a href="#二、论文的研究内容、研究目标，以及拟解决的关键问题" class="headerlink" title="二、论文的研究内容、研究目标，以及拟解决的关键问题"></a><strong>二、论文的研究内容、研究目标，以及拟解决的关键问题</strong></h3><h3 id="2-1-研究内容"><a href="#2-1-研究内容" class="headerlink" title="2.1 研究内容"></a><strong>2.1 研究内容</strong></h3><p>我们的主要研究内容围绕以下几个内部威胁检测面临的挑战展开：</p>
+<ol>
+<li>多域信息融合。组织或企业内部员工每天产生大量的活动日志，这些数据非常多样化和异构化[22]，不同类别的数据（例如：登录域，网页域，设备域，文件域等）表现出截然不同的行为，利用各种数据源和融合这些异构数据对于改进内部威胁检测至关重要[6]。然而，当前大部分研究简单地将这些异构特征连接成单维特征向量并不能很好地工作，因为来自不同域的信息尺度差异较大，缺乏适当的融合方案使得模型无法区分不同类型的活动，并且限制了模型适当推理发现组合活动类型中潜在的内部威胁的能力。</li>
+<li>混入异常识别。目前的研究工作大多将内部威胁检测任务视为异常检测任务，通常将异常样本建模为分布外样本。现有的模型通常对来自良性用户的样本进行训练，然后应用于识别与观察到的良性样本不同的威胁人员，得到阈值或异常分数来量化威胁人员和良性用户之间的差异[6]。然而，在现实中，为了逃避检测，威胁人员在进行异常行为前后进行大量正常操作，这意味着威胁人员和良性用户建模后的特征空间十分接近以至于难以区分。因此，提升模型对少量混入异常的威胁识别至关重要。</li>
+<li>数据极其不平衡。与良性活动相比，来自威胁人员的恶意活动在现实场景中极为罕见。因此，内部威胁数据集是一个不平衡的数据集，这是训练深度学习模型的一大挑战。一般来说，由大量参数组成的深度学习模型需要大量的标记数据来进行正确的训练。然而，在现实中，收集大量标记为恶意的内部人士是不可行的[23]。如何利用现有的少量标记样本和大量未标记样本来正确训练深度学习模型是内部威胁检测任务的关键。</li>
+</ol>
+<h3 id="2-2-研究目标"><a href="#2-2-研究目标" class="headerlink" title="2.2 研究目标"></a><strong>2.2 研究目标</strong></h3><p>我们的研究旨在为以上内部威胁检测面临的问题提供新的尝试。以下是期望达到的研究目标：</p>
+<ol>
+<li>研究合适的异构信息融合方法，用于增强不同数据源特征之间的内在联系，发现更多的用户异常行为模式；</li>
+<li>增强模型对难以察觉到的混入异常的检测，进行对比实验，并对实验结果进行评估；</li>
+<li>研究无标记、少样本情况下的学习方法，为模型应用到现实环境中提供参考。</li>
+</ol>
+<h3 id="2-3-拟解决的关键问题"><a href="#2-3-拟解决的关键问题" class="headerlink" title="2.3 拟解决的关键问题"></a><strong>2.3 拟解决的关键问题</strong></h3><ol>
+<li>对于多域信息未有效利用的问题，舍弃目前将不同域的数据特征简单组合成单维特征向量的做法，尝试使用多维特征空间构造初始特征矩阵，用多维空间增强不同域特征间的联系；</li>
+<li>对于难以察觉的混入异常数据，尝试在深度学习模型中加入注意力机制模块，加强模型对异常数据的关注；</li>
+<li>对于内部威胁数据不平衡问题，目前主流的做法是使用无监督学习，利用聚类阈值区分离群点中的异常值。</li>
+</ol>
+<h3 id="三、拟采取的研究方案及可行性分析"><a href="#三、拟采取的研究方案及可行性分析" class="headerlink" title="三、拟采取的研究方案及可行性分析"></a><strong>三、拟采取的研究方案及可行性分析</strong></h3><h3 id="3-1-研究方案"><a href="#3-1-研究方案" class="headerlink" title="3.1 研究方案"></a><strong>3.1 研究方案</strong></h3><p>目前还没有全面的真实世界数据集公开可用于内部威胁检测，大多数研究采用合成的CMU CERT数据集[25]来评估其所提出的方法。在本课题中，我们使用CERT r4.2数据集来说明内部威胁检测所面临的挑战。该数据集记录了1000名用户500天左右的网页浏览、电子邮件通信、文件操作、设备使用和登录情况，其中包括被标记的恶意内部人员及其异常活动。在数据预处理阶段，我们需要从文本型用户日志数据中提取频率和统计类型的数值特征向量，数据粒度为日级别，即每一条数据实例代表一个用户一天的行为描述。如果用户在某天发生了异常行为，则被标记为异常实例[4]。</p>
+<p>CNN在视觉图像领域应用广泛，但据我们所知，在内部威胁检测领域，很少有文章将其应用于异常数据检测[6]。究其原因，卷积网络模型仅接受固定大小的二维矩阵输入，适合空域图像等视觉感知型数据。而内部威胁数据往往采用不同域特征的单维行向量简单连接表示，这样的特征表示方式在很大程度上限制了模型区分不同类型活动和推理活动间潜在联系的能力。因此，一个自然的想法是，我们改变不同域特征的组合方式，将其表示为多维特征矩阵。这个想法的启发来自于手写数字(MNIST)识别实验，相比输入为784个像素行的全连接模型，采用输入为28x28像素矩阵的卷积模型效果更好，因为二维空间显式地表达了数字笔划的联系。同样的，不同类型的内部威胁数据间的联系组成了用户行为模式，因此我们使用二维矩阵显式地构造初始特征矩阵，然后输入到深度卷积网络中提取高维隐藏特征，最终训练得到监督学习分类器。在模型选择上，我们使用深度残差网络(ResNet)[24]缓解深度CNN模型梯度消失的问题，其残差连接特性能够学习到不同类型的用户行为表达模式。图3-1展示了基于深度残差网络的内部威胁检测框架。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211202114446557.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211202114446557.png" style="zoom:67%;" />
+
+<p>图3-1 基于深度残差网络的内部威胁检测框架</p>
+<p>注意力机制是神经网络建模的重要组成部分，它模拟人类视觉机制，用于提升模型性能和可解释性，它也适合用于发掘异常检测中难以察觉的细节。我们发现有些异常行为表现得与正常操作接近，试图降低被离群点检测的风险。对此，我们在深度残差网络检测模型上加入多种注意力机制(SE[26]、BAM[27]、CBAM[28])，以提高模型对细微异常数据的专注能力。</p>
+<p>在现实世界中，内部威胁异常检测数据集的正样本(表示异常)远远小于负样本(表示正常)，为了使模型效果接近真实情况，我们尝试加入无监督学习范式。借鉴图聚类威胁检测[29]和对用户行为建模[30]的做法，我们可以使用无监督聚类算法自动学习不同用户角色的行为模式，然后基于聚类结果进行带注意力机制的监督学习，以取得比单纯的监督学习更好的效果。另一种方案是采用无监督聚类的卷积神经网络模型，对深层特征进行迭代聚类，并使用聚类赋值作为伪标签来学习卷积网络的参数，该方法已经在大规模图像分类上取得比监督学习更好的效果[31]。基于深度残差网络的深度聚类模型如图3-2所示。与现有模型对内部威胁数据初始特征直接聚类的方式不同，这种深度聚类方式对多层卷积后的高维隐藏特征进行分类。基于深度残差网络的深度聚类模型如图3-2所示。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211203095212721.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211203095212721.png" style="zoom:67%;" />
+
+<p>图3-2 基于深度残差网络的深度聚类模型</p>
+<h3 id="3-2-可行性分析"><a href="#3-2-可行性分析" class="headerlink" title="3.2 可行性分析"></a><strong>3.2 可行性分析</strong></h3><ol>
+<li>理论可行性：</li>
+</ol>
+<p>内部威胁检测研究一般使用CMU于2013年公开的CERT数据集作为基准，目前已有大量的统计学习方法、深度学习模型研究为本课题提供参考。深度残差网络、注意力机制、无监督异常检测在其他领域也有大量的参考文献，我们的课题研究将基于已有的理论依据，在内部威胁检测领域上作新的尝试。</p>
+<ol>
+<li>技术可行性：</li>
+</ol>
+<p>在前期的工作中，我们已经完成了CERT数据集的收集和用户行为特征提取，并使用传统机器学习模型进行了初步实验，其结果将作为之后基于深度残差网络模型的对比。另外，在Pytorch深度学习框架中已经集成深度残差网络模型的实现，带有注意力机制模块的网络模型也有开源代码可以借鉴。此外，无监督聚类算法如K-means等可以使用Scikit-learn机器学习库进行实验。</p>
+<ol>
+<li>实验环境可行性：</li>
+</ol>
+<p>进行深度学习，不仅对数据量有要求，实验环境也非常重要，为此实验室搭建了专业的深度学习平台（4块顶级GPU，型号：NVIDA GTX1080Ti、64G(DDR4)内存、加装固态硬盘）。利用专业的深度学习平台可以加速训练过程，大大缩短训练模型的时间。现有的开源深度学习框架众多，Pytorch目前使用最为广泛，因此，本课题实验主要使用Pytorch作为主要的模型训练和测试框架。</p>
+<h3 id="四、本课题的特色与创新之处"><a href="#四、本课题的特色与创新之处" class="headerlink" title="四、本课题的特色与创新之处"></a><strong>四、本课题的特色与创新之处</strong></h3><ol>
+<li>目前的内部威胁检测算法将不同类型的特征简单连接，丢失了异构数据间的关联信息，本课题首次尝试将数据特征表示为二维特征矩阵以融合多域信息，并首次提出使用带注意力机制的深度残差网络模型进行内部威胁检测任务；</li>
+<li>本课题尝试使用更少的样本和无监督学习方式来模拟真实环境下的内部威胁检测任务，实验结果对模型部署到现实世界具有一定的参考价值。</li>
+</ol>
+<h3 id="五、参考文献"><a href="#五、参考文献" class="headerlink" title="五、参考文献"></a><strong>五、参考文献</strong></h3><p>[1] 国家计算机网络应急技术处理协调中心. 2020年中国互联网网络安全报告[EB&#x2F;OL]. (2021-07-21)[2021-12-1]. <a target="_blank" rel="noopener" href="https://www.cert.org.cn/publish/main/upload/File/2020">https://www.cert.org.cn/publish/main/upload/File/2020</a> Annual Report.pdf.</p>
+<p>[2] 张有,王开云,张春瑞,邓妙然. 基于用户行为日志的内部威胁检测综述[J]. 计算机时代, 2020(09):45-49.</p>
+<p>[3] M. L. Collins <em>et al.</em>, “Common sense guide to mitigating insider threats, fififth edition,” CERT Insider Threat Center, Carnegie Mellon Univ.,Pittsburgh, PA, USA, Rep. CMU&#x2F;SEI-2015-TR-010, 2016.</p>
+<p>[4] Duc C. Le et al. “Analyzing Data Granularity Levels for Insider Threat Detection Using Machine Learning” IEEE Transactions on Network and Service Management 17 (2020): 30-44.</p>
+<p>[5] CSO, U.S. Secret Service, CERT Division of SEI-CMU, KnowBe4, “The 2018 U.S. State of cybercrime survey,” IDG, Foster City, CA, USA, Rep., 2018. Accessed: Jun. 15, 2019. [Online]. Available: <a target="_blank" rel="noopener" href="https://www.idg.com/tools-for-marketers/2018-u-s-state-of-cybercrime/">https://www.idg.com/tools-for-marketers/2018-u-s-state-of-cybercrime/</a></p>
+<p>[6] Shuhan Yuan and Xintao Wu. “Deep learning for insider threat detection: Review, challenges and opportunities” Computers &amp; Security 104 (2021): 102221.</p>
+<p>[7] Samira Pouyanfar et al. “A Survey on Deep Learning: Algorithms, Techniques, and Applications” <em>ACM Computing Surveys</em> 51 (2018): 92.</p>
+<p>[8] Liu Liu et al. “Anomaly-Based Insider Threat Detection Using Deep Autoencoders” International Conference on Data Mining (2018).</p>
+<p>[9] Lingli Lin et al. “Insider Threat Detection Based on Deep Belief Network Feature Representation” (2017).</p>
+<p>[10] Alex Graves. “Generating Sequences With Recurrent Neural Networks” arXiv: Neural and Evolutionary Computing (2013): n. pag.</p>
+<p>[11] Yoshua Bengio et al. “Learning long-term dependencies with gradient descent is difficult” IEEE Transactions on Neural Networks 5 (1994): 157-166.</p>
+<p>[12] Sepp Hochreiter and Jürgen Schmidhuber. “Long short-term memory” Neural Computation 9 (1997): 1735-1780.</p>
+<p>[13] Junyoung Chung et al. “Gated Feedback Recurrent Neural Networks” arXiv: Neural and Evolutionary Computing (2015): n. pag.</p>
+<p>[14] Jiuming Lu and Raymond K. Wong. “Insider Threat Detection with Long Short-Term Memory” (2019).</p>
+<p>[15] Aaron Tuor et al. “Deep Learning for Unsupervised Insider Threat Detection in Structured Cybersecurity Data Streams” National Conference on Artificial Intelligence (2017).</p>
+<p>[16] Yuan Fangfang et al. “Insider Threat Detection with Deep Neural Network” International Conference on Computational Science (2018).</p>
+<p>[17] Shuhan Yuan et al. “Insider Threat Detection via Hierarchical Neural Temporal Point Processes” arXiv: Cryptography and Security (2019): n. pag.</p>
+<p>[18] Haochen Chen et al. “A Tutorial on Network Embeddings..” arXiv: Social and Information Networks (2018): n. pag.</p>
+<p>[19] Jianguo Jiang et al. “Anomaly Detection with Graph Convolutional Networks for Insider Threat and Fraud Detection” Military Communications Conference (2019).</p>
+<p>[20] Li Deng et al. “New types of deep neural network learning for speech recognition and related applications: an overview” International Conference on Acoustics, Speech, and Signal Processing (2013).</p>
+<p>[21] CSO, CERT Division of SRI-CMU, and ForcePoint. 2018. 2018 U.S. State of Cybercrime. Technical Report.</p>
+<p>[22] Hoda Eldardiry et al. “Multi-Domain Information Fusion for Insider Threat Detection” IEEE Symposium on Security and Privacy (2013).</p>
+<p>[23] Duc C. Le and Nur Zincir-Heywood. “Anomaly Detection for Insider Threats Using Unsupervised Ensembles” IEEE Transactions on Network and Service Management 18 (2021): 1152-1164.</p>
+<p>[24] Kaiming He et al. “Deep Residual Learning for Image Recognition” Computer Vision and Pattern Recognition (2016).</p>
+<p>[25] J. Glasser and B. Lindauer. 2013. Bridging the Gap: A Pragmatic Approach to Generating Insider Threat Data. In 2013 IEEE Security and Privacy Workshops.98–104.</p>
+<p>[26] Jie Hu et al. “Squeeze-and-Excitation Networks” Computer Vision and Pattern Recognition (2018).</p>
+<p>[27] Jongchan Park et al. “BAM: Bottleneck Attention Module..” arXiv: Computer Vision and Pattern Recognition (2018): n. pag.</p>
+<p>[28] Sanghyun Woo et al. “CBAM: Convolutional Block Attention Module” European Conference on Computer Vision (2018).</p>
+<p>[29] Anagi Gamachchi and Serdar Boztas. “Insider Threat Detection Through Attributed Graph Clustering” Trust, Security And Privacy In Computing And Communications (2017).</p>
+<p>[30] Junhong Kim et al. “Insider threat detection based on user behavior modeling and anomaly detection algorithms” Applied Sciences 9 (2019): 4018.</p>
+<p>[31] Caron M, Bojanowski P, Joulin A, et al. Deep clustering for unsupervised learning of visual features[C]&#x2F;&#x2F;Proceedings of the European Conference on Computer Vision (ECCV). 2018: 132-149.</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/11/22/2021-11-22-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E4%B8%8EGCN%E6%A8%A1%E5%9E%8B%E5%AE%9E%E9%AA%8C%E5%AF%B9%E6%AF%94/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-11-30 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/12/11/2021-12-11-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E6%97%A0%E7%9B%91%E7%9D%A3%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E5%AE%9E%E9%AA%8C/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%BA%E6%96%87%E9%80%89%E9%A2%98%E4%BE%9D%E6%8D%AE"><span class="toc-text">一、论文选题依据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF"><span class="toc-text">1.1 研究背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%9B%BD%E5%86%85%E5%A4%96%E7%A0%94%E7%A9%B6%E7%8E%B0%E7%8A%B6"><span class="toc-text">1.2 国内外研究现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%A0%94%E7%A9%B6%E7%9A%84%E7%8E%B0%E5%AE%9E%E6%84%8F%E4%B9%89"><span class="toc-text">1.3 研究的现实意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BA%E6%96%87%E7%9A%84%E7%A0%94%E7%A9%B6%E5%86%85%E5%AE%B9%E3%80%81%E7%A0%94%E7%A9%B6%E7%9B%AE%E6%A0%87%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%8B%9F%E8%A7%A3%E5%86%B3%E7%9A%84%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98"><span class="toc-text">二、论文的研究内容、研究目标，以及拟解决的关键问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%A0%94%E7%A9%B6%E5%86%85%E5%AE%B9"><span class="toc-text">2.1 研究内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A0%94%E7%A9%B6%E7%9B%AE%E6%A0%87"><span class="toc-text">2.2 研究目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%8B%9F%E8%A7%A3%E5%86%B3%E7%9A%84%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98"><span class="toc-text">2.3 拟解决的关键问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%8B%9F%E9%87%87%E5%8F%96%E7%9A%84%E7%A0%94%E7%A9%B6%E6%96%B9%E6%A1%88%E5%8F%8A%E5%8F%AF%E8%A1%8C%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-text">三、拟采取的研究方案及可行性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%A0%94%E7%A9%B6%E6%96%B9%E6%A1%88"><span class="toc-text">3.1 研究方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8F%AF%E8%A1%8C%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-text">3.2 可行性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%AC%E8%AF%BE%E9%A2%98%E7%9A%84%E7%89%B9%E8%89%B2%E4%B8%8E%E5%88%9B%E6%96%B0%E4%B9%8B%E5%A4%84"><span class="toc-text">四、本课题的特色与创新之处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">五、参考文献</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】虚假评论检测论文 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】虚假评论检测论文</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-09-24 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="半监督图注意力网络"><a href="#半监督图注意力网络" class="headerlink" title="半监督图注意力网络"></a>半监督图注意力网络</h3><blockquote>
+<p>Wang, D., Qi, Y., Lin, J., Cui, P., Jia, Q., Wang, Z., … Yang, S. (2019). <em>A Semi-Supervised Graph Attentive Network for Financial Fraud Detection. 2019 IEEE International Conference on Data Mining (ICDM).</em> doi:10.1109&#x2F;icdm.2019.00070</p>
+</blockquote>
+<p><strong>待解决的问题</strong>：在金融服务中，用户丰富的活动带来了多方面的信息。这些数据形成了一个大型的多视图网络，基于规则的传统方法没有被充分利用。此外，在网络中，<strong>只有极少的用户被标记</strong>，只通过标记数据来实现欺诈检测的效果不佳。</p>
+<p>传统方法：</p>
+<ol>
+<li><p>基于规则，需要较强先验知识，难以处理复杂情况，容易被攻击</p>
+</li>
+<li><p>机器学习分类，基于单个用户行为、事务的统计特征，未考虑用户之间互动</p>
+</li>
+</ol>
+<p>难点：欺诈检测中只有少部分标记数据，大部分是未标记数据；金融场景中需要可解释的模型</p>
+<p>本文做法：</p>
+<ol>
+<li>将标记数据通过社会关系进行扩展，得到未标记数据，利用多视图模型对标记和未标记数据进行欺诈检测</li>
+<li>采用层次注意机制，以更好地关联不同的邻节点和不同的层次。注意机制可以使模型可解释，并判断欺诈的重要因素，以及为什么用户被预测为欺诈。</li>
+</ol>
+<p><strong>问题定义</strong>：将金融数据中用户的社会关系、交易关系、属性等构成用户的多层视图模型。目标是利用不同视图层信息训练一个用户欺诈分类器。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917094710466.png" alt="image-20210917094710466" style="zoom: 80%;" />
+
+<p><strong>网络架构</strong>：</p>
+<ul>
+<li>采用低级别注意力聚合各个数据视图层的重要信息</li>
+<li>采用高级别注意力区分不同视图数据的重要程度</li>
+<li>计算标记用户和未标记用户的相关损失进行分类</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917102459846.png" alt="image-20210917102459846" style="zoom: 67%;" />
+
+<p><strong>实验</strong>：使用支付宝花呗数据，进行用户违约预测、花呗信用分评估。</p>
+<p>用户视图组成：</p>
+<ul>
+<li>用户-关系图：支付宝好友关系</li>
+<li>用户-应用图：用户打开的金融、p2p、购物等应用</li>
+<li>用户-昵称图：用户在另一个好友中的备注昵称可能展示用户身份信息</li>
+<li>用户-地址图：用户消费地址可能隐含身份信息</li>
+</ul>
+<p>基准方法：Xgboost、LINE、GCN、GAT.</p>
+<hr>
+<h3 id="应用宝虚假评论检测"><a href="#应用宝虚假评论检测" class="headerlink" title="应用宝虚假评论检测"></a>应用宝虚假评论检测</h3><blockquote>
+<p>Wang, J., Wen, R., Wu, C., Huang, Y., &amp; Xion, J. (2019). <em>FdGars: Fraudster Detection via Graph Convolutional Networks in Online App Review System. Companion Proceedings of The 2019 World Wide Web Conference on - WWW ’19.</em> doi:10.1145&#x2F;3308560.3316586</p>
+</blockquote>
+<p><strong>解决的问题</strong>：现有的欺诈检测多用于电商平台、点评系统上的垃圾邮件和虚假评论内容，文章首次关注于在线评论系统（腾讯应用宝）上检测发布广告信息用于提升应用排名的欺诈者。</p>
+<p><strong>欺诈者特征</strong>：以往的欺诈特征提取需要耗费大量人力，且只利用单一的特征，如语言特征、发布时间和发布评论的频率来进行评估。本文通过利用评论的内容特征和行为分布，收集欺诈者作为种子，然后传播这些种子，以找到更多的恶意账户。</p>
+<ul>
+<li>内容特征：相似评论数、评论长度、<strong>表情评论占比</strong>、正则匹配黑名单</li>
+<li>行为特征：<strong>评论数量</strong>、24h评论分布、评分等级</li>
+</ul>
+<p>通过数据分析得到合理评估阈值：连续评价超过7天、设备数超过20的为欺诈者（最终目的是找出更多欺诈者）</p>
+<table frame=void>
+  <tr>
+      <td>
+      <img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917155132411.png" alt="image-20210917155132411"  />
+      </td>
+    <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917155208698.png" alt="image-20210917155208698"  />
+    </td>
+    </tr>
+</table>
+**网络框架**：采用两层GCN网络训练标记更多潜在欺诈者。输入为评论过同一APP的用户连接图和特征向量。
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917161044322.png" alt="image-20210917161044322" style="zoom: 80%;" />
+
+<p><strong>实验</strong>：使用了腾讯应用宝评论数据。基准方法：逻辑回归、随机森林、随机游走等。</p>
+<hr>
+<h3 id="咸鱼APP广告评论检测"><a href="#咸鱼APP广告评论检测" class="headerlink" title="咸鱼APP广告评论检测"></a>咸鱼APP广告评论检测</h3><blockquote>
+<p>Li, A., Qin, Z., Liu, R., Yang, Y., &amp; Li, D. (2019). <em>Spam Review Detection with Graph Convolutional Networks. Proceedings of the 28th ACM International Conference on Information and Knowledge Management - CIKM ’19.</em> doi:10.1145&#x2F;3357384.3357820</p>
+</blockquote>
+<p><strong>解决的问题</strong>：网上购物的用户评论直接影响其他用户的购买决定，垃圾评论信息不仅破坏用户体验，而且存在潜在的网络欺诈信息。咸鱼APP上的商品评论是商品成交前用户与商家的互动，垃圾信息大部分是广告推广。面临的挑战是如何识别各种反检测的攻击模式。</p>
+<p><strong>异构图模型</strong>：构建用户-评论-商品的二分图。垃圾评论往往在相关商品下发布更便宜的售卖信息，诱导线下交易。</p>
+<table>
+<tr>
+<td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917202006804.png" alt="image-20210917202006804" style="zoom: 80%;" /></td>
+<td>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210917202239401.png" /></td>
+</tr>
+</table>
+与同构图模型的GCN节点嵌入不同，模型同时对边和连接的两个节点进行嵌入，并与文本分类模型合并：
+
+<ul>
+<li>评论（边）的嵌入：直接合并（concat）用户和商品、自身层信息</li>
+<li>用户商品（节点）的嵌入：合并一跳邻节点和边的信息</li>
+<li>评论图的嵌入：KNN构建评论图，使用TextCNN进行分类，目的是捕获相似评论</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210918094411219.png" alt="image-20210918094411219" style="zoom:80%;" />
+
+<p>实验：使用咸鱼评论数据集。基准模型：GBDT，TextCNN。</p>
+<hr>
+<h3 id="Yelp虚假评论检测"><a href="#Yelp虚假评论检测" class="headerlink" title="Yelp虚假评论检测"></a>Yelp虚假评论检测</h3><blockquote>
+<p>Liu, Z., Dou, Y., Yu, P. S., Deng, Y., &amp; Peng, H. (2020). <em>Alleviating the Inconsistency Problem of Applying Graph Neural Network to Fraud Detection. Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval.</em> doi:10.1145&#x2F;3397271.3401253</p>
+</blockquote>
+<p><strong>解决的问题</strong>：作者发现现有的方法在设计关于欺诈检测任务的GNN模型时，都忽略了<strong>不一致性问题</strong>。即网络中节点信息的聚合是基于邻居具有相似特征和标签的假设，当假设不符合时，就不能聚合邻域信息来学习节点嵌入。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210921192630764.png" alt="image-20210921192630764" style="zoom: 80%;" />
+
+<p>例如：欺诈节点1如果从正常节点中聚合信息，则会降低其被检测为欺诈节点的可能（上下文不一致）。且欺诈者和非欺诈者的特征、相关性相差巨大，不能直接聚合（特征、相关性不一致）。</p>
+<p><strong>提出的解决方案</strong>：改变聚合方式：排除不一致节点；采样特征较接近节点；分不同关系进行训练</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210921194211883.png" alt="image-20210921194211883" style="zoom: 80%;" />
+
+<p><strong>数据集</strong>：YelpChi-餐厅、旅馆评论数据，29431名用户、182个店铺和45954条评论（14.5%垃圾信息）。</p>
+<p>GraphConsis论文代码：<a target="_blank" rel="noopener" href="https://github.com/safe-graph/DGFraud-TF2/tree/main/algorithms/GraphConsis">https://github.com/safe-graph/DGFraud-TF2/tree/main/algorithms/GraphConsis</a></p>
+<p>Yelp评论数据：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// string, 22 character unique review id</span></span><br><span class="line">    <span class="attr">&quot;review_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;zdSx_SD6obEhz9VrW9uAWA&quot;</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// string, 22 character unique user id, maps to the user in user.json</span></span><br><span class="line">    <span class="attr">&quot;user_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Ha3iJu77CxlrFm-vQRs_8g&quot;</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// string, 22 character business id, maps to business in business.json</span></span><br><span class="line">    <span class="attr">&quot;business_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tnhfDv5Il8EaGSXZGiuQGg&quot;</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// integer, star rating</span></span><br><span class="line">    <span class="attr">&quot;stars&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// string, date formatted YYYY-MM-DD</span></span><br><span class="line">    <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2016-03-09&quot;</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// string, the review itself</span></span><br><span class="line">    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Great place to hang out after work: the prices are decent, and the ambience is fun. It&#x27;s a bit loud, but very lively. The staff is friendly, and the food is good. They have a good selection of drinks.&quot;</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// integer, number of useful votes received</span></span><br><span class="line">    <span class="attr">&quot;useful&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// integer, number of funny votes received</span></span><br><span class="line">    <span class="attr">&quot;funny&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">// integer, number of cool votes received</span></span><br><span class="line">    <span class="attr">&quot;cool&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>YelpChi数据集简介：<a target="_blank" rel="noopener" href="http://odds.cs.stonybrook.edu/yelpchi-dataset/">http://odds.cs.stonybrook.edu/yelpchi-dataset/</a></p>
+<p>Yelp数据集来源：<a target="_blank" rel="noopener" href="https://www.yelp.com/dataset/documentation/main">https://www.yelp.com/dataset/documentation/main</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/09/14/2021-09-14-Wireshark-start/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-09-24 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/09/24/2021-09-24-Web-and-HTTP/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%9B%BE%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%BD%91%E7%BB%9C"><span class="toc-text">半监督图注意力网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%AE%9D%E8%99%9A%E5%81%87%E8%AF%84%E8%AE%BA%E6%A3%80%E6%B5%8B"><span class="toc-text">应用宝虚假评论检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%B8%E9%B1%BCAPP%E5%B9%BF%E5%91%8A%E8%AF%84%E8%AE%BA%E6%A3%80%E6%B5%8B"><span class="toc-text">咸鱼APP广告评论检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Yelp%E8%99%9A%E5%81%87%E8%AF%84%E8%AE%BA%E6%A3%80%E6%B5%8B"><span class="toc-text">Yelp虚假评论检测</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

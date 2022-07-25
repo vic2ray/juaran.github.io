@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】发现表格型数据深度学习 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】发现表格型数据深度学习</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2022-01-06 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>上周在查找相关理论时发现的问题是：深度学习方法在表格型数据上依然是一项挑战(2021年最新综述)。主要解决的问题是：在不依赖空间信息的情况下发现和利用异构数据的相关性。我们需要继续寻找使用CNN在内部威胁数据上建模的可解释性。</p>
+<h3 id="TabNet-2020"><a href="#TabNet-2020" class="headerlink" title="TabNet(2020)"></a><strong>TabNet(2020)</strong></h3><blockquote>
+<p>Arık S O, Pfister T. TabNet: Attentive interpretable tabular learning[J]. arXiv, 2020.</p>
+</blockquote>
+<p>Google Cloud AI在AAAI2021上发表，提出针对表格数据的深度学习模型，效果好于基于树的方法。文中提到为什么在表格数据进行深度学习，与树学习相比，有以下诸多优势：</p>
+<ol>
+<li>可以有效地将表格数据编码成多种数据类型，如图像</li>
+<li>减轻了对特征工程的需求，这是目前基于树的表格数据学习方法的一个关键方面</li>
+<li>可以从流数据中学习</li>
+<li>端到端模型允许表示学习，这支持许多有价值的应用程序场景，包括数据高效的域自适应、生成模型和半监督学习</li>
+</ol>
+<h3 id="DeepInsight-2019"><a href="#DeepInsight-2019" class="headerlink" title="DeepInsight(2019)"></a><strong>DeepInsight(2019)</strong></h3><blockquote>
+<p>Sharma A, Vans E, Shigemizu D, et al. DeepInsight: A methodology to transform a non-image data to an image for convolution neural network architecture[J]. Scientific reports, 2019, 9(1): 1-7.</p>
+</blockquote>
+<p>这篇文章将CNN应用到非图像数据上提取有效特征，并在不同的表格数据集上进行了实验。分类任务步骤如下：</p>
+<ol>
+<li><strong>特征排列</strong>：以适当的方式排列初始数据，以便特征提取时具有较强的相关性</li>
+<li>特征提取：卷积核</li>
+<li>合适的分类器：本文讨论CNN</li>
+</ol>
+<p>文中提到一个重要的观点是：在传统的机器学习方法中，分类器从一维特征向量中提取特征并分类，每一列的特征通常被视为是<strong>相互独立</strong>的，因此特征的排列对分类结果没有影响。但在深度模型(特别是CNN)中，特征提取<strong>依赖特征的相关性</strong>，例如：打乱图像像素排列会影响分类结果。</p>
+<p>因此，这对于我们的启发是：要想使用卷积提取内部威胁数据中的异常行为特征，对不同域特征进行合理地排列是必要的（多域信息融合的关键）。目前我们的做法是简单重构为二维矩阵（感觉缺少说服力，这个点可以深入研究）。这篇文章提出了DeepInsight的方法将特征向量编码为特征矩阵，以输入到CNN中进行分类。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20220107120708878.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20220107120708878.png" style="zoom:50%;" />
+
+<p>其中用到的降维算法：tSNE，主要原理是根据特征相似度进行聚类，结果作为图像表示。</p>
+<h3 id="其他转换方法-2021"><a href="#其他转换方法-2021" class="headerlink" title="其他转换方法(2021)"></a><strong>其他转换方法(2021)</strong></h3><blockquote>
+<p>Zhu Y, Brettin T, Xia F, et al. Converting tabular data into images for deep learning with convolutional neural networks[J]. Scientific reports, 2021, 11(1): 1-11.</p>
+</blockquote>
+<p>这篇文章引述了上一篇的特征转换方法，并总结了目前已有的三种非图像表格数据转换成用于CNN建模图像的映射算法，提出了一种新的转换方法。由此可知，在表格数据上的CNN建模还在探索阶段，具有广泛的应用前景。</p>
+<p>在文中的Introduction部分提到：对于一些表格数据，可以<strong>在二维空间中重新排列特征的顺序</strong>，<strong>以明确表示特征之间的关系，例如特征类别或相似性</strong>(此处引用三种转换算法的论文)。这促使将表格数据转换为图像，与在表格数据上训练的模型相比，CNN 可以从中学习和利用特征关系来提高预测性能。</p>
+<hr>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a><strong>小结</strong></h3><p>以上几篇论文探讨了为什么使用DNN(特别是CNN)在表格型数据上进行建模，以及将表格数据转换成二维图像的不同尝试，为我们在内部威胁数据集上进行CNN建模提供了参考（当前没有研究使用）。在Kaggle-MoA竞赛中，通过实践证明了使用卷积分类表格数据的优异性能。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/12/28/2021-12-28-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91Resnet%E5%8F%98%E4%BD%93%E6%A8%A1%E5%9E%8B%E8%A7%A3%E9%87%8A/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2022-01-06 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/03/31/2022-04-01-DNS%E5%9C%A8V2Ray%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#TabNet-2020"><span class="toc-text">TabNet(2020)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DeepInsight-2019"><span class="toc-text">DeepInsight(2019)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95-2021"><span class="toc-text">其他转换方法(2021)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

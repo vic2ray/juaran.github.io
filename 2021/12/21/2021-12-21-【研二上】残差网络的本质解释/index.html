@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】残差网络的本质解释 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】残差网络的本质解释</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-12-21 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="残差网络的一种解释"><a href="#残差网络的一种解释" class="headerlink" title="残差网络的一种解释"></a><strong>残差网络的一种解释</strong></h3><p>斯坦福CS224W《图机器学习》课程(2021) by Jure Leskovec - Stacking layers of a GNN，引用论文：</p>
+<blockquote>
+<p>Veit A, Wilber M J, Belongie S. Residual networks behave like ensembles of relatively shallow networks[J]. Advances in neural information processing systems, 2016, 29: 550-558.</p>
+</blockquote>
+<p><strong>目的</strong>：缓解GNN在层数加深时的过平滑（梯度消失）问题，增强较浅的图神经网络层的表达能力</p>
+<p><strong>做法</strong>：增加短路连接(Add skip connection&#x2F;shorcuts in GNNs)</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211222110454182.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211222110454182.png" style="zoom: 67%;" />
+
+<p><strong>为什么短路连接有效？</strong>（论文中关于深度残差连接能够缓解梯度消失问题的理论解释）</p>
+<ul>
+<li>直觉：短路连接将产生<strong>混合模型</strong>（a mixture of models）</li>
+<li>N个短路连接将得到2^N种可能的路径组合</li>
+<li>每一种连接方式都对应N种模型</li>
+<li>最终得到浅层网络和深层网络的组合模型</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211222111444663.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211222111444663.png" style="zoom: 50%;" />
+
+<p>最后作者根据实验基本得出了一个结论，ResNet 并没有解决深层网络情况下的梯度消失问题，<strong>而是通过集成多个子网络的方式回避了这一问题</strong>。ResNet 只是训练了一系列浅层模型，而 ensemble 中的深层模型并没有得到良好的训练，只不过是这部分模型数量少，并没有影响 ResNet 的整体性能。</p>
+<p>因此，深度残差网络能缓解梯度消失的根本原因是其能够学习到不同深度、不同层次模型的表达。网络越深，模型组合（集成）方式越多，表达能力越强。我们希望利用集成模型来学习内部威胁中的各种异常行为模式。</p>
+<h3 id="内部威胁检测问题的本质"><a href="#内部威胁检测问题的本质" class="headerlink" title="内部威胁检测问题的本质"></a><strong>内部威胁检测问题的本质</strong></h3><p><strong>本质</strong>：识别日志数据中的异常行为模式</p>
+<p><strong>难点</strong>：融合高维异构数据信息，从不同日志域中检测异常行为的特征组合</p>
+<ul>
+<li>威胁场景示例1：</li>
+</ul>
+<blockquote>
+<p>员工因工作满意度下降而被裁员，对公司感到愤怒，将文件上传到Dropbox，计划用于个人利益。</p>
+</blockquote>
+<p>这种情况将会在生成的数据中产生许多可观测的数据：</p>
+<ol>
+<li>下岗员工的数据流结束，从日志目录中消失</li>
+<li>登录和注销时间证明，由于工作满意度下降，变得不守时（登录域）</li>
+<li>HTTP日志显示该员工将文档上传到Dropbox（HTTP域、文件域）</li>
+</ol>
+<ul>
+<li>威胁场景示例2：</li>
+</ul>
+<blockquote>
+<p>员工开始浏览求职网站，并在竞争公司谋职。在离开公司之前，他们使用U盘（频率明显高于以前）窃取数据。</p>
+</blockquote>
+<p>关联域：HTTP域、设备域</p>
+<ul>
+<li>威胁场景示例3：</li>
+</ul>
+<blockquote>
+<p>以前未在下班时间使用U盘的用户，在下班时间登录，然后向维基解密上传数据。很快离开组织。</p>
+</blockquote>
+<p>关联域：登录域、设备域、HTTP域</p>
+<h3 id="残差连接在内部威胁检测上的解释"><a href="#残差连接在内部威胁检测上的解释" class="headerlink" title="残差连接在内部威胁检测上的解释"></a><strong>残差连接在内部威胁检测上的解释</strong></h3><ul>
+<li>残差连接用于形成关注不同域特征的网络模型的集成</li>
+<li>每一种连接方式都表达了某种行为模式，跳过连接忽略了正常行为特征，进而关联异常特征</li>
+<li>最终模型表达的是各种可能的用户行为模式</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211222160809393.png" alt="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211222160809393.png" style="zoom:67%;" />
+
+<p>例如，f1&#x2F;f2&#x2F;f3可能是卷积得到的登录域&#x2F;设备域&#x2F;HTTP域的高维特征空间，残差连接删除f2，所得模型能够专注于登录域和HTTP域的异常检测。而原始的前馈网络同时关注三个域的特征，正常域特征会降低整体的异常行为表现。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/12/16/2021-12-16-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91Resnet%E9%87%8D%E6%96%B0%E5%AE%9E%E9%AA%8C/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-12-21 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/12/28/2021-12-28-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91Resnet%E5%8F%98%E4%BD%93%E6%A8%A1%E5%9E%8B%E8%A7%A3%E9%87%8A/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%8B%E5%B7%AE%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E9%87%8A"><span class="toc-text">残差网络的一种解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">内部威胁检测问题的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%8B%E5%B7%AE%E8%BF%9E%E6%8E%A5%E5%9C%A8%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E4%B8%8A%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toc-text">残差连接在内部威胁检测上的解释</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      猿人学JS混淆分析第四题 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">猿人学JS混淆分析第四题</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2022-06-28 11:49:24
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="逆向分析">
+                    <b>#</b> 逆向分析
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/" title="反爬虫">
+                    <b>#</b> 反爬虫
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="题目信息"><a href="#题目信息" class="headerlink" title="题目信息"></a>题目信息</h1><ul>
+<li>题目地址：<a target="_blank" rel="noopener" href="https://match.yuanrenxue.com/match/4">https://match.yuanrenxue.com/match/4</a></li>
+<li>提交请求：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">GET</span> /api/match/<span class="number">4</span> <span class="variable constant_">HTTP</span>/<span class="number">2</span></span><br><span class="line"><span class="title class_">Host</span>: match.<span class="property">yuanrenxue</span>.<span class="property">com</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>正确响应：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;state&quot;</span><span class="punctuation">:</span> <span class="string">&quot;success&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;a1w2I3Icfz&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;IA1ndviFm5&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;iv&quot;</span><span class="punctuation">:</span> <span class="string">&quot;jlewo&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;info&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;td&gt;&lt;img src=\&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h1><h2 id="定位偏移"><a href="#定位偏移" class="headerlink" title="定位偏移"></a>定位偏移</h2><p>这题没有debugger。请求结果中的<code>info</code>为<code>td</code>嵌套<code>img</code>，每个img源地址都是数字0-9的图片的base64编码。而每一组<code>&lt;td&gt;&lt;/td&gt;</code>内的数个<code>img</code>数字组成一组数值，也就是说需要获取的数值由一组数字图片按顺序拼接而成，而非普通文本。除此之外，每个<code>img</code>标签添加了样式诸如<code>style=left:-11.5px</code>，这个偏移量决定了该图片相对于原来位置的移动距离。很熟悉啊，之前做过的<a target="_blank" rel="noopener" href="https://98112.xyz/2021/04/16/2021-04-16-dangdang-crawler/">当当网电子书获取</a>就是一模一样的做法：页面内的每一个文字的显示顺序都被打乱顺序，按照<code>position</code>定位在渲染时重新排列，不能按照源码中的标签顺序直接进行拼接。有了前车之鉴，这题就非常简单了，只需要获取原数组，偏移数组，按偏移重新排列即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">origin</span>: [<span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line"><span class="attr">offset</span>: [<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>]</span><br><span class="line"><span class="attr">realset</span>:[<span class="number">6</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<p>那如何根据原数组和偏移数组得到真实数组呢？偏移0代表保持不动，偏移1代表需要右移1个元素位置，-1代表需要左移1个元素位置，那么偏移后的位置就是：<code>i+offset</code>，<code>i</code>为当前元素索引。简单实现如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numList = [<span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line"><span class="keyword">let</span> offsetList = [<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">let</span> newNumList = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; numList.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    newNumList[i + offsetList[i]] = numList[i]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数组解析"><a href="#数组解析" class="headerlink" title="数组解析"></a>数组解析</h2><p>因为需要从html字符串中解析出数组，可以使用DOM-parser工具如<code>jsdom</code>直接生成dom，然后以<code>dom.document.querySelector</code>的方式操作DOM类数组和属性值。另一种方式就是regex直接干了。</p>
+<p>中间使用<code>RegExp.exec</code>时发现了之前没有注意到的细节。使用<code>RegExp.exec(str)</code>并不会一次性返回所有的匹配结果，而使用<code>str.match(RegExp)</code>可以返回所有匹配结果。在js红宝书上对这两个方法的描述是“本质上相同”，查阅资料才发现在非全局模式下是一样的，而全局模式下则不同：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> reg = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;abc, abc&#x27;</span></span><br><span class="line">reg.<span class="title function_">exec</span>(str) <span class="comment">// [&#x27;a&#x27;, index: 0]</span></span><br><span class="line">str.<span class="title function_">match</span>(reg) <span class="comment">// [&#x27;a&#x27;, index: 0]</span></span><br><span class="line"></span><br><span class="line">reg = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">reg.<span class="title function_">exec</span>(str) <span class="comment">// [&#x27;a&#x27;, index: 0]</span></span><br><span class="line">str.<span class="title function_">match</span>(reg) <span class="comment">// [&#x27;a&#x27;, &#x27;a&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<p>在全局模式下，每次执行<code>exec</code>只会返回一个结果，只有继续循环执行直到结果为null才算匹配完全：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reg.<span class="title function_">exec</span>(str) <span class="comment">// [&#x27;a&#x27;, index: 5]</span></span><br><span class="line">reg.<span class="title function_">exec</span>(str) <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
+<p>参考阅读：<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/jsref/jsref_exec_regexp.asp">JavaScript exec() 方法</a></p>
+<h2 id="隐类排除"><a href="#隐类排除" class="headerlink" title="隐类排除"></a>隐类排除</h2><p>在接口返回结果中，还包含了<code>key</code>、<code>value</code>、<code>kv</code>，ajax请求成功时的data处理过程如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">    datas = data.<span class="property">info</span>;</span><br><span class="line">    $(<span class="string">&#x27;.number&#x27;</span>).<span class="title function_">text</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">append</span>(datas);</span><br><span class="line">    <span class="keyword">var</span> j_key = <span class="string">&#x27;.&#x27;</span> + <span class="title function_">hex_md5</span>(<span class="title function_">btoa</span>(data.<span class="property">key</span> + data.<span class="property">value</span>).<span class="title function_">replace</span>(<span class="regexp">/=/g</span>, <span class="string">&#x27;&#x27;</span>));</span><br><span class="line">    $(j_key).<span class="title function_">css</span>(<span class="string">&#x27;display&#x27;</span>, <span class="string">&#x27;none&#x27;</span>);</span><br><span class="line">    $(<span class="string">&#x27;.img_number&#x27;</span>).<span class="title function_">removeClass</span>().<span class="title function_">addClass</span>(<span class="string">&#x27;img_number&#x27;</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>首先base64加密<code>k+v</code>，然后<code>hex_md5</code>计算哈希，作为隐类名将对应的标签设为hidden。最后移除将<code>img_number</code>类标签移除所有类，再加上<code>img_number</code>类。这个过程的最终结果是所有<code>img</code>都只有一个类，不过有些样式被设为隐藏。这样做的目的是，实际的接口返回结果中每个img标签都是有一个md5值的类，由<code>k+v</code>计算得到的类标签被隐藏，因此需要对原始数组过滤隐藏值。</p>
+<h1 id="复盘回顾"><a href="#复盘回顾" class="headerlink" title="复盘回顾"></a>复盘回顾</h1><p>这题将数值类型的内容转为图片，并利用css-position进行乱序，可能出现在页面价格保护、评分等场景，因为数值只需要0-9即可表示，任何数值都能组合得到。之前分析过的当当网图书乱序，每一页书中的文字、符号都是乱序，后端混淆的代价相当大，也会给前端渲染带来额外负担。另外，图片数字在显示时会和页面中其他元素的颜色、大小等产生明显的差异甚至失真，不利于主题切换等场景。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/06/26/%E7%8C%BF%E4%BA%BA%E5%AD%A6JS%E6%B7%B7%E6%B7%86%E5%88%86%E6%9E%90%E7%AC%AC%E4%B8%89%E9%A2%98/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2022-06-28 11:49:24
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="逆向分析">
+                        <b>#</b> 逆向分析
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/" title="反爬虫">
+                        <b>#</b> 反爬虫
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/07/25/%E3%80%90%E5%9B%BD%E5%AE%B6%E4%B8%AD%E5%B0%8F%E5%AD%A6%E6%99%BA%E6%85%A7%E6%95%99%E8%82%B2%E5%B9%B3%E5%8F%B0%E3%80%91%E7%99%BB%E5%BD%95%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="toc-text">题目信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="toc-text">解题过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%BD%8D%E5%81%8F%E7%A7%BB"><span class="toc-text">定位偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E8%A7%A3%E6%9E%90"><span class="toc-text">数组解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E7%B1%BB%E6%8E%92%E9%99%A4"><span class="toc-text">隐类排除</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E7%9B%98%E5%9B%9E%E9%A1%BE"><span class="toc-text">复盘回顾</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

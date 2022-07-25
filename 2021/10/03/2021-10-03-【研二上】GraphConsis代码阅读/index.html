@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】GraphConsis代码阅读 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】GraphConsis代码阅读</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-10-03 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <ul>
+<li>论文：<em>Alleviating the Inconsistency Problem of Applying Graph Neural Network to Fraud Detection.</em></li>
+<li>代码：<a target="_blank" rel="noopener" href="https://github.com/safe-graph/DGFraud-TF2/tree/main/algorithms/GraphConsis">https://github.com/safe-graph/DGFraud-TF2/tree/main/algorithms/GraphConsis</a></li>
+</ul>
+<h3 id="1-数据集"><a href="#1-数据集" class="headerlink" title="1. 数据集"></a>1. 数据集</h3><p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/safe-graph/DGFraud-TF2/blob/main/dataset/Yelpchi.zip">https://github.com/safe-graph/DGFraud-TF2/blob/main/dataset/Yelpchi.zip</a></p>
+<p>数据结构：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>size</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>features</td>
+<td>45954x32</td>
+<td>节点32维特征</td>
+</tr>
+<tr>
+<td>label</td>
+<td>1x45954</td>
+<td>节点二分类标签</td>
+</tr>
+<tr>
+<td>net_rsr</td>
+<td>45954x45954</td>
+<td>review-product图</td>
+</tr>
+<tr>
+<td>net_rtr</td>
+<td>45954x45954</td>
+<td>review-time图</td>
+</tr>
+<tr>
+<td>net_rur</td>
+<td>45954x45954</td>
+<td>review-user图</td>
+</tr>
+</tbody></table>
+<p>补充说明：</p>
+<ol>
+<li>32维特征向量包括：15 review features, 9 user features, and 8 product features</li>
+<li><em>R-U-R</em> connects reviews posted by the same user</li>
+<li><em>R-S-R</em> connects reviews under the same product with the same rating</li>
+<li><em>R-T-R</em> connects two reviews under the same product posted in the same month</li>
+</ol>
+<h3 id="2-数据加载和划分"><a href="#2-数据加载和划分" class="headerlink" title="2. 数据加载和划分"></a>2. 数据加载和划分</h3><ul>
+<li>图数据一般采用稀疏矩阵存储，使用<code>scipy.io</code>读取标签、特征、图</li>
+<li>使用<code>sklearn</code>的<code>train_test_split</code>快速划分按标签比例分布的数据集</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scipy</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">data_path = <span class="string">&#x27;../YelpChi.mat&#x27;</span></span><br><span class="line">train_size = <span class="number">0.8</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_data_yelp</span>():</span><br><span class="line">    <span class="comment"># 特征、标签、图加载</span></span><br><span class="line">    data = scipy.io.loadmat(data_path)</span><br><span class="line">    truelabels, features = data[<span class="string">&#x27;label&#x27;</span>], data[<span class="string">&#x27;features&#x27;</span>].astype(<span class="built_in">float</span>)  <span class="comment"># 特征是[0,1]浮点数</span></span><br><span class="line">    <span class="comment"># print(truelabels.nonzero()[1].size)  # 6677 fraud review: 14.5%</span></span><br><span class="line">    rownetworks = [data[<span class="string">&#x27;net_rur&#x27;</span>], data[<span class="string">&#x27;net_rsr&#x27;</span>], data[<span class="string">&#x27;net_rtr&#x27;</span>]]        <span class="comment"># 45954 x 45954 x 3</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 划分数据集</span></span><br><span class="line">    y = truelabels.tolist()[<span class="number">0</span>] </span><br><span class="line">    X = np.arange(<span class="built_in">len</span>(y))  <span class="comment"># [0, 1, 2, ..., 45953]</span></span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(X, y,</span><br><span class="line">                     train_size=train_size, </span><br><span class="line">                     stratify=y,     <span class="comment"># 按照标签的比例生成相同标签比例的数据集</span></span><br><span class="line">                    random_state=<span class="number">1</span>)  <span class="comment"># 相同的随机状态得到相同的随机数结果</span></span><br><span class="line">    <span class="comment"># ==&gt;划分得到80%训练集，20%测试集，且0,1标签的比例相同</span></span><br><span class="line">    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, stratify=y_train, test_size=<span class="number">0.2</span>, random_state=<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># ==&gt;划分训练集中的20%最为验证集</span></span><br><span class="line"> </span><br><span class="line">    split_ids = [X_train, X_val, X_test]  <span class="comment"># ==&gt; 节点划分索引</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> rownetworks, features, np.array(y), split_ids</span><br><span class="line"> </span><br><span class="line">adj_list, features, y, split_ids = load_data_yelp()</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-数据预处理"><a href="#3-数据预处理" class="headerlink" title="3. 数据预处理"></a>3. 数据预处理</h3><ul>
+<li>特征按行归一化，以加快收敛速度</li>
+<li>邻接矩阵转为字典key-value形式存储图</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GCN代码中的特征按行归一化，加快收敛</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">preprocess_feature</span>(<span class="params">features</span>):</span><br><span class="line">    features = scipy.sparse.lil_matrix(features)</span><br><span class="line">    rowsum = np.array(features.<span class="built_in">sum</span>(<span class="number">1</span>))</span><br><span class="line">    r_inv = np.power(rowsum, -<span class="number">1</span>).flatten()</span><br><span class="line">    r_inv[np.isinf(r_inv)] = <span class="number">0.</span></span><br><span class="line">    r_mat_inv = scipy.sparse.diags(r_inv)</span><br><span class="line">    features = r_mat_inv.dot(features)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> features</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 标签和特征处理</span></span><br><span class="line">label = np.array([y]).T  <span class="comment"># 标签数组转置：(45954, ) =&gt; (45954, 1)</span></span><br><span class="line">features = np.array(preprocess_feature(features).todense())  <span class="comment"># 特征归一化</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 图处理：邻接矩阵表示 ==&gt; 字典表示</span></span><br><span class="line">neigh_dicts = []        <span class="comment"># 最终得到 [&#123;10: [], ...&#125;, &#123;0: [], ...&#125;, &#123;3: [], ...&#125;]      注意，不是所有节点都有邻居！</span></span><br><span class="line"><span class="keyword">for</span> net <span class="keyword">in</span> adj_list:        <span class="comment">#  r-u-r, r-s-r, r-t-r 三个关系图</span></span><br><span class="line">    <span class="comment"># print(net.size)       # rur边数量98630 rsr边6805486 rtr边1147232</span></span><br><span class="line">    neigh_dict = &#123;&#125;         <span class="comment"># 图节点信息：&#123; 0: [2,6701], 1: [], ..., 45953: []  &#125;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(y)):     <span class="comment"># 所有节点</span></span><br><span class="line">        neigh_dict[i] = []      <span class="comment"># 节点的邻居节点列表初始化空</span></span><br><span class="line">    nodes1 = net.nonzero()[<span class="number">0</span>]       <span class="comment"># 非零元素行索引，即起始节点u</span></span><br><span class="line">    nodes2 = net.nonzero()[<span class="number">1</span>]       <span class="comment"># 非零元素列索引，即连接节点v</span></span><br><span class="line">    <span class="keyword">for</span> node1, node2 <span class="keyword">in</span> <span class="built_in">zip</span>(nodes1, nodes2):        <span class="comment"># (u, v)</span></span><br><span class="line">        neigh_dict[node1].append(node2)         <span class="comment"># u -&gt; v</span></span><br><span class="line">    neigh_dicts.append(&#123;k: np.array(v, dtype=np.int64) <span class="keyword">for</span> k, v <span class="keyword">in</span> neigh_dict.items()&#125;)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># neigh_dicts[1][3]  # 第二个图的节点3有[ 5 6703 6704]三个邻节点</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-邻居采样和创建计算子图"><a href="#4-邻居采样和创建计算子图" class="headerlink" title="4. 邻居采样和创建计算子图"></a>4. 邻居采样和创建计算子图</h3><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211002120254463.png" alt="image-20211002120254463" style="zoom: 80%;" />
+
+<h4 id="4-1-采样和混淆矩阵"><a href="#4-1-采样和混淆矩阵" class="headerlink" title="4.1 采样和混淆矩阵"></a>4.1 采样和混淆矩阵</h4><ol>
+<li>首先计算节点<code>u</code>和邻居<code>v</code>的差异分数</li>
+<li>若两个节点无一致性则不采样，得到节点的邻接矩阵</li>
+<li>对采样后的邻接矩阵<strong>去除空列</strong>，得到<code>[u,v]</code>混淆邻接矩阵</li>
+<li>返回混淆矩阵和矩阵行列信息：<ul>
+<li>dstsrc    参与计算的所有目标节点u和邻节点v列表</li>
+<li>dstsrc2src  混淆矩阵的行含义，即v节点是哪些</li>
+<li>dstsrc2dst 混淆矩阵的列含义，即u节点是哪些</li>
+<li>dif_mat      混淆矩阵包含了u-&gt;v的连接信息，且边权重为度的平均</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">eps = <span class="number">0.001</span>   <span class="comment"># 节点特征差异超参数</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 计算节点与其邻节点的特征差异分数：consistent score</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calc_consistency_score</span>(<span class="params">n, ns</span>):      <span class="comment"># 计算与邻节点的差异大小</span></span><br><span class="line">    <span class="comment"># Equation 3 in the paper</span></span><br><span class="line">    consis = tf.exp(-tf.<span class="built_in">pow</span>(tf.norm(tf.tile([features[n]], [<span class="built_in">len</span>(ns), <span class="number">1</span>]) -</span><br><span class="line">                                    features[ns], axis=<span class="number">1</span>), <span class="number">2</span>))</span><br><span class="line">    consis = tf.where(consis &gt; eps, consis, <span class="number">0</span>)  <span class="comment"># 低于阈值则返回0</span></span><br><span class="line">    <span class="keyword">return</span> consis</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 按照差异分数进行邻节点采样</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sample</span>(<span class="params">n, ns, sample_size</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(ns) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> []  <span class="comment"># 没有邻节点</span></span><br><span class="line">    consis_score = calc_consistency_score(n, ns)</span><br><span class="line">    <span class="comment"># Equation 4 in the paper</span></span><br><span class="line">    prob = consis_score / tf.reduce_sum(consis_score)     <span class="comment"># 按照consis_score计算邻节点采样权重</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># prop=0的邻节点不被选择。得到一个采样后的 邻节点 列表</span></span><br><span class="line">    <span class="keyword">return</span> np.random.choice(ns, <span class="built_in">min</span>(<span class="built_in">len</span>(ns), sample_size), replace=<span class="literal">False</span>, p=prob)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># sample(3, neigh_dicts[1][3], 5)  # 对原图采样：array([6703,    5, 6704])</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 计算 u-&gt; v 的混淆矩阵</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute_diffusion_matrix</span>(<span class="params">dst_nodes, neigh_dict, sample_size</span>):</span><br><span class="line">    <span class="comment"># 1. 计算采样后的图邻接矩阵</span></span><br><span class="line">    rows = []           <span class="comment"># 新的邻接矩阵行</span></span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> dst_nodes:</span><br><span class="line">        ns = sample(n, neigh_dict[n], sample_size)    <span class="comment"># 采样邻节点</span></span><br><span class="line">        row = np.zeros(<span class="built_in">len</span>(neigh_dict), dtype=np.float32)  <span class="comment"># 邻接矩阵一行节点u</span></span><br><span class="line">        row[ns] = <span class="number">1</span>   <span class="comment"># 节点 u 的邻节点 v</span></span><br><span class="line">        rows.append(row)</span><br><span class="line">    adj_mat_full = np.stack(rows)   <span class="comment"># 堆叠一个batch_size的n个节点，得到采样后的邻接矩阵: batch_size x 45954</span></span><br><span class="line">    <span class="comment"># print(adj_mat_full.shape)   # (batch_size, 45954)</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 2. 去除空列得到混淆矩阵</span></span><br><span class="line">    nonzero_cols_mask = np.<span class="built_in">any</span>(adj_mat_full.astype(np.<span class="built_in">bool</span>), axis=<span class="number">0</span>)  <span class="comment"># 取非空列v节点索引，去掉大部分空列</span></span><br><span class="line">    adj_mat = adj_mat_full[:, nonzero_cols_mask]    <span class="comment"># 去除空列的 u-&gt;v 邻接矩阵</span></span><br><span class="line">    adj_mat_sum = np.<span class="built_in">sum</span>(adj_mat, axis=<span class="number">1</span>, keepdims=<span class="literal">True</span>)  <span class="comment"># 统计 u 的度</span></span><br><span class="line">    dif_mat = np.nan_to_num(adj_mat / adj_mat_sum)        <span class="comment"># 平均度作为v节点的权重  ==&gt; 混淆矩阵</span></span><br><span class="line">    <span class="comment"># print(dif_mat)  行: u : 0, 1, 2 三个节点</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;  列: v : [   0    2    4 6702] 四列非空</span></span><br><span class="line"><span class="string">    [[0.  0.5 0.  0.5] </span></span><br><span class="line"><span class="string">     [0.  0.  1.  0. ]</span></span><br><span class="line"><span class="string">     [0.5 0.  0.  0.5]]</span></span><br><span class="line"><span class="string">     &quot;&quot;&quot;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 3. 混淆矩阵的行列节点信息</span></span><br><span class="line">    src_nodes = np.arange(nonzero_cols_mask.size)[nonzero_cols_mask]  <span class="comment"># v 节点索引</span></span><br><span class="line">    <span class="comment"># print(nonzero_cols_mask.nonzero()[0])     # [   0    2    4 6702]  ==&gt; 计算图中的源节点 v</span></span><br><span class="line">    <span class="comment"># print(src_nodes)                  # v 节点 [   0    2    4 6702]</span></span><br><span class="line">    dstsrc = np.union1d(dst_nodes, src_nodes)    <span class="comment"># 排序返回 [u,v]</span></span><br><span class="line">    <span class="comment"># print(dstsrc)                   # u,v 所有节点 [   0    1    2    4 6702]</span></span><br><span class="line">    dstsrc2src = np.searchsorted(dstsrc, src_nodes)</span><br><span class="line">    <span class="comment"># print(dstsrc2src)               # [0 2 3 4] v 源节点在 dstsrc 中索引</span></span><br><span class="line">    dstsrc2dst = np.searchsorted(dstsrc, dst_nodes)</span><br><span class="line">    <span class="comment"># print(dstsrc2dst)               # [0 1 2]  u 目标节点在 dstsrc 中索引</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> dstsrc, dstsrc2src, dstsrc2dst, dif_mat</span><br><span class="line"> </span><br><span class="line"><span class="comment"># compute_diffusion_matrix(np.array([0]), neigh_dicts[1], 5)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">(array([   0,    2, 6702]),   待计算节点</span></span><br><span class="line"><span class="string"> array([1, 2]),               v: 邻节点索引，混淆矩阵的行</span></span><br><span class="line"><span class="string"> array([0]),                  u: 目标节点索引，混淆矩阵的列</span></span><br><span class="line"><span class="string"> array([[0.5, 0.5]], dtype=float32))  [u,v] 混淆矩阵</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-创建计算图节点的minibatch"><a href="#4-2-创建计算图节点的minibatch" class="headerlink" title="4.2 创建计算图节点的minibatch"></a>4.2 创建计算图节点的minibatch</h4><ol>
+<li>每一个输入网络中的batch包含三个minibatch，对应三种类型的图</li>
+<li>每个minibatch包含了<strong>两层</strong>邻节点到目标节点的<strong>混淆矩阵</strong>代表图节点计算信息</li>
+<li>按照batch_size对训练集分批产生网络的输入(mini_batch)和输出(mini_batch_labels)</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">batch_size = <span class="number">512</span>  <span class="comment"># 批大小</span></span><br><span class="line">sample_sizes = [<span class="number">5</span>, <span class="number">5</span>]  <span class="comment"># 每一层采样大小</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 训练节点迭代生成minibatch</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_training_minibatch</span>(<span class="params">nodes_for_train</span>):</span><br><span class="line">    nodes = np.copy(nodes_for_train)</span><br><span class="line">    ix = <span class="number">0</span>    <span class="comment"># 分批切片索引</span></span><br><span class="line">    np.random.shuffle(nodes)  <span class="comment"># 再次打乱节点顺序</span></span><br><span class="line">    <span class="comment"># 前batch整数倍个批次</span></span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(nodes) &gt; ix + batch_size:</span><br><span class="line">        mini_batch_nodes = nodes[ix: ix+batch_size]  <span class="comment"># 取一个batch</span></span><br><span class="line">        mini_batch_labels = labels[mini_batch_nodes]  <span class="comment"># 取对应标签</span></span><br><span class="line">        <span class="comment"># 创建batch</span></span><br><span class="line">        mini_batch = build_batch(mini_batch_nodes)</span><br><span class="line"> </span><br><span class="line">        ix = ix + batch_size</span><br><span class="line">        <span class="keyword">yield</span> mini_batch, mini_batch_labels</span><br><span class="line">    <span class="comment"># 最后不足批部分</span></span><br><span class="line">    last_batch_nodes = nodes[ix: -<span class="number">1</span>]</span><br><span class="line">    last_batch_labels = labels[last_batch_nodes]</span><br><span class="line">    mini_batch = build_batch(last_batch_nodes)</span><br><span class="line">    <span class="keyword">yield</span> mini_batch, last_batch_labels</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 产生训练batch，即创建节点计算图</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">build_batch</span>(<span class="params">nodes</span>):</span><br><span class="line">    batch = []</span><br><span class="line">    <span class="keyword">for</span> neigh_dict <span class="keyword">in</span> neigh_dicts:  <span class="comment"># 三个关系图都要计算节点子图</span></span><br><span class="line">        <span class="comment"># 目标节点u，和两层的[u,v]混淆矩阵</span></span><br><span class="line">        dst_nodes, dstsrc2dsts, dstsrc2srcs, dif_mats = [nodes], [], [], []</span><br><span class="line">        <span class="keyword">for</span> sample_size <span class="keyword">in</span> <span class="built_in">reversed</span>(sample_sizes):  <span class="comment"># 采样层数=网络层数</span></span><br><span class="line">            ds, d2s, d2d, dm = compute_diffusion_matrix(dst_nodes.pop(), neigh_dict, sample_size)</span><br><span class="line">            <span class="comment"># print(&quot;ds: &quot;,ds, &quot;d2s: &quot;,d2s, &quot;d2d: &quot;,d2d, &quot;dm: &quot;,dm)</span></span><br><span class="line">            <span class="comment"># 添加邻节点信息</span></span><br><span class="line">            dst_nodes.append(ds)</span><br><span class="line">            dstsrc2srcs.append(d2s)  <span class="comment"># v</span></span><br><span class="line">            dstsrc2dsts.append(d2d)  <span class="comment"># u</span></span><br><span class="line">            dif_mats.append(dm)      <span class="comment"># dif_mat</span></span><br><span class="line">        src_nodes = dst_nodes.pop()  <span class="comment"># 所有u,v</span></span><br><span class="line">        <span class="comment"># 具名元组，存放layer层节点树列表</span></span><br><span class="line">        MiniBatchFields = [<span class="string">&quot;src_nodes&quot;</span>, <span class="string">&quot;dstsrc2srcs&quot;</span>, <span class="string">&quot;dstsrc2dsts&quot;</span>, <span class="string">&quot;dif_mats&quot;</span>]</span><br><span class="line">        MiniBatch = namedtuple(<span class="string">&quot;MiniBatch&quot;</span>, MiniBatchFields)       </span><br><span class="line">        batch.append(MiniBatch(src_nodes, dstsrc2srcs, dstsrc2dsts, dif_mats))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> batch</span><br><span class="line"> </span><br><span class="line"><span class="comment"># batch = build_batch(np.array([0]))</span></span><br><span class="line"><span class="string">&quot;&quot;&quot; 节点 0 的计算图batch：</span></span><br><span class="line"><span class="string">ds:  [0] d2s:  [] d2d:  [0] dm:  []  第一张图没有邻居</span></span><br><span class="line"><span class="string">ds:  [0] d2s:  [] d2d:  [0] dm:  []</span></span><br><span class="line"><span class="string">第二张图：0 - 2 - 6702</span></span><br><span class="line"><span class="string">ds:  [   0    2 6702] d2s:  [1 2] d2d:  [0] dm:  [[0.5 0.5]]  ==&gt; layer 1</span></span><br><span class="line"><span class="string">ds:  [   0    2 6702] d2s:  [0 1 2] d2d:  [0 1 2] dm:  [[0.  0.5 0.5]  ==&gt; layer 2</span></span><br><span class="line"><span class="string"> [0.5 0.  0.5]</span></span><br><span class="line"><span class="string">[0.5 0.5 0. ]]</span></span><br><span class="line"><span class="string">ds:  [0] d2s:  [] d2d:  [0] dm:  []  第三张图没有邻居</span></span><br><span class="line"><span class="string">ds:  [0] d2s:  [] d2d:  [0] dm:  []</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-网络模型"><a href="#5-网络模型" class="headerlink" title="5. 网络模型"></a>5. 网络模型</h3><ol>
+<li>首先定义聚合函数，按照GraphSAGE的聚合公式：</li>
+</ol>
+<p>$$<br>h^{(l)}_{v} &#x3D; \sigma(W^{(l)} · CONCAT(h^{(l-1)}_v, MEAN({h_u^{l-1}, \forall u \in N(v)})))<br>$$</p>
+<ol start="2">
+<li>在GraphSAGE聚合函数基础上，增加关系注意力参数</li>
+<li>网络层：包含两个聚合线性层和一个输出分类层</li>
+<li>前向传播：依次聚合batch中各个节点的每一层信息</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> Model, layers</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">init_fn = tf.keras.initializers.GlorotUniform</span><br><span class="line"> </span><br><span class="line"><span class="comment"># GraphSAGE网络模型聚合函数</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SageMeanAggregator</span>(layers.Layer):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, src_dim, dst_dim, activ=<span class="literal">True</span>, **kwargs</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(**kwargs)</span><br><span class="line">        self.activ_fn = tf.nn.relu <span class="keyword">if</span> activ <span class="keyword">else</span> tf.identity</span><br><span class="line">        self.w = self.add_weight(name=kwargs[<span class="string">&quot;name&quot;</span>] + <span class="string">&quot;_weight&quot;</span>,</span><br><span class="line">                                 shape=(src_dim * <span class="number">2</span>, dst_dim),    <span class="comment"># 特征维度拼接后 x 2</span></span><br><span class="line">                                 dtype=tf.float32,</span><br><span class="line">                                 initializer=GlorotUniform,</span><br><span class="line">                                 trainable=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">self, dstsrc_features, dstsrc2src, dstsrc2dst, dif_mat</span>):</span><br><span class="line">        dst_features = tf.gather(dstsrc_features, dstsrc2dst)    <span class="comment"># 从features中抽取m个目标节点u特征：m x 32</span></span><br><span class="line">        src_features = tf.gather(dstsrc_features, dstsrc2src)    <span class="comment"># 从features中抽取n个邻节点v特征：n x 32</span></span><br><span class="line">        aggregated_features = tf.matmul(dif_mat, src_features)   <span class="comment"># 聚合邻居特征：mxn x nx32 = m x 32</span></span><br><span class="line">        concatenated_features = tf.concat([aggregated_features, dst_features],  <span class="comment"># 拼接特征：m x 64 ==&gt; 64维特征！</span></span><br><span class="line">                                          <span class="number">1</span>)</span><br><span class="line">        x = tf.matmul(concatenated_features, self.w)    <span class="comment"># W*x: src_dimx64 x 64xdsr_dim ==&gt; src_dim x dsr_dim</span></span><br><span class="line">        <span class="keyword">return</span> self.activ_fn(x)             <span class="comment"># 激活函数。最终得到h(l)嵌入</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># GranphConsis聚合函数继承GraphSAGE，增加了关系注意力</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConsisMeanAggregator</span>(<span class="title class_ inherited__">SageMeanAggregator</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, src_dim, dst_dim, **kwargs</span>):</span><br><span class="line">         <span class="built_in">super</span>().__init__(src_dim, dst_dim, activ=<span class="literal">False</span>, **kwargs)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, dstsrc_features, dstsrc2src, dstsrc2dst, dif_mat,</span></span><br><span class="line"><span class="params">                 relation_vec, attention_vec</span>):</span><br><span class="line">        <span class="comment"># Equation 5,6 in the paper        增加可训练的关系注意力参数</span></span><br><span class="line">        x = <span class="built_in">super</span>().__call__(dstsrc_features, dstsrc2src, dstsrc2dst, dif_mat)</span><br><span class="line">        relation_features = tf.tile([relation_vec], [x.shape[<span class="number">0</span>], <span class="number">1</span>])</span><br><span class="line">        alpha = tf.matmul(tf.concat([x, relation_features], <span class="number">1</span>), attention_vec)</span><br><span class="line">        alpha = tf.tile(alpha, [<span class="number">1</span>, x.shape[-<span class="number">1</span>]])      <span class="comment"># 注意力机制函数alpha</span></span><br><span class="line">        x = tf.multiply(alpha, x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"> </span><br><span class="line"><span class="comment"># GraphConsis网络模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GraphConsis</span>(<span class="title class_ inherited__">Model</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, features_dim: <span class="built_in">int</span>, internal_dim: <span class="built_in">int</span>, num_layers: <span class="built_in">int</span>,</span></span><br><span class="line"><span class="params">                 num_classes: <span class="built_in">int</span>, num_relations: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param int features_dim: input dimension                输入特征维度</span></span><br><span class="line"><span class="string">        :param int internal_dim: hidden layer dimension         隐含层数</span></span><br><span class="line"><span class="string">        :param int num_layers: number of sample layer           网络层数</span></span><br><span class="line"><span class="string">        :param int num_classes: number of node classes          二分类</span></span><br><span class="line"><span class="string">        :param int num_relations: number of relations           三种关系</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.seq_layers = []          <span class="comment"># 两个Linear layer + 一个Dense layer</span></span><br><span class="line">        self.attention_vec = tf.Variable(tf.random.uniform(</span><br><span class="line">            [<span class="number">2</span> * internal_dim, <span class="number">1</span>], dtype=tf.float32))       <span class="comment"># 注意力参数，维度与隐层维数相关</span></span><br><span class="line">        self.relation_vectors = tf.Variable(tf.random.uniform(      <span class="comment"># 不同关系聚合参数</span></span><br><span class="line">            [num_relations, internal_dim], dtype=tf.float32))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, num_layers + <span class="number">1</span>):</span><br><span class="line">            layer_name = <span class="string">&quot;agg_lv&quot;</span> + <span class="built_in">str</span>(i)</span><br><span class="line">            input_dim = internal_dim <span class="keyword">if</span> i &gt; <span class="number">1</span> <span class="keyword">else</span> features_dim</span><br><span class="line">            aggregator_layer = ConsisMeanAggregator(input_dim, internal_dim, name=layer_name)</span><br><span class="line">            self.seq_layers.append(aggregator_layer)            <span class="comment"># 添加线性聚合层</span></span><br><span class="line"> </span><br><span class="line">        self.classifier = tf.keras.layers.Dense(num_classes,    <span class="comment"># 最后一层维度 --&gt; 2，softmax激活分类</span></span><br><span class="line">                                                activation=tf.nn.softmax,</span><br><span class="line">                                                use_bias=<span class="literal">False</span>,</span><br><span class="line">                                                kernel_initializer=init_fn,</span><br><span class="line">                                                name=<span class="string">&quot;classifier&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">self, minibatchs: namedtuple, features: tf.Tensor</span>) -&gt; tf.Tensor:</span><br><span class="line">        xs = []   <span class="comment"># 一个minibatch的节点的嵌入列表</span></span><br><span class="line">        <span class="keyword">for</span> i, minibatch <span class="keyword">in</span> <span class="built_in">enumerate</span>(minibatchs):      <span class="comment"># 遍历每个节点</span></span><br><span class="line">            <span class="comment"># 节点初始特征作为h(0)嵌入</span></span><br><span class="line">            x = tf.gather(tf.Variable(features, dtype=<span class="built_in">float</span>), tf.squeeze(minibatch.src_nodes))   </span><br><span class="line">            <span class="comment"># 聚合节点邻居信息得到最终层嵌入x</span></span><br><span class="line">            <span class="keyword">for</span> aggregator_layer <span class="keyword">in</span> self.seq_layers:</span><br><span class="line">                x = aggregator_layer(x,     <span class="comment"># 输入特征（上一层的嵌入）</span></span><br><span class="line">                                     minibatch.dstsrc2srcs.pop(),    <span class="comment"># 邻节点信息</span></span><br><span class="line">                                     minibatch.dstsrc2dsts.pop(),    <span class="comment"># 目标节点信息</span></span><br><span class="line">                                     minibatch.dif_mats.pop(),       <span class="comment"># 混淆矩阵</span></span><br><span class="line">                                     tf.nn.embedding_lookup(</span><br><span class="line">                                         self.relation_vectors, i),     <span class="comment"># 关系注意力参数</span></span><br><span class="line">                                     self.attention_vec     <span class="comment"># 注意力参数</span></span><br><span class="line">                                     )</span><br><span class="line">            xs.append(x)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> self.classifier(tf.nn.l2_normalize(tf.reduce_sum(</span><br><span class="line">            tf.stack(xs, <span class="number">1</span>), axis=<span class="number">1</span>, keepdims=<span class="literal">False</span>), <span class="number">1</span>))    <span class="comment"># 执行分类</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-网络训练"><a href="#6-网络训练" class="headerlink" title="6. 网络训练"></a>6. 网络训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os           <span class="comment"># 禁用GPU</span></span><br><span class="line">os.environ[<span class="string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="string">&quot;-1&quot;</span></span><br><span class="line"> </span><br><span class="line">num_classes = <span class="number">2</span></span><br><span class="line">lr = <span class="number">0.5</span></span><br><span class="line">nhid = <span class="number">128</span>    <span class="comment"># 128个隐层。输入32 --&gt; 拼接后64</span></span><br><span class="line">epochs = <span class="number">1</span></span><br><span class="line">batch_size = <span class="number">512</span></span><br><span class="line"> </span><br><span class="line">train_nodes = split_ids[<span class="number">0</span>]</span><br><span class="line">val_nodes = split_ids[<span class="number">1</span>]</span><br><span class="line">test_nodes = split_ids[<span class="number">2</span>]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 图网络模型建立</span></span><br><span class="line">model = GraphConsis(features.shape[-<span class="number">1</span>], nhid, <span class="built_in">len</span>(sample_sizes), num_classes, <span class="built_in">len</span>(neigh_dicts))</span><br><span class="line"><span class="comment"># 梯度下降优化器</span></span><br><span class="line">optimizer = tf.keras.optimizers.SGD(learning_rate=lr)</span><br><span class="line"><span class="comment"># 损失函数定义</span></span><br><span class="line">loss_fn = tf.keras.losses.SparseCategoricalCrossentropy()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epochs):        <span class="comment"># 训练轮次</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Epoch <span class="subst">&#123;epoch:d&#125;</span>: training...&quot;</span>)</span><br><span class="line">    <span class="comment"># 迭代产生每一批的节点(batch, lables)</span></span><br><span class="line">    minibatch_generator = generate_training_minibatch(train_nodes)</span><br><span class="line">    batchs = <span class="built_in">len</span>(train_nodes) / batch_size     <span class="comment"># 每一轮分为多少批</span></span><br><span class="line">    <span class="keyword">for</span> inputs, inputs_labels <span class="keyword">in</span> tqdm(minibatch_generator, total=batchs):       <span class="comment"># tqdm显示批次进度</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">            predicted = model(inputs, features)     <span class="comment"># 输出预测值</span></span><br><span class="line">            loss = loss_fn(tf.convert_to_tensor(inputs_labels), predicted)      <span class="comment"># 损失值</span></span><br><span class="line">            acc = accuracy_score(inputs_labels,     <span class="comment"># 准确率</span></span><br><span class="line">                                 predicted.numpy().argmax(axis=<span class="number">1</span>))</span><br><span class="line">        grads = tape.gradient(loss, model.trainable_weights)</span><br><span class="line">        optimizer.apply_gradients(<span class="built_in">zip</span>(grads, model.trainable_weights))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot; loss: <span class="subst">&#123;loss.numpy():<span class="number">.4</span>f&#125;</span>, acc: <span class="subst">&#123;acc:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># validation</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Validating...&quot;</span>)</span><br><span class="line">    val_results = model(build_batch(val_nodes, neigh_dicts,</span><br><span class="line">                                    args.sample_sizes, features), features)</span><br><span class="line">    loss = loss_fn(tf.convert_to_tensor(labels[val_nodes]), val_results)</span><br><span class="line">    val_acc = accuracy_score(labels[val_nodes],</span><br><span class="line">                             val_results.numpy().argmax(axis=<span class="number">1</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot; Epoch: <span class="subst">&#123;epoch:d&#125;</span>, &quot;</span></span><br><span class="line">          <span class="string">f&quot;loss: <span class="subst">&#123;loss.numpy():<span class="number">.4</span>f&#125;</span>, &quot;</span></span><br><span class="line">          <span class="string">f&quot;acc: <span class="subst">&#123;val_acc:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># testing</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing...&quot;</span>)</span><br><span class="line">results = model(build_batch(test_nodes, neigh_dicts, sample_sizes, features), features)</span><br><span class="line">test_acc = accuracy_score(labels[test_nodes],results.numpy().argmax(axis=<span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Test acc: <span class="subst">&#123;test_acc:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 计算 AUC</span></span><br><span class="line">fpr, tpr, thresholds = metrics.roc_curve(labels[test_nodes], results.numpy().argmax(axis=<span class="number">1</span>), pos_label=<span class="number">1</span>)</span><br><span class="line">auc = metrics.auc(fpr, tpr)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;AUC: <span class="subst">&#123;auc&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-实验结果"><a href="#7-实验结果" class="headerlink" title="7. 实验结果"></a>7. 实验结果</h3><p>经过1、个epoch训练和验证，Accuracy看起来在85%左右：</p>
+<blockquote>
+<p> 98%|█████████████████████████████████▍| 226&#x2F;229.765625 [04:37&lt;00:04,  1.24s&#x2F;it]<br> loss: 0.3349, acc: 0.8984<br> 99%|█████████████████████████████████▋| 228&#x2F;229.765625 [04:39&lt;00:02,  1.24s&#x2F;it]<br> loss: 0.4782, acc: 0.8203<br>100%|██████████████████████████████████| 230&#x2F;229.765625 [04:41&lt;00:00,  1.16s&#x2F;it]<br> loss: 0.3758, acc: 0.8763<br>Validating…<br> Epoch: 1, loss: 0.4136, acc: 0.8548</p>
+</blockquote>
+<p>但是测试时发现accuracy虽然也有85%，但是AUC只有<strong>0.5</strong>：</p>
+<blockquote>
+<p>Testing…<br>Test acc: 0.8547<br>AUC: 0.5</p>
+</blockquote>
+<p>其中测试集共有9191条数据，<code>label=1</code>的数据有1335条（14.5%），也就是说模型预测全部结果为<code>label=0</code>，相当于全部盲猜0也有85%的准确率（样本分布不均衡造成），因此Accuracy基本不能作为模型评判标准，应该关注<strong>AUC</strong>（论文实验结果：0.7428）和<strong>F1</strong>等。<del>但实际训练时模型参数未调好一直没有收敛。</del> 10轮训练后测试结果：</p>
+<blockquote>
+<p>Testing…<br>Test acc: 0.8666<br>AUC: 0.7161637947474008</p>
+</blockquote>
+<p>使用GPU运行时发现GPU内存占用率高，但是GPU利用率低，是因为大部分计算消耗在创建minibatch上：从大图中提取当前训练批次的节点的混淆矩阵，导致验证或测试时内存溢出。</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Yanjy-OnlyOne/p/11288098.html">sklearn的train_test_split()各函数参数含义解释（非常全）</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/09/28/2021-09-28-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91Yelp%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9B%B8%E5%85%B3/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-10-03 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/10/03/2021-10-03-DNS/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">1. 数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%92%8C%E5%88%92%E5%88%86"><span class="toc-text">2. 数据加载和划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-text">3. 数据预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%82%BB%E5%B1%85%E9%87%87%E6%A0%B7%E5%92%8C%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%90%E5%9B%BE"><span class="toc-text">4. 邻居采样和创建计算子图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E9%87%87%E6%A0%B7%E5%92%8C%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5"><span class="toc-text">4.1 采样和混淆矩阵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%9B%BE%E8%8A%82%E7%82%B9%E7%9A%84minibatch"><span class="toc-text">4.2 创建计算图节点的minibatch</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="toc-text">5. 网络模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83"><span class="toc-text">6. 网络训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-text">7. 实验结果</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

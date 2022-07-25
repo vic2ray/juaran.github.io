@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      《信息安全理论与技术》实验 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">《信息安全理论与技术》实验</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-04-24 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="CNN分层特征可视化"><a href="#CNN分层特征可视化" class="headerlink" title="CNN分层特征可视化"></a>CNN分层特征可视化</h2><p><strong>姓名</strong>：</p>
+<p><strong>学号</strong>：200320105</p>
+<p><strong>指导教师</strong>：</p>
+<h2 id="一、实验目标"><a href="#一、实验目标" class="headerlink" title="一、实验目标"></a>一、实验目标</h2><ol>
+<li>使用CNN（卷积神经网络）训练图片数据完成机器学习分类任务</li>
+<li>在已训练好的模型上，可视化每一层网络节点提取的低级特征、中级特征和高级特征</li>
+</ol>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/1457797187_33943.png" alt="1457797187_33943" style="zoom: 67%;" />
+
+<h2 id="二、实验内容"><a href="#二、实验内容" class="headerlink" title="二、实验内容"></a>二、实验内容</h2><h3 id="1-数据集"><a href="#1-数据集" class="headerlink" title="1. 数据集"></a>1. 数据集</h3><p>实验将分别对两个数据集进行。一个是机器学习经典分类数据集CIFAR-10，包含60000张32x32大小的彩色图像，分为10个类别；另一个是自收集的明星人脸数据集，包含6719张224x224大小的彩色图像，也是10个类别。</p>
+<ul>
+<li>CIFAR-10数据集</li>
+</ul>
+<p>该数据集可以从Pytorch的torchvision工具库直接引入，第一次引入时将从网络下载。训练数据集50000张，测试数据集10000张。数据集特点是图像不大，数据量充足，训练时模型参数少，可以达到很好的训练和测试效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets</span><br><span class="line"> </span><br><span class="line">train_dataset = datasets.CIFAR10(root=<span class="string">&#x27;cifar10&#x27;</span>,  <span class="comment"># 数据集根目录</span></span><br><span class="line">                     transform=transforms.ToTensor(),  <span class="comment"># 转换为Tensor</span></span><br><span class="line">                     train=<span class="literal">True</span>)  <span class="comment"># 训练数据集</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425115908156.png" alt="image-20210425115908156" style="zoom: 67%;" />
+
+<ul>
+<li>明星人脸数据集</li>
+</ul>
+<p>从网络中下载十位明星的图片，通过人脸剪裁工具检测并保存大小为224x224的人脸部分，训练数据集大小6719，每个人物平均约600张。数据集特点是图像大，数据量少，训练参数量多，人脸的区分度不如上一个数据集，因此训练较为困难。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重写Dataset类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyDataset</span>(<span class="title class_ inherited__">Dataset</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data_dir, transform: transforms = <span class="literal">None</span></span>):</span><br><span class="line">        self.data_info = self.get_img_info(data_dir)</span><br><span class="line">        self.transform = transform</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, index</span>):</span><br><span class="line">        label, img_path = self.data_info[index]</span><br><span class="line">        im = Image.<span class="built_in">open</span>(img_path).convert(<span class="string">&#x27;RGB&#x27;</span>)  <span class="comment"># PIL.Image</span></span><br><span class="line">        <span class="keyword">if</span> self.transform <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            im = self.transform(im)  <span class="comment"># 图像变换</span></span><br><span class="line">        <span class="keyword">return</span> im, label   <span class="comment"># (torch.Size([3, 224, 224]), 0)</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.data_info)</span><br><span class="line"> </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_img_info</span>(<span class="params">data_dir</span>):</span><br><span class="line">        img_info = []</span><br><span class="line">        <span class="keyword">for</span> root, dirs, file <span class="keyword">in</span> os.walk(data_dir):</span><br><span class="line">            <span class="keyword">for</span> sub_dir <span class="keyword">in</span> dirs:  <span class="comment"># 遍历类别目录</span></span><br><span class="line">                img_label = <span class="built_in">int</span>(sub_dir.split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">0</span>])  <span class="comment"># 提取类别标签</span></span><br><span class="line">                img_names = os.listdir(os.path.join(root, sub_dir))  <span class="comment"># 拼接图片路径</span></span><br><span class="line">                img_paths = [os.path.join(root, sub_dir, img_name) <span class="keyword">for</span> img_name <span class="keyword">in</span> img_names]</span><br><span class="line">                img_info.extend([(img_label, img_path) <span class="keyword">for</span> img_path <span class="keyword">in</span> img_paths])</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> img_info  <span class="comment"># [(0, &#x27;train_dataset/1-蔡徐坤/0002.jpg&#x27;), ...]</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425120446353.png" alt="image-20210425120446353" style="zoom:80%;" />
+
+<h3 id="2-模型"><a href="#2-模型" class="headerlink" title="2. 模型"></a>2. 模型</h3><p>本实验选择VGG-16卷积神经网络作为机器学习模型，其网络结构如下图所示。模型隐层包含前13个卷积层和后3个全连接层，每一层经过卷积或全连接+ReLU激活操作，中间有五个池化层。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/v2-dfe4eaaa4450e2b58b38c5fe82f918c0_1440w.jpg" alt="一文读懂VGG网络"></p>
+<ul>
+<li>构建模型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 构建网络模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VGG16</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(VGG16, self).__init__()</span><br><span class="line">        self.net = nn.Sequential(</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">64</span>, out_channels=<span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">64</span>, out_channels=<span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">128</span>, out_channels=<span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">128</span>, out_channels=<span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            nn.Flatten(),    </span><br><span class="line">            nn.Linear(in_features=<span class="number">512</span>, out_features=<span class="number">100</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(in_features=<span class="number">100</span>, out_features=<span class="number">100</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(in_features=<span class="number">100</span>, out_features=<span class="number">10</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">        )</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> self.net(x)</span><br></pre></td></tr></table></figure>
+
+<p>注意最后三个全连接层参数需要根据输入图像大小进行调整。按照VGG网络模型，当输入图像大小为224x224x3时，第一个全连接层输入为512x7x7，输出为4096（FC-4096、FC-4096、FC-10）；在CIFAR-10数据集上，输入图像32x32x3，得到第一个全连接层输入为512x1x1，相应的将全连接层输出调整为100（FC-100、FC-100、FC-10）。</p>
+<ul>
+<li>模型参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchsummary <span class="keyword">import</span> summary</span><br><span class="line"> </span><br><span class="line">model = VGG16()</span><br><span class="line">model.cuda()  </span><br><span class="line"><span class="comment"># summary(model, input_size=(3, 32, 32))</span></span><br><span class="line">summary(model, input_size=(<span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Input Size 3x32x32: Total params: 14,777,098</p>
+<p>Input Size 3x224x224: Total params: 134,301,514</p>
+</blockquote>
+<h3 id="3-训练"><a href="#3-训练" class="headerlink" title="3. 训练"></a>3. 训练</h3><ul>
+<li>开始训练</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> optim</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> MyDataset</span><br><span class="line"><span class="keyword">from</span> vgg16 <span class="keyword">import</span> VGG16</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 0. 读取显卡</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ[<span class="string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="built_in">print</span>(torch.cuda.is_available())</span><br><span class="line"><span class="comment"># 1. 读取数据集</span></span><br><span class="line">train_dataset = MyDataset(data_dir=<span class="string">&#x27;train_dataset&#x27;</span>,</span><br><span class="line">                          transform=transforms.Compose(</span><br><span class="line">                              [transforms.Resize([<span class="number">224</span>, <span class="number">224</span>]),</span><br><span class="line">                               transforms.ToTensor()]</span><br><span class="line">                          ))</span><br><span class="line"><span class="comment"># 2. 数据迭代器</span></span><br><span class="line">train_batch_size = <span class="number">32</span></span><br><span class="line">train_dataloader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 3. 实例化模型</span></span><br><span class="line">model = VGG16()</span><br><span class="line">model.cuda()</span><br><span class="line"><span class="comment"># 如果保存了模型参数，加载最后一次参数继续训练</span></span><br><span class="line"><span class="comment"># model.load_state_dict(torch.load(f=&#x27;models/state_dict_epoch100_50.pth&#x27;))</span></span><br><span class="line"><span class="comment"># 4. 训练设置</span></span><br><span class="line">epochs = <span class="number">50</span>  <span class="comment"># 训练轮数</span></span><br><span class="line">display = <span class="number">100</span>  <span class="comment"># 显示步长</span></span><br><span class="line">train_batch_size = <span class="number">32</span>  <span class="comment"># 训练批次大小</span></span><br><span class="line"><span class="comment"># 数据加载器（迭代器，每次迭代返回一个batch大小的数据data+标签target）</span></span><br><span class="line">train_dataloader = DataLoader(dataset=train_dataset, batch_size=train_batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 优化器、损失函数</span></span><br><span class="line">optimizer = optim.Adam(params=model.parameters(), lr=<span class="number">1e-3</span>)</span><br><span class="line">criteon = torch.nn.CrossEntropyLoss()  <span class="comment"># 交叉熵损失</span></span><br><span class="line"><span class="comment"># 5. 开启训练</span></span><br><span class="line">model.train()</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">    <span class="keyword">for</span> i, train_data <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_dataloader):</span><br><span class="line">        <span class="comment"># 正向传播</span></span><br><span class="line">        data, target = train_data  <span class="comment"># 获取数据和标签</span></span><br><span class="line">        data = data.to(device)    <span class="comment"># 数据载入显卡</span></span><br><span class="line">        target = target.to(device)    <span class="comment"># 数据载入显卡</span></span><br><span class="line">        pred = model(data)  <span class="comment"># 模型输出预测值</span></span><br><span class="line">        loss = criteon(pred, target)  <span class="comment"># 损失</span></span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="comment"># 显示Loss</span></span><br><span class="line">        <span class="keyword">if</span> i % display == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Epoch&#x27;</span>, epoch + <span class="number">1</span>, (i + <span class="number">1</span>) * train_batch_size, <span class="string">&#x27;/ 50000&#x27;</span>, <span class="string">&#x27;Loss&#x27;</span>, loss.item())</span><br><span class="line">            <span class="comment"># 6. 每10轮保存一次模型</span></span><br><span class="line">            <span class="keyword">if</span> epoch % <span class="number">10</span> == <span class="number">0</span>: </span><br><span class="line">                model_epoch = <span class="string">&#x27;models/cifar10_epoch_&#x27;</span> + <span class="built_in">str</span>(epoch+<span class="number">10</span>) + <span class="string">&#x27;.pth&#x27;</span></span><br><span class="line">                torch.save(obj=model.state_dict(), f=model_epoch)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Epoch 1 128 &#x2F; 50000 Loss 2.308591842651367<br>Epoch 2 128 &#x2F; 50000 Loss 2.3025848865509033<br>Epoch 3 128 &#x2F; 50000 Loss 2.3025848865509033<br>Epoch 4 128 &#x2F; 50000 Loss 2.3025848865509033<br>Epoch 5 128 &#x2F; 50000 Loss 2.3025848865509033<br>……</p>
+</blockquote>
+<ul>
+<li>训练调参</li>
+</ul>
+<p>训练时发现Loss一直不下降，参考以下调参技巧对模型和训练参数进行调整：</p>
+<ol>
+<li>模型结构和特征工程存在问题——修正网络结构，检查参数是否错误</li>
+<li>权重初始化方案有问题</li>
+<li>正则化过度，模型欠拟合</li>
+<li>选择合适的激活函数、损失函数</li>
+<li>选择合适的优化器和学习率</li>
+<li>梯度消失、梯度爆炸——使用Dropout、BatchNorm等方法减少学习参数</li>
+<li>batch_size不合理</li>
+<li>数据集本身有问题——作无量纲化、打乱等</li>
+<li>训练时间不够长</li>
+</ol>
+<p>最终发现是优化器的选择不合适，当调整为使用<strong>Adagrad优化器</strong>后，Loss下降速度加快：</p>
+<blockquote>
+<p>Epoch 1 12832 &#x2F; 50000 Loss 2.197270393371582<br>Epoch 1 16032 &#x2F; 50000 Loss 2.1675164699554443<br>Epoch 1 19232 &#x2F; 50000 Loss 2.0508370399475098<br>Epoch 1 22432 &#x2F; 50000 Loss 1.837303638458252<br>Epoch 1 25632 &#x2F; 50000 Loss 1.862862467765808</p>
+</blockquote>
+<h3 id="4-预测（可视化）"><a href="#4-预测（可视化）" class="headerlink" title="4. 预测（可视化）"></a>4. 预测（可视化）</h3><p>实例化Vgg-16网络模型，加载已训练好的模型参数字典，字典包含每一层的线性变换参数Weight和bias。按照网络结构依次对上一层输入进行卷积、激活等操作，将每一层的特征图（feature map）可视化输出。由于每一层卷积核数量不同（64、128、256、512），随机选取10个卷积核对应的特征图。网络前13层为卷积层，后3层全连接层没有高宽维度，最后输出各类别预测的概率值，因此仅对卷积层作可视化处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> vgg <span class="keyword">import</span> VGG16</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加载模型参数</span></span><br><span class="line">model = VGG16()     <span class="comment"># 由于使用GPU训练保存的模型，加载时转为CPU类型的参数</span></span><br><span class="line">model.load_state_dict(torch.load(f=<span class="string">&#x27;./models/cifar10_epoch_40.pth&#x27;</span>, map_location=torch.device(<span class="string">&#x27;cpu&#x27;</span>)))</span><br><span class="line"><span class="comment"># 读取模型参数</span></span><br><span class="line">params = <span class="built_in">list</span>(model.named_parameters())</span><br><span class="line"><span class="comment"># 读取图片数据</span></span><br><span class="line">im, target = test_dataset.__getitem__(<span class="number">0</span>)     <span class="comment"># TensorFloat, 32, 32, 3</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;所属分类&quot;</span>, target)</span><br><span class="line">im = im.reshape(<span class="number">1</span>, <span class="number">3</span>, <span class="number">32</span>, <span class="number">32</span>)     <span class="comment"># [1, 3, width, height]</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取每一卷积层的输出结果，传入层数和上一层输入</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_conv_output</span>(<span class="params">params, layer, conv_in</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;【第 <span class="subst">&#123;layer&#125;</span> 层】&quot;</span>)</span><br><span class="line">    <span class="comment"># 读取第一层weight和bias进行卷积操作</span></span><br><span class="line">    weight, bias = params[(layer - <span class="number">1</span>) * <span class="number">2</span>], params[(layer - <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;权重&quot;</span>, weight[<span class="number">0</span>], weight[<span class="number">1</span>].shape)  <span class="comment"># [64, 3, 3, 3]</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;偏置&quot;</span>, bias[<span class="number">0</span>], bias[<span class="number">1</span>].shape)  <span class="comment"># [64]</span></span><br><span class="line">    <span class="comment"># 卷积</span></span><br><span class="line">    conv_out = F.conv2d(<span class="built_in">input</span>=conv_in, weight=weight[<span class="number">1</span>], bias=bias[<span class="number">1</span>], padding=<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;卷积输出&quot;</span>, conv_out.shape)  <span class="comment"># [1, 64, 32, 32]</span></span><br><span class="line">    conv_out = nn.ReLU()(conv_out)    <span class="comment"># 激活</span></span><br><span class="line">    <span class="comment"># 保存特征图</span></span><br><span class="line">    save_feature_map(conv_out, feature_num=<span class="number">10</span>)</span><br><span class="line">    <span class="comment"># 池化</span></span><br><span class="line">    <span class="keyword">if</span> layer <span class="keyword">in</span> [<span class="number">2</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">13</span>]:</span><br><span class="line">        conv_out = nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)(conv_out)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> conv_out</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取每一全连接层的输出结果，传入层数和上一层输入</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_linear_output</span>(<span class="params">params, layer, linear_in</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;【第 <span class="subst">&#123;layer&#125;</span> 层】&quot;</span>)</span><br><span class="line">    <span class="comment"># 读取第一层weight和bias进行卷积操作</span></span><br><span class="line">    weight, bias = params[(layer - <span class="number">1</span>) * <span class="number">2</span>], params[(layer - <span class="number">1</span>) * <span class="number">2</span> + <span class="number">1</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;权重&quot;</span>, weight[<span class="number">0</span>], <span class="string">&quot;shape&quot;</span>, weight[<span class="number">1</span>].shape)  <span class="comment"># [64, 3, 3, 3]</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;偏置&quot;</span>, bias[<span class="number">0</span>], <span class="string">&quot;shape&quot;</span>, bias[<span class="number">1</span>].shape)  <span class="comment"># [64]</span></span><br><span class="line">    <span class="comment"># 全连接</span></span><br><span class="line">    layer_out = F.linear(linear_in, weight[<span class="number">1</span>], bias[<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;全连接输出&quot;</span>, layer_out.shape)</span><br><span class="line">    layer_out = nn.ReLU()(layer_out)        <span class="comment"># 激活</span></span><br><span class="line">    <span class="comment"># TODO 保存特征图</span></span><br><span class="line">    <span class="comment"># save_feature_map(layer_out, 10)</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> layer_out</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存特征图</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_feature_map</span>(<span class="params">conv_out, feature_num: <span class="built_in">int</span></span>):</span><br><span class="line">    feature_maps = conv_out.detach().numpy()  <span class="comment"># Tensor转numpy</span></span><br><span class="line">    <span class="comment"># 降维，(1, 64, 32, 32) -&gt; (64, 32, 32)</span></span><br><span class="line">    feature_maps = feature_maps.squeeze()       <span class="comment"># 512, 2, 2 -&gt; 100</span></span><br><span class="line">    <span class="comment"># if feature_maps.shape[0] &lt;= 100:</span></span><br><span class="line">    <span class="comment">#     feature_maps = np.expand_dims(np.expand_dims(feature_maps, 1), 1)</span></span><br><span class="line">    <span class="built_in">print</span>(feature_maps.shape)</span><br><span class="line">    <span class="comment"># 随机选取一个卷积核得到的特征图</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(feature_num):</span><br><span class="line">        random_feature_map = feature_maps[random.randint(<span class="number">0</span>, feature_maps.shape[<span class="number">0</span>] - <span class="number">1</span>)]  <span class="comment"># 第一维参数为特征图数量</span></span><br><span class="line">        display_feature_maps.append( random_feature_map )</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 显示读入图像</span></span><br><span class="line">plt.imshow(test_dataset.data[<span class="number">0</span>])</span><br><span class="line">display_feature_maps = []</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 1-13层     卷积层</span></span><br><span class="line">last_conv_out = im     <span class="comment"># 第一次卷积输入为原始图像</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">14</span>):      <span class="comment"># 前13层依次卷积，上一次卷积结果传入下一层输入</span></span><br><span class="line">    last_conv_out = get_conv_output(params, layer, last_conv_out)</span><br><span class="line"><span class="comment"># 14-16层    全连接层</span></span><br><span class="line">layer13_out = nn.Flatten()(last_conv_out)     <span class="comment"># 展平</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;【展平】&quot;</span>, layer13_out.shape)</span><br><span class="line">last_linear_out = layer13_out     <span class="comment"># 第一次全连接输入为13层展平结果</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">14</span>, <span class="number">17</span>):      <span class="comment"># 前13层依次卷积，上一次卷积结果传入下一层输入</span></span><br><span class="line">    last_linear_out = get_linear_output(params, layer, last_linear_out)</span><br><span class="line"><span class="built_in">print</span>(last_linear_out)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;输出分类&quot;</span>, torch.argmax(last_linear_out, axis=<span class="number">1</span>).numpy()[<span class="number">0</span>])</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 绘制每一层的特征图</span></span><br><span class="line">plt.figure()</span><br><span class="line"><span class="keyword">for</span> idx, i <span class="keyword">in</span> <span class="built_in">enumerate</span>(np.arange(<span class="number">0</span>, <span class="number">130</span>).reshape(<span class="number">13</span>, <span class="number">10</span>).T.reshape(<span class="number">130</span>) + <span class="number">1</span>):</span><br><span class="line">    plt.subplot(<span class="number">10</span>, <span class="number">13</span>, idx+<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># print(display_feature_maps[i-1].shape)</span></span><br><span class="line">    plt.imshow(display_feature_maps[i-<span class="number">1</span>], cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">    plt.xticks([])</span><br><span class="line">    plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、实验结果"><a href="#三、实验结果" class="headerlink" title="三、实验结果"></a>三、实验结果</h2><h3 id="1-CIFAR-10数据集"><a href="#1-CIFAR-10数据集" class="headerlink" title="1. CIFAR-10数据集"></a>1. CIFAR-10数据集</h3><p>在对CIFAR-10数据集的实验过程中，经过50轮训练得到损失值Loss低于0.01，且对测试数据集的验证准确率高达99.1%。</p>
+<p>第一张：输入Cat类别图像，输出Softmax值为：[ 0.0000,  4.6779,  2.4917, 23.1221,  0.0000, 11.7948,  8.8059,  0.0000, 9.1107,  0.0000]，其中最大值对应类别为Cat，其次为Dog。下图为各个卷积层可视化结果：</p>
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/cat.png" alt="cat" style="zoom: 25%;" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/cat_visual.png" alt="cat_visual" style="zoom:150%;" /></td>
+        <td>
+            <ul>
+                <li>Cat:23.1</li>
+                <li>Dog:11.7</li>
+                <li>Ship:9.1</li>
+                <li>Car:4.6</li>
+                <li>Bird:2.4</li>
+                </ul>      
+        </td>
+    </tr>
+</table>
+
+<p>第二张：输入Dog类别图像，输出Softmax值为：[ 1.3165,  0.0000,  9.1405, 11.5022,  3.2681, 25.5454,  0.0000, 11.5654, 0.0000,  0.6764]，其中最大值对应类别Dog，其次为Cat。下图为各个卷积层可视化结果：</p>
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425201444402.png" alt="image-20210425201444402" style="zoom:33%;" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425201519222.png" alt="image-20210425201519222" style="zoom:80%;" /></td>
+        <td>
+            <ul>
+                <li>Dog:25.5</li>
+                <li>Cat:11.5</li>
+                <li>Horse:11.5</li>
+                <li>Bird:9.1</li>
+                <li>Deer:3.2</li>
+                </ul>      
+        </td>
+    </tr>
+</table>
+
+<h3 id="2-人脸数据集"><a href="#2-人脸数据集" class="headerlink" title="2. 人脸数据集"></a>2. 人脸数据集</h3><p>由于自收集的明星人脸数据集本身质量不高、学习参数过多等问题，使用VGG-16网络训练了500轮依然没有将损失降到较低，因此所得模型仅用于可视化卷积层，模型输出值没有参考价值。</p>
+<blockquote>
+<p>……<br>Epoch 500 5440 &#x2F; 6734 Loss 1.2500115633010864<br>Epoch 500 5760 &#x2F; 6734 Loss 1.1513397693634033<br>Epoch 500 6080 &#x2F; 6734 Loss 1.1512929201126099<br>Epoch 500 6400 &#x2F; 6734 Loss 1.1513009071350098<br>Epoch 500 6720 &#x2F; 6734 Loss 0.8223527073860168</p>
+</blockquote>
+<p>因为所得模型并不能拟合该分类任务，在卷积层上的直接表现就是部分卷积核不能正确提取出输入目标的特征，参数为零矩阵使得卷积结果为全0的黑色图，而且各个层之间提取的特征混乱无关联。</p>
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/0004.jpg" alt="0004" style="zoom: 50%;" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425105659102.png" /></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425203849928.png" alt="image-20210425203849928" style="zoom:30%;" /></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210425203824784.png" /></td>
+    </tr>
+</table>
+
+<h3 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h3><p>本次实验使用Pytorch构建了VGG-16卷积神经网络模型，并分别对两个不同数据集进行了学习训练和卷积层可视化。在简单数据集上，该模型取得不错训练和预测效果；但对于较为复杂的模型，需要更多数据和训练调试技巧。另一方面，VGG模型本身学习参数量大、消耗内存资源高，增加了训练成本和难度。</p>
+<p>在深度学习的可解释性上，本实验仅针对卷积网络每一层的卷积结果进行了可视化。卷积是图像处理的一种方式，用于提取边缘、纹理、去噪、锐化等，在CNN中，前几层提取的图像特征可以看做是普通的图像信息提取结果，池化、激活等操作进一步“压缩”这些特征信息，随着深度加深，特征“堆叠”越来越厚，可解析性也越来越差。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/04/19/2021-04-19-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E5%85%AB%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-04-24 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/04/26/2021-04-26-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E4%B9%9D%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CNN%E5%88%86%E5%B1%82%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-text">CNN分层特征可视化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%9E%E9%AA%8C%E7%9B%AE%E6%A0%87"><span class="toc-text">一、实验目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-text">二、实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">1. 数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A8%A1%E5%9E%8B"><span class="toc-text">2. 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%AD%E7%BB%83"><span class="toc-text">3. 训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%A2%84%E6%B5%8B%EF%BC%88%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%89"><span class="toc-text">4. 预测（可视化）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-text">三、实验结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CIFAR-10%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">1. CIFAR-10数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">2. 人脸数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%80%BB%E7%BB%93"><span class="toc-text">3. 总结</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

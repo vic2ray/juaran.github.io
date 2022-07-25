@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研一下】第六周学习汇报 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研一下】第六周学习汇报</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-04-08 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="PyTorch训练CIFAR10分类任务"><a href="#PyTorch训练CIFAR10分类任务" class="headerlink" title="PyTorch训练CIFAR10分类任务"></a>PyTorch训练CIFAR10分类任务</h2><h3 id="1-数据集加载"><a href="#1-数据集加载" class="headerlink" title="1. 数据集加载"></a>1. 数据集加载</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, transforms</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载数据集</span></span><br><span class="line">train_dataset = \</span><br><span class="line">    datasets.CIFAR10(root=<span class="string">&#x27;cifar10&#x27;</span>,  <span class="comment"># 数据集根目录</span></span><br><span class="line">                     transform=transforms.Compose([</span><br><span class="line">                         transforms.ToTensor(),  <span class="comment"># 转换为Tensor</span></span><br><span class="line">                         transforms.Resize([<span class="number">32</span>, <span class="number">32</span>])]),  <span class="comment"># 转换大小</span></span><br><span class="line">                     download=<span class="literal">True</span>,  <span class="comment"># 没有则下载</span></span><br><span class="line">                     train=<span class="literal">True</span>)  <span class="comment"># 训练数据集</span></span><br><span class="line">test_dataset = \</span><br><span class="line">    datasets.CIFAR10(root=<span class="string">&#x27;cifar10&#x27;</span>,  <span class="comment"># 数据集根目录</span></span><br><span class="line">                     transform=transforms.Compose([</span><br><span class="line">                         transforms.ToTensor(),  <span class="comment"># 转换为Tensor</span></span><br><span class="line">                         transforms.Resize([<span class="number">32</span>, <span class="number">32</span>])]),  <span class="comment"># 转换大小</span></span><br><span class="line">                     download=<span class="literal">True</span>,  <span class="comment"># 没有则下载</span></span><br><span class="line">                     train=<span class="literal">False</span>)  <span class="comment"># 测试数据集</span></span><br></pre></td></tr></table></figure>
+
+<p>查看数据集大小，训练集50000*3*32*32，测试集10000*3*32*32：</p>
+<blockquote>
+<p>print(train_dataset.data.shape)  # (50000, 32, 32, 3)<br>print(test_dataset.data.shape)  # (10000, 32, 32, 3)</p>
+<p>print(len(train_dataset.targets))  # 标签，50000</p>
+</blockquote>
+<h3 id="2-构建网络模型"><a href="#2-构建网络模型" class="headerlink" title="2. 构建网络模型"></a>2. 构建网络模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建网络模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyNet</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(MyNet, self).__init__()</span><br><span class="line"> </span><br><span class="line">        self.net = nn.Sequential(</span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">32</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), stride=(<span class="number">1</span>, <span class="number">1</span>)),    <span class="comment"># 卷积层，32*5*5</span></span><br><span class="line">            nn.ReLU(),    <span class="comment"># ReLU激活</span></span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),    <span class="comment"># 最大池化</span></span><br><span class="line">            nn.Conv2d(in_channels=<span class="number">32</span>, out_channels=<span class="number">64</span>, kernel_size=(<span class="number">5</span>, <span class="number">5</span>), stride=(<span class="number">1</span>, <span class="number">1</span>)),    <span class="comment"># 卷积层，64*5*5</span></span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>),</span><br><span class="line">            nn.Flatten(),    <span class="comment"># Flatten层</span></span><br><span class="line">            nn.Dropout(p=<span class="number">0.5</span>),    <span class="comment"># dropout不训练部分节点</span></span><br><span class="line">            nn.Linear(in_features=<span class="number">64</span> * <span class="number">5</span> * <span class="number">5</span>, out_features=<span class="number">1600</span>),    <span class="comment"># 全连接</span></span><br><span class="line">            nn.Dropout(p=<span class="number">0.5</span>),</span><br><span class="line">            nn.Linear(in_features=<span class="number">1600</span>, out_features=<span class="number">10</span>),    <span class="comment"># 输出层</span></span><br><span class="line">        )</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):    <span class="comment"># 前向传播</span></span><br><span class="line">        <span class="keyword">return</span> self.net(x)</span><br></pre></td></tr></table></figure>
+
+<p>网络模型需要根据训练效果进行调整优化。</p>
+<h3 id="3-训练参数"><a href="#3-训练参数" class="headerlink" title="3. 训练参数"></a>3. 训练参数</h3><p>使用DataLoader()分批batch获取数据并传入网络进行训练；设置训练迭代次数epochs；设置GPU训练，需要在每一个input输入和输出target后加上 <code>.to(device)</code>。</p>
+<p>设置优化器、学习率和交叉熵损失</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">epochs = <span class="number">50</span>  <span class="comment"># 训练轮数</span></span><br><span class="line">display = <span class="number">1000</span>  <span class="comment"># 显示步长</span></span><br><span class="line">train_batch_size = <span class="number">128</span>  <span class="comment"># 训练批次大小</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 数据加载器（迭代器，每次迭代返回一个batch大小的数据data+标签target）</span></span><br><span class="line">train_dataloader = DataLoader(dataset=train_dataset, batch_size=train_batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line"> </span><br><span class="line">moduel = MyNet()  <span class="comment"># 实例化模型</span></span><br><span class="line">device = torch.device(<span class="string">&#x27;cuda:1&#x27;</span>)</span><br><span class="line">moduel.to(device)</span><br><span class="line"> </span><br><span class="line">optimizer = optim.Adam(params=moduel.parameters(), lr=<span class="number">1e-3</span>)  <span class="comment"># 优化器</span></span><br><span class="line">criteon = torch.nn.CrossEntropyLoss()  <span class="comment"># 交叉熵损失</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-进行训练"><a href="#4-进行训练" class="headerlink" title="4. 进行训练"></a>4. 进行训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">moduel.train()  <span class="comment"># 当前为训练模式</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">    <span class="keyword">for</span> i, train_data <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_dataloader):</span><br><span class="line">        data, target = train_data  <span class="comment"># 获取数据和标签</span></span><br><span class="line">        data = data.to(device)</span><br><span class="line">        target = target.to(device)</span><br><span class="line">        pred = moduel(data)  <span class="comment"># 模型输出预测值</span></span><br><span class="line">        loss = criteon(pred, target)  <span class="comment"># 损失</span></span><br><span class="line"> </span><br><span class="line">        optimizer.zero_grad()  <span class="comment"># 固定搭配这三句。梯度清零</span></span><br><span class="line">        loss.backward()        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.step()    <span class="comment"># 更新梯度</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> i % display == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Epoch&#x27;</span>, epoch + <span class="number">1</span>, (i + <span class="number">1</span>) * <span class="number">32</span>, <span class="string">&#x27;/ 50000&#x27;</span>, <span class="string">&#x27;Loss&#x27;</span>, loss.item(), )</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存训练模型</span></span><br><span class="line">torch.save(obj=moduel.state_dict(), f=<span class="string">&#x27;models/cifar10.pth&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Epoch 1 32 &#x2F; 50000 Loss 2.306429862976074<br>Epoch 2 32 &#x2F; 50000 Loss 1.3437093496322632<br>Epoch 3 32 &#x2F; 50000 Loss 1.311663031578064<br>Epoch 4 32 &#x2F; 50000 Loss 1.275579810142517<br>Epoch 5 32 &#x2F; 50000 Loss 1.1473222970962524<br>Epoch 6 32 &#x2F; 50000 Loss 1.0987987518310547<br>Epoch 7 32 &#x2F; 50000 Loss 1.0071738958358765<br>Epoch 8 32 &#x2F; 50000 Loss 1.0531636476516724<br>Epoch 9 32 &#x2F; 50000 Loss 0.9103541374206543<br>Epoch 10 32 &#x2F; 50000 Loss 0.9287123084068298</p>
+<p>……</p>
+</blockquote>
+<h3 id="5-进行验证"><a href="#5-进行验证" class="headerlink" title="5. 进行验证"></a>5. 进行验证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据批加载器</span></span><br><span class="line">test_batch_size = <span class="number">64</span>  <span class="comment"># 测试批次大小</span></span><br><span class="line">test_dataloader = DataLoader(dataset=train_dataset, batch_size=test_batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加载训练模型</span></span><br><span class="line">model = MyNet().to(device)</span><br><span class="line">model.load_state_dict(torch.load(<span class="string">&#x27;models/cifar10.pth&#x27;</span>))</span><br><span class="line">moduel.<span class="built_in">eval</span>()        <span class="comment"># 当前为验证模式</span></span><br><span class="line">acc = <span class="number">0</span>        <span class="comment"># 精度</span></span><br><span class="line">total = <span class="number">0</span>    <span class="comment"># 验证数</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():        <span class="comment"># 验证模式下不用求导</span></span><br><span class="line">    <span class="keyword">for</span> data, target <span class="keyword">in</span> test_dataloader:</span><br><span class="line">        data = data.to(device)</span><br><span class="line">        target = target.to(device)    <span class="comment"># shape = [batch]</span></span><br><span class="line">        <span class="comment"># 预测结果取argmax</span></span><br><span class="line">        pred = moduel(data)        <span class="comment"># shape = [batch, 10]</span></span><br><span class="line">        pred = pred.argmax(dim=<span class="number">1</span>)    <span class="comment"># 取第二个维度的argmax，shape=[batch]</span></span><br><span class="line">        <span class="comment"># 比较pred和target，结果为True/Fasle，转为浮点数1/0，计数得到正确数</span></span><br><span class="line">        acc += torch.eq(pred, target).<span class="built_in">float</span>().<span class="built_in">sum</span>().item()</span><br><span class="line">        total += data.size(<span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">    acc = acc / total</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Validate accuracy: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(acc))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Validate accuracy: 0.79068</p>
+</blockquote>
+<p>最终达到79%的准确率，Not too bad.</p>
+<p>【参考】</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Sr4y1N71H?p=69">https://www.bilibili.com/video/BV1Sr4y1N71H?p=69</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/XLcaoyi/article/details/109754507">https://blog.csdn.net/XLcaoyi/article/details/109754507</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/04/03/2021-04-03-unified-login/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-04-08 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/04/16/2021-04-16-dangdang-crawler/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PyTorch%E8%AE%AD%E7%BB%83CIFAR10%E5%88%86%E7%B1%BB%E4%BB%BB%E5%8A%A1"><span class="toc-text">PyTorch训练CIFAR10分类任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%8A%A0%E8%BD%BD"><span class="toc-text">1. 数据集加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9E%84%E5%BB%BA%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="toc-text">2. 构建网络模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%AD%E7%BB%83%E5%8F%82%E6%95%B0"><span class="toc-text">3. 训练参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BF%9B%E8%A1%8C%E8%AE%AD%E7%BB%83"><span class="toc-text">4. 进行训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%BF%9B%E8%A1%8C%E9%AA%8C%E8%AF%81"><span class="toc-text">5. 进行验证</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      猿人学JS混淆分析第二题 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">猿人学JS混淆分析第二题</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2022-06-24 14:12:39
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="逆向分析">
+                    <b>#</b> 逆向分析
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/" title="反爬虫">
+                    <b>#</b> 反爬虫
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="题目信息"><a href="#题目信息" class="headerlink" title="题目信息"></a>题目信息</h1><ul>
+<li>题目地址：<a target="_blank" rel="noopener" href="https://match.yuanrenxue.com/match/2">https://match.yuanrenxue.com/match/2</a></li>
+<li>提交请求：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">GET</span> /api/match/<span class="number">2</span> <span class="variable constant_">HTTP</span>/<span class="number">2</span></span><br><span class="line"><span class="title class_">Host</span>: match.<span class="property">yuanrenxue</span>.<span class="property">com</span></span><br><span class="line"><span class="title class_">Cookie</span>: m=cb7bab05e4fd04b626c3e4e23c1c23cc|<span class="number">1655901448000</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>正常响应：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;state&quot;</span><span class="punctuation">:</span> <span class="string">&quot;success&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;data&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">3592</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">1829</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">3753</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">5054</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">9894</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">1037</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">7581</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">5257</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">8218</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">5244</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h1><h2 id="debugger"><a href="#debugger" class="headerlink" title="debugger"></a>debugger</h2><p>打开控制台直接陷入无限匿名debugger，查看堆栈调用，全都是在VM虚拟机中执行的函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span> <span class="title function_">anonymous</span>(<span class="params"></span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line"><span class="keyword">debugger</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>找到最上层调用函数，是在<code>&lt;script&gt;</code>标签内执行的，因此不能以替换文件的方式解决。我们掏出抓包工具进行分析，这里我用Burpsuite。一共抓到三个关键包：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 - Length: 277844</span></span><br><span class="line"><span class="variable constant_">GET</span> /match/<span class="number">2</span> <span class="variable constant_">HTTP</span>/<span class="number">2</span> <span class="number">200</span> <span class="variable constant_">OK</span></span><br><span class="line"></span><br><span class="line">&lt;script&gt;<span class="keyword">var</span> $dbsm_0x123c=[<span class="string">&#x27;\x48\x32\x41\x47&#x27;</span>, ...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2 - Length: 46951</span></span><br><span class="line"><span class="variable constant_">GET</span> /match/<span class="number">2</span> <span class="variable constant_">HTTP</span>/<span class="number">2</span> <span class="number">200</span> <span class="variable constant_">OK</span></span><br><span class="line"><span class="title class_">Cookie</span>: m=e83afe046ceafc5efee32ac34c30debf|<span class="number">1655902552000</span></span><br><span class="line"></span><br><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;<span class="language-xml"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span><span class="attr">class</span>=<span class="string">&quot;no-js&quot;</span>&gt;</span> ...</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">// 3 - Length: 337</span></span><br><span class="line"><span class="language-xml">GET /api/match/2 HTTP/2 200 OK</span></span><br><span class="line"><span class="language-xml">Cookie: m=e83afe046ceafc5efee32ac34c30debf|1655902552000</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">&#123;&quot;status&quot;: &quot;1&quot;, &quot;state&quot;: &quot;success&quot;, &quot;data&quot;: ...</span></span><br></pre></td></tr></table></figure>
+
+<p>第一次请求返回只包含一个大script的HTML，执行后生成<code>cookie-m</code>，第二次请求应该是生成m后立即触发，携带cookie请求正常HTML源码，第三个请求得到数据并渲染加载。debugger就出现在大script内，去除应该是不太可能，源码被是专门算法混淆过的，也导致体积如此庞大（压缩后近46K），我们尝试先解混淆</p>
+<h2 id="obfuscator"><a href="#obfuscator" class="headerlink" title="obfuscator"></a>obfuscator</h2><p>混淆算法来自：<code>https://obfuscator.io/</code></p>
+<blockquote>
+<p>该工具将您的原始 JavaScript 源代码转换为一种新的表示形式，在未经授权的情况下更难理解、复制、重用和修改。</p>
+<p>虽然 UglifyJS（和其他缩小器）确实使输出代码更难理解（压缩和丑陋），但可以使用 JS 美化器轻松将其转换为可读的东西。该工具通过使用各种转换和“陷阱”来防止这种情况，例如自我防御和调试保护。</p>
+<p>通过一系列转换，例如变量&#x2F;函数&#x2F;参数重命名、字符串删除等，您的源代码被转换为不可读的东西，同时工作与以前完全一样。</p>
+</blockquote>
+<p>其中几个关键的混淆设置：</p>
+<ul>
+<li>identifierNamesGenerator：设置标识符名称生成器。</li>
+<li>stringArray：移除字符串文字并将它们放置在一个特殊的数组中。例如，var m &#x3D; “ Hello World”中的字符串“ Hello World”; 将被替换为 var m &#x3D; _ 0x12c456[0x1] ;</li>
+<li>stringArrayIndexShift：字符数组索引偏移</li>
+<li>selfDefending：不要以任何方式改变混淆后的代码与这个选项混淆，因为任何改变，如代码的丑化可以触发自卫和代码不再工作！</li>
+<li>debugProtection：这个选项使得几乎不可能使用开发工具的调试器功能(包括基于 WebKit 和 MozillaFirefox 的调试器功能)。</li>
+<li>disableConsoleOutput：通过将它们替换为空函数，禁用 console.log、 console.info、 console.error、 console.warn、 console.debug、 console.Exception 和 console.trace 的使用。这使得调试器的使用更加困难。</li>
+<li>deadCodeInjection：大幅增加混淆代码的大小(高达200%) ，只有在混淆代码的大小不重要时才使用。</li>
+</ul>
+<p>这些特征将在之后的代码分析中挨个体验(狗头)。而关于de-obfuscator的工具网站也很多，但因为混淆时可以设置的参非常多，这些工具也仅能做一些通用的反混淆过程，如：将类十六进制_0xffffff的变量重命名，代码格式化，将十六进制数转为十进制等。总之，没有一劳永逸完全还原混淆代码的工具，代码分析必不可少。</p>
+<p>找了一圈后，发现<code>https://deobfuscate.io/</code>效果不错，这域名简直天生一对。把配置全勾上，转换后的代码1350行，开干！</p>
+<h2 id="字符数组"><a href="#字符数组" class="headerlink" title="字符数组"></a>字符数组</h2><p>首行暴击，一个超大的字符数组，也就是混淆设置中的stringArray了。如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $dbsm_0x123c = [<span class="string">&quot;H2AG&quot;</span>, <span class="string">&quot;wrPCtsOE&quot;</span>, <span class="string">&quot;w73Dky8=&quot;</span>, ...]</span><br></pre></td></tr></table></figure>
+
+<p>数组长度为1260。搜索$dbsm_0x123c，发现只在随后两个函数中使用了这个字符数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params">oreste, emron</span>)&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;($dbsm_0x123c, <span class="number">112</span>))</span><br><span class="line"><span class="keyword">var</span> $dbsm_0x42c3 = <span class="keyword">function</span>(<span class="params">dajaha</span>) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    daveney = $dbsm_0x123c[dajaha];</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>是的，一个地方作为立即执行函数的参数传入，一个地方用于取值。那么，该立即执行函数内部有极大可能对数组进行更改，当调用$dbsm_0x42c3时返回数组内某个元素（字符串）。因此，我们重点关注两个关键点：</p>
+<ol>
+<li>立即执行函数内如何对数组进行变换</li>
+<li>读取字符数组的函数如何返回数组值</li>
+</ol>
+<h2 id="字符数组移位"><a href="#字符数组移位" class="headerlink" title="字符数组移位"></a>字符数组移位</h2><p>传入立即执行函数的形参<code>oreste</code>、<code>emron</code>分别对应实参字符数组和112。我们直接跳过头部的大量赋值操作，关注将会执行的代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iOLOQL = <span class="string">&quot;$1&quot;</span>, <span class="title class_">OQ1</span>oqQ = <span class="string">&quot;counter&quot;</span>, <span class="title class_">IO0OOi</span> = <span class="number">1</span>, <span class="title class_">QqQlQQ</span> = <span class="string">&quot;counter&quot;</span>,</span><br><span class="line">myldred = <span class="keyword">function</span>(<span class="params">valerieann</span>) &#123; ...</span><br><span class="line">&#125;, tarahji = <span class="keyword">function</span>(<span class="params"></span>) &#123; ...</span><br><span class="line">&#125;, <span class="title function_">tarahji</span>();</span><br></pre></td></tr></table></figure>
+
+<p>全是逗号表达式，最后执行了<code>tarahji</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mirsab = &#123; ...</span><br><span class="line">&#125;, yajahira = <span class="keyword">function</span>(<span class="params"></span>) &#123; ...</span><br><span class="line">&#125;, , mirsab.<span class="property">updateCookie</span> = yajahira, irvan = <span class="string">&quot;&quot;</span>, harsimar = mirsab.<span class="title function_">updateCookie</span>();</span><br><span class="line"><span class="keyword">if</span> (!harsimar) &#123;</span><br><span class="line">    mirsab.<span class="title function_">setCookie</span>([<span class="string">&quot;*&quot;</span>], <span class="title class_">OQ1</span>oqQ, <span class="title class_">IO0OOi</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (harsimar) &#123;</span><br><span class="line">    irvan = mirsab.<span class="title function_">getCookie</span>(<span class="literal">null</span>, <span class="title class_">QqQlQQ</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    mirsab.<span class="title function_">removeCookie</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行的地方在条件判断中的<code>harsimar</code>，顺着执行了<code>yajahira</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yajahira = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    eudella = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;\\w+ *\\(\\) *&#123;\\w+ *[&#x27;|\&quot;].+[&#x27;|\&quot;];? *&#125;&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> eudella.<span class="title function_">test</span>(mirsab.<span class="property">removeCookie</span>.<span class="title function_">toString</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而此处返回的test结果是永真，因此分支处只会走<code>mirsab.getCookie</code>。这就是所谓的<code>deadCodeInjection</code>，用大量的分支语句混淆视线，实际运行时只会走一个分支，让人分析一通只后只得到一个true&#x2F;false的结果。继续跟踪代码，<code>getCookie</code>如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">getCookie</span>: <span class="keyword">function</span>(<span class="params">synai, ixchell</span>) &#123;</span><br><span class="line">    synai = synai || <span class="keyword">function</span>(<span class="params">dafni</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> dafni;</span><br><span class="line">    &#125;, hartaj = <span class="title function_">synai</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;(?:^|; )&quot;</span> + ixchell.<span class="title function_">replace</span>(<span class="regexp">/([.$?*|&#123;&#125;()[]\/+^])/g</span>, iOLOQL) + <span class="string">&quot;=([^;]*)&quot;</span>)), florrie = <span class="keyword">function</span>(<span class="params">ekamveer, vanessah</span>) &#123;</span><br><span class="line">        <span class="title function_">ekamveer</span>(++vanessah);</span><br><span class="line">    &#125;, <span class="title function_">florrie</span>(myldred, emron);</span><br><span class="line">    <span class="keyword">return</span> hartaj ? <span class="built_in">decodeURIComponent</span>(hartaj[<span class="number">1</span>]) : <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有了前面的教训，我们直击要害，我需要返回结果吗？不需要！<code>hartaj</code>怎么变化不管，只知道执行了<code>florrie</code>，参数<code>emron</code>为立即执行函数第二入参，<code>myldred</code>在开头定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">myldred = <span class="keyword">function</span>(<span class="params">valerieann</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (--valerieann) &#123;</span><br><span class="line">        oreste.<span class="title function_">push</span>(oreste.<span class="title function_">shift</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>oreste</code>正是对应的大字符数组<code>$dbsm_0x123c</code>，这里的修改正是混淆手段中的stringArrayIndexShift。因此我们抠出这几段有效代码，真正的立即执行函数如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params">oreste, emron, myldred</span>)&#123;</span><br><span class="line">    myldred = <span class="keyword">function</span>(<span class="params">valerieann</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (--valerieann) &#123;</span><br><span class="line">            oreste.<span class="title function_">push</span>(oreste.<span class="title function_">shift</span>());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, </span><br><span class="line">    <span class="title function_">myldred</span>(++emron);</span><br><span class="line">&#125;($dbsm_0x123c, <span class="number">112</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符数组读取"><a href="#字符数组读取" class="headerlink" title="字符数组读取"></a>字符数组读取</h2><p>处理完数组移位，来看看数组取值函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $dbsm_0x42c3 = <span class="keyword">function</span>(<span class="params">dajaha, aubin</span>) &#123;</span><br><span class="line">    qQq01i = <span class="string">&quot;&quot;</span>, qoiOlo = <span class="number">16</span>, dajaha = dajaha - <span class="number">0</span>, daveney = $dbsm_0x123c[dajaha];</span><br><span class="line">    <span class="keyword">if</span> ($dbsm_0x42c3.<span class="property">JCBKDb</span> === <span class="literal">undefined</span>) &#123; ... </span><br><span class="line">    chatara = $dbsm_0x42c3.<span class="property">ApEKVq</span>[dajaha];</span><br><span class="line">    <span class="keyword">if</span> (chatara === <span class="literal">undefined</span>) &#123; </span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        daveney = $dbsm_0x42c3.<span class="title class_">JhSaco</span>(daveney, aubin), $dbsm_0x42c3.<span class="property">ApEKVq</span>[dajaha] = daveney;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        daveney = chatara;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> daveney;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这回我们学乖了，直接搜索函数调用，发现只有两个入参，接下来只需要重点找这两个形参参与代码，出现了的地方必然会被执行。从返回值<code>daveney</code>开始往上，最后执行了<code>JhSaco</code>，第一参数为<code>$dbsm_0x123c[dajaha]</code>即从数组中取出的原字符串，第二参数原样传入。函数内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">montserrath = <span class="keyword">function</span>(<span class="params">braynt, siyan</span>) &#123;</span><br><span class="line">    kam = [], saanya = <span class="number">0</span>, janetzi = <span class="string">&quot;&quot;</span>, samael = <span class="string">&quot;&quot;</span>, braynt = <span class="title function_">atob</span>(braynt);</span><br><span class="line">    <span class="keyword">for</span> (alaxandra = <span class="number">0</span>, rodell = braynt.<span class="property">length</span>; alaxandra &lt; rodell; alaxandra++) &#123;</span><br><span class="line">        samael += <span class="string">&quot;%&quot;</span> + (<span class="string">&quot;00&quot;</span> + braynt.<span class="title function_">charCodeAt</span>(alaxandra).<span class="title function_">toString</span>(qoiOlo)).<span class="title function_">slice</span>(-<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    braynt = <span class="built_in">decodeURIComponent</span>(samael);</span><br><span class="line">    <span class="keyword">for</span> (kaiona = <span class="number">0</span>; kaiona &lt; <span class="number">256</span>; kaiona++) &#123;</span><br><span class="line">        kam[kaiona] = kaiona;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (kaiona = <span class="number">0</span>; kaiona &lt; <span class="number">256</span>; kaiona++) &#123;</span><br><span class="line">        saanya = (saanya + kam[kaiona] + siyan.<span class="title function_">charCodeAt</span>(kaiona % siyan.<span class="property">length</span>)) % <span class="number">256</span>, alfy = kam[kaiona], kam[kaiona] = kam[saanya], kam[saanya] = alfy;</span><br><span class="line">    &#125;</span><br><span class="line">    kaiona = <span class="number">0</span>, saanya = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (waqar = <span class="number">0</span>; waqar &lt; braynt.<span class="property">length</span>; waqar++) &#123;</span><br><span class="line">        kaiona = (kaiona + <span class="number">1</span>) % <span class="number">256</span>, saanya = (saanya + kam[kaiona]) % <span class="number">256</span>, alfy = kam[kaiona], kam[kaiona] = kam[saanya], kam[saanya] = alfy, janetzi += <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(braynt.<span class="title function_">charCodeAt</span>(waqar) ^ kam[(kam[kaiona] + kam[saanya]) % <span class="number">256</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> janetzi;</span><br><span class="line">&#125;, $dbsm_0x42c3.<span class="property">JhSaco</span> = montserrath,</span><br></pre></td></tr></table></figure>
+
+<p>函数<code>montserrath</code>的返回值<code>janetzi</code>就是最终返回值。从最后一个for循环可见对原值进行了异或、取余操作，具体怎么操作就不管了，只需要保证这个函数执行即可。特别注意的是，其中用到了<code>atob</code>和<code>decodeURIComponent</code>两个浏览器原生函数，如果在node下调试需要替换为node环境：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> queryString <span class="keyword">from</span> <span class="string">&#x27;node:queryString&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">atob</span> = (<span class="params">str</span>) =&gt; <span class="title class_">Buffer</span>.<span class="title function_">from</span>(str, <span class="string">&#x27;base64&#x27;</span>).<span class="title function_">toString</span>(<span class="string">&#x27;binary&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="title function_">decodeURIComponent</span> = (<span class="params">str</span>) =&gt; queryString.<span class="built_in">unescape</span>(str);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> $dbsm_0x42c3 = <span class="keyword">function</span>(<span class="params">dajaha, aubin</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> qQq01i = <span class="string">&quot;&quot;</span>, qoiOlo = <span class="number">16</span>, dajaha = dajaha - <span class="number">0</span>, daveney = $dbsm_0x123c[dajaha];</span><br><span class="line">    montserrath = <span class="keyword">function</span>(<span class="params">braynt, siyan</span>) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">return</span> janetzi;</span><br><span class="line">    &#125;, $dbsm_0x42c3.<span class="property">JhSaco</span> = montserrath,</span><br><span class="line">    daveney = $dbsm_0x42c3.<span class="title class_">JhSaco</span>(daveney, aubin);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> daveney;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果在node中还需要把变量名全补头上，不然报未定义错误，在浏览器中则会自动保存为全局变量。这里找一个调用测试一下：<code>$dbsm_0x42c3(&#39;0x1fd&#39;, &#39;mjVK&#39;)</code>，结果应该是<code>DrP</code>。</p>
+<h2 id="真正的执行函数"><a href="#真正的执行函数" class="headerlink" title="真正的执行函数"></a>真正的执行函数</h2><p>接下来是一个大的立即执行函数，解救之道，就在其中。观察主要结构：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span> <span class="title function_">$dbsm_0x37d29a</span>(<span class="params">OooIi1, QQQO0q</span>)&#123;</span><br><span class="line">    <span class="comment">// 1</span></span><br><span class="line">    <span class="title class_">OooIi1</span> = <span class="string">&quot;0x1fd&quot;</span>, <span class="title class_">QQQO0</span>q = <span class="string">&quot;mjVK&quot;</span>, ...</span><br><span class="line">    <span class="comment">// 2</span></span><br><span class="line">    janziel = &#123;&#125;, </span><br><span class="line">    janziel[$dbsm_0x42c3(<span class="title class_">OooIi1</span>, <span class="title class_">QQQO0</span>q) + <span class="string">&quot;ad&quot;</span>] = <span class="keyword">function</span>(<span class="params">kayren, shavina</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> kayren === shavina;</span><br><span class="line">    &#125;,</span><br><span class="line">    janziel[$dbsm_0x42c3(qQOQo0, <span class="title class_">OOQQ1I</span>) + <span class="string">&quot;EU&quot;</span>] = $dbsm_0x42c3(qoo1ql, I1LoO1) + <span class="string">&quot;Yu&quot;</span>,</span><br><span class="line">    ...</span><br><span class="line">    mehr = janziel,</span><br><span class="line">    <span class="comment">// 3</span></span><br><span class="line">    magdelyn = <span class="keyword">function</span>(<span class="params"></span>) &#123; ...</span><br><span class="line">    &#125;()</span><br><span class="line">    <span class="comment">// 4</span></span><br><span class="line">    , tyla = <span class="keyword">function</span>(<span class="params"></span>) &#123; ...</span><br><span class="line">    &#125;()</span><br><span class="line">    <span class="comment">// 5</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">domica</span>(<span class="params"></span>) &#123; ... </span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">betsaida</span>(<span class="params"></span>) &#123; ...</span><br><span class="line">    <span class="comment">// 6</span></span><br><span class="line">    [$dbsm_0x42c3(<span class="title class_">QOlqQO</span>, <span class="title class_">Qq0</span>q1I) + <span class="string">&quot;Fz&quot;</span>](tecola), ooOQOI);</span><br><span class="line">    <span class="comment">// 7</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">argo</span>(<span class="params"></span>) &#123; ...</span><br><span class="line">    <span class="comment">// 8</span></span><br><span class="line">    mehr[$dbsm_0x42c3(qI0iQO, qLQQQQ) + <span class="string">&quot;uP&quot;</span>](camyrah, mehr.<span class="title class_">RjlFz</span>(ahleeyah));</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+
+<p>第一段，变量赋值为十六进制数或字符串，这些变量两个一组将作为上一节中取字符数组元素的参数；第二段，将取出的字符串作为<code>janziel</code>对象的属性名或函数名或属性值，而这些函数主要功能是对传入参数进行比较或数值运算；第三、四段，两个立即执行函数；第五、七段，一些函数；第六、八段，执行代码。</p>
+<p>我们首先解决繁杂的字符数组调用，将<code>janziel[$dbsm_0x42c3(iq0ol0, oiOq11) + &quot;KY&quot;]</code>此类取值的地方全部替换成字符串结果。在console中，首先将第一段的所有字符串变量扣下来，然后对其余的所有代码字符串使用正则替换：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;mehr[$dbsm_0x42c3(iqOiQ0, QOiq0Q) + &quot;Gk&quot;]&#x27;</span></span><br><span class="line">str.<span class="title function_">replace</span>(<span class="regexp">/\$dbsm_0x42c3\((\w&#123;6&#125;),.(\w&#123;6&#125;)\)/g</span>, <span class="function">(<span class="params">_, $<span class="number">1</span>, $<span class="number">2</span></span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// console.log(window[$1], window[$2])</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">`&quot;<span class="subst">$&#123;$dbsm_0x42c3(<span class="variable language_">window</span>[$<span class="number">1</span>], <span class="variable language_">window</span>[$<span class="number">2</span>])&#125;</span>&quot;`</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>所得结果去除<code>\n</code>以及字符连接<code>&quot; + &quot;</code>，得到了阅读性较好的代码重新封装回原函数，就不需要前面大段字符变量了，甚至前面的字符数组、字符数组偏移、取字符函数也不再需要了，可以单独分析：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    janziel = &#123;&#125;,</span><br><span class="line">    janziel[<span class="string">&quot;DrPad&quot;</span>] = <span class="keyword">function</span>(<span class="params">kayren, shavina</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> kayren === shavina;</span><br><span class="line">    &#125;</span><br><span class="line">    ,</span><br><span class="line">    janziel[<span class="string">&quot;SwiEU&quot;</span>] = <span class="string">&quot;pLEYu&quot;</span>,</span><br><span class="line">    janziel[<span class="string">&quot;EFHQd&quot;</span>] = <span class="string">&quot;eTkNW&quot;</span>,</span><br><span class="line">    janziel[<span class="string">&quot;KYhGd&quot;</span>] = <span class="string">&quot;fUGmN&quot;</span>,</span><br><span class="line">    janziel[<span class="string">&quot;QshMZ&quot;</span>] = <span class="string">&quot;人生苦短，何必python？&quot;</span>,</span><br><span class="line">    janziel[<span class="string">&quot;qsLgw&quot;</span>] = <span class="keyword">function</span>(<span class="params">teilynn, jennene</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> teilynn !== jennene;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    mehr[<span class="string">&quot;VCfuP&quot;</span>](camyrah, mehr.<span class="title class_">RjlFz</span>(ahleeyah));</span><br><span class="line">&#125;())</span><br></pre></td></tr></table></figure>
+
+<h2 id="debuggerProtection"><a href="#debuggerProtection" class="headerlink" title="debuggerProtection"></a>debuggerProtection</h2><p>我们依次分析执行的代码。首先是将在<code>janziel</code>中塞了大量字符属性、运算函数，然后传给<code>mehr</code>，之后所有的调用都通过<code>mehr</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">janziel = &#123;&#125;,</span><br><span class="line">...</span><br><span class="line">janziel[<span class="string">&quot;QshMZ&quot;</span>] = <span class="string">&quot;人生苦短，何必python？&quot;</span>,</span><br><span class="line">janziel[<span class="string">&quot;RjlFz&quot;</span>] = <span class="keyword">function</span>(<span class="params">mayukh</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">mayukh</span>();</span><br><span class="line">&#125;,</span><br><span class="line">...</span><br><span class="line">mehr = janziel,</span><br></pre></td></tr></table></figure>
+
+<p>接着是两个立即执行函数<code>magdelyn</code>和<code>tyla</code>，啊不对，这里仅仅是把立即执行函数的结果复制给了变量，所以还是赋值操作，之后调用时再回看即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">magdelyn = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    bianeth = &#123;&#125;, ...</span><br><span class="line">    <span class="keyword">if</span> (mehr[<span class="string">&quot;qsLgw&quot;</span>](mehr.<span class="property">RmLGP</span>, mehr.<span class="property">RmLGP</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        zarella = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">anterion, zyreion</span>)&#123; ...</span><br><span class="line">            <span class="keyword">if</span> ...</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable language_">console</span>[<span class="string">&quot;log&quot;</span>](adala.<span class="property">zYSeC</span>);</span><br><span class="line">                <span class="keyword">debugger</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br><span class="line">tyla = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (mehr[<span class="string">&quot;ldKor&quot;</span>](mehr[<span class="string">&quot;YmATX&quot;</span>], mehr[<span class="string">&quot;YmATX&quot;</span>])) &#123; </span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">global</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>[<span class="string">&quot;log&quot;</span>](mehr[<span class="string">&quot;QshMZ&quot;</span>]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>[<span class="string">&quot;log&quot;</span>](mehr.<span class="property">QshMZ</span>);</span><br><span class="line">                <span class="keyword">debugger</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        auslynn = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">ariabella, gates</span>) &#123; ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
+<p>按照死代码的尿性，这里必然会返回这两个函数进行调用，而且另一个分支竟然出现了<code>debugger</code>，想必是判断环境并开启debuggerProtection了。我们跳过debugger直接抽出返回的函数部分。我们继续往下找到执行的地方：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mehr[<span class="string">&quot;xaeVQ&quot;</span>](<span class="built_in">setInterval</span>, mehr[<span class="string">&quot;RjlFz&quot;</span>](tecola), ooOQOI);</span><br></pre></td></tr></table></figure>
+
+<p>好吧，还是需要前面的一大堆变量的，不嫌麻烦还可以替换一次。这里的值是500，每半秒钟定时执行一次<code>tecola</code>，而tecola开始执行的时正调用了以上两个函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">daden = mehr[<span class="string">&quot;qXqVu&quot;</span>](magdelyn, <span class="variable language_">this</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;),</span><br><span class="line"><span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    ...</span><br><span class="line">    mehr[<span class="string">&quot;lCmHb&quot;</span>](tyla, <span class="variable language_">this</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;...</span><br><span class="line">    &#125;)();</span><br><span class="line">&#125;(),</span><br></pre></td></tr></table></figure>
+
+<p>也就是<code>this</code>和<code>function</code>作为参数传入magdelyn、tyla中，到这里已经有熟悉的味道了，this作为函数上下文对象传入时通常是通过apply或call方法调用函数。回到这两个函数中，发现果然如此：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// magdelyn</span></span><br><span class="line"><span class="keyword">function</span>(<span class="params">anterion, zyreion</span>) &#123;</span><br><span class="line">    sheili = zyreion[<span class="string">&quot;apply&quot;</span>](anterion, <span class="variable language_">arguments</span>),zyreion = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> sheili;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// tyla</span></span><br><span class="line"><span class="keyword">function</span>(<span class="params">ariabella, gates</span>) &#123;</span><br><span class="line">    averill = gates[<span class="string">&quot;apply&quot;</span>](ariabella, <span class="variable language_">arguments</span>), gates = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> averill;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里，再分析apply的什么玩意已经不重要啦！这里的返回结果完全没用，其主要目的是进入debuggerProtection，而且是500ms检测一次以防篡改。因此，直接把<code>tecola</code>这个大的检测函数干掉，最好是置空或在其他调用的地方直接删掉。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function tecola() &#123;...&#125;</span></span><br><span class="line"><span class="comment">// mehr[&quot;xaeVQ&quot;](setInterval, mehr[&quot;RjlFz&quot;](tecola), ooOQOI);</span></span><br><span class="line">tecola = <span class="function">()=&gt;</span><span class="string">&#x27;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="cookie生成"><a href="#cookie生成" class="headerlink" title="cookie生成"></a>cookie生成</h2><p>干掉debugger后，只剩最后一行执行代码了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mehr[<span class="string">&quot;VCfuP&quot;</span>](camyrah, mehr.<span class="title class_">RjlFz</span>(ahleeyah));</span><br></pre></td></tr></table></figure>
+
+<p>遇到<code>mehr[&quot;xxx&quot;](func, param)</code>直接视为<code>func(param)</code>，在mehr的定义上全是这样的花花函数，另一种则运算是<code>param1+param2</code>。查看<code>ahleeyah</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ahleeyah</span>(<span class="params">jerae, bruner</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (mehr[<span class="string">&quot;IQzYn&quot;</span>](mehr[<span class="string">&quot;wiRbe&quot;</span>], mehr[<span class="string">&quot;wiRbe&quot;</span>])) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">Date</span>[<span class="string">&quot;parse&quot;</span>](<span class="keyword">new</span> <span class="title class_">Date</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>毫无疑问，只会返回<code>Date[&quot;parse&quot;](new Date)</code>，也意味着之后的加密都会围绕这个时间戳来进行。跟踪<code>camyrah</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">camyrah</span>(<span class="params">terricka, antiona</span>) &#123;</span><br><span class="line">    <span class="variable language_">document</span>[<span class="string">&quot;cookie&quot;</span>] = mehr.<span class="title class_">NtDrC</span>(mehr[<span class="string">&quot;KGBme&quot;</span>](mehr[<span class="string">&quot;KGBme&quot;</span>](mehr[<span class="string">&quot;mQKrD&quot;</span>](mehr[<span class="string">&quot;mQKrD&quot;</span>](mehr[<span class="string">&quot;mQKrD&quot;</span>](<span class="title class_">Ql1OO0</span>, mehr.<span class="title function_">zvglw</span>(tecola)), <span class="title class_">Qoqq0I</span>), mehr[<span class="string">&quot;wWbGk&quot;</span>](mandeep, terricka)), lOo0QQ), terricka), mehr[<span class="string">&quot;TfZNZ&quot;</span>]),         </span><br><span class="line">    location[<span class="string">&quot;reload&quot;</span>]();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是最终执行的<code>document.cookie = &#39;xxx&#39;</code>，那这些函数都是字符拼接<code>+</code>运算了，只要按照<code>, </code>分隔从后往前串就行了。简化后结果是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="property">cookie</span> = <span class="string">&#x27;m&#x27;</span> + <span class="title function_">tecola</span>() + <span class="string">&#x27;=&#x27;</span> + <span class="title function_">mandeep</span>(terricka) + <span class="string">&#x27;|&#x27;</span> + terricka + <span class="string">&#x27;; path=/&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>前面我们已经把检测函数<code>tecola</code>干掉了，而且从最终结果看，<code>m</code>和<code>=</code>之间是没有内容的。继续追踪<code>mandeep</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mandeep</span>(<span class="params">jarlin, ivonne, sarahjo</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> ivonne ? sarahjo ? mehr[<span class="string">&quot;QNaKk&quot;</span>](jannete, ivonne, jarlin) : mehr.<span class="title function_">rquKQ</span>(y, ivonne, jarlin) : sarahjo ? mehr[<span class="string">&quot;OpVMn&quot;</span>](kjersti, jarlin) : mehr[<span class="string">&quot;OpVMn&quot;</span>](shermona, jarlin);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>???莫慌，直接控制台测试一下输出第几个：<code>0?0?1:2:0?3:4</code>，结果是最后一个执行。追踪<code>shermona</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">shermona</span>(<span class="params">mergeron</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> mehr[<span class="string">&quot;dJCCX&quot;</span>](roneika, mehr.<span class="title function_">oOahG</span>(kjersti, mergeron));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简化后执行的是<code>roneika(kjersti(mergeron))</code>，里面的继续跟踪：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">kjersti</span>(<span class="params">challie</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> mehr.<span class="title function_">dJCCX</span>(tarrel, mehr[<span class="string">&quot;dJCCX&quot;</span>](gilma, challie));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tarrel</span>(<span class="params">elizebth</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> mehr[<span class="string">&quot;eQcMs&quot;</span>](makeva, mehr[<span class="string">&quot;yramJ&quot;</span>](argo, mehr[<span class="string">&quot;eQcMs&quot;</span>](lejin, elizebth), mehr.<span class="title class_">OnQtT</span>(oq1q0q, elizebth.<span class="property">length</span>)));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">gilma</span>(<span class="params">jovee</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> mehr[<span class="string">&quot;eQcMs&quot;</span>](<span class="built_in">unescape</span>, mehr[<span class="string">&quot;eQcMs&quot;</span>](<span class="built_in">encodeURIComponent</span>, jovee));</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>其实到这里就已经差不多了，接下来就是紧张刺激的抠代码环节了，只要牢牢抓住<code>roneika</code>和<code>kjersti</code>加密函数即可。而最后一个大函数<code>$dbsm_0x1a0b2e</code>也是用来检测环境的，在抠加密函数的时候要剔除掉。</p>
+<p>Emm…由于牵扯太多，抠不动了，直接尝试运行生成cookie。因为前面已经去掉了debugger，<code>dbsm_0x1a0b2e</code>内的防御不会被执行，加密执行过程也没有调用到，但有两个地方报错：<code>ReferenceError: qz is not defined</code>，都是在<code>if (qz)</code>时引发的。搜索<code>qz =</code>，发现是在前面注释掉的<code>tecola</code>内定义，而且并没有出现在参数列表中，属于全局变量。而此处判断qz后代码中并未操作qz，因此大胆假设，qz是执行环境检测是产生了全局变量，如果关闭了环境监测，就会导致qz未定义错误，从而使加密出错。那么，只需要在外面定义好：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable language_">document</span> = &#123;&#125;;</span><br><span class="line"><span class="keyword">let</span> qz = [];</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">$dbsm_0x37d29a</span>(<span class="params"></span>)&#123;</span><br><span class="line">    ...</span><br><span class="line">        <span class="variable language_">document</span>[<span class="string">&quot;cookie&quot;</span>] = ...</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">document</span>);</span><br><span class="line">        <span class="comment">// location[&quot;reload&quot;]();</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; cookie: &#x27;m=47e8d6bcee3483b8fb04616797a1f76d|1656134875000; path=/&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>再运行，cookie成功产生。稍加封装后export给api请求调用。</p>
+<h1 id="复盘回顾"><a href="#复盘回顾" class="headerlink" title="复盘回顾"></a>复盘回顾</h1><p>这一题手撸obfuscator混淆代码，最大的感受是，不要被混淆中的死代码、花指令给迷惑，只要找到真正执行的地方，往上顺藤摸瓜，排除debugger保护代码，思路就能清晰许多。从总体来看，首先需要把stringArray的shift部分找出，这会产生一个新的stringArray；继而分析从字符数组取值的函数，其间通常会把原值进行变换后返回；取值函数将会广泛出现在接下来的立即执行函数中，在console将所有的<code>getStringArray(&quot;0xffff&quot;, &quot;OOqq1I&quot;)</code>替换成实际输出字符串，让代码可读性提高，可以窥探到document、global等一些关键信息；立即执行函数内有debuggerProtection代码、setInterval强制关闭console，直接干掉置空，让其他分支永远不进入这部分执行。</p>
+<p>在开始分析之前，有必要利用deobfuscator.io等工具将十六进制变量转成常规变量、十六进制数值转成十进制，同时格式化、美化代码，熟练使用VSCode的折叠展开(<code>Ctrl+Shift+[/]</code>)，以保持不秃头状态。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/06/21/%E7%8C%BF%E4%BA%BA%E5%AD%A6JS%E6%B7%B7%E6%B7%86%E5%88%86%E6%9E%90%E7%AC%AC%E4%B8%80%E9%A2%98/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2022-06-24 14:12:39
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="逆向分析">
+                        <b>#</b> 逆向分析
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/" title="反爬虫">
+                        <b>#</b> 反爬虫
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/06/26/%E7%8C%BF%E4%BA%BA%E5%AD%A6JS%E6%B7%B7%E6%B7%86%E5%88%86%E6%9E%90%E7%AC%AC%E4%B8%89%E9%A2%98/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="toc-text">题目信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="toc-text">解题过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#debugger"><span class="toc-text">debugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#obfuscator"><span class="toc-text">obfuscator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84"><span class="toc-text">字符数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E7%A7%BB%E4%BD%8D"><span class="toc-text">字符数组移位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E8%AF%BB%E5%8F%96"><span class="toc-text">字符数组读取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%9F%E6%AD%A3%E7%9A%84%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="toc-text">真正的执行函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debuggerProtection"><span class="toc-text">debuggerProtection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie%E7%94%9F%E6%88%90"><span class="toc-text">cookie生成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E7%9B%98%E5%9B%9E%E9%A1%BE"><span class="toc-text">复盘回顾</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研一上】第七周学习汇报 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研一上】第七周学习汇报</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2020-10-11 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/project/" title="project">
+                    <b>#</b> project
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h4 id="10-12"><a href="#10-12" class="headerlink" title="10.12"></a>10.12</h4><p>三维建模文章学习： How it works(15) OpenDroneMap</p>
+<p>结构简析（文章链接： <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2089ea04732a">https://www.jianshu.com/p/2089ea04732a</a> ）</p>
+<p>引入OpenDroneMap（简称ODM），开源无人机三维重建项目。通过 三维重建技术，由无人机拍摄图片构建地图、建筑3D模型，从而得到 正摄影像 等。 技术铺垫生成正摄影像的方法：</p>
+<ul>
+<li>光束平差法： 根据相机的位置,俯仰等参数,将照片确定在固定的位置</li>
+<li>三维重建 ：对三维物理建立适合计算机表示和处理的数学模型。在ODM中， 将拍摄图像分 散成一堆细小的素材，利用算法把这些素材重建成三维模型，再通过投影的方法得到正摄（不同角度均可）</li>
+<li>SFM三维重建：SFM (Structure From Motion)，通过相机的移动确定物体的空间几何结构。是三维重建的一种常见方法。核心思想是利用同一点在多幅图像中的重叠构建三维信息。</li>
+<li>小孔成像模型（参考： <a target="_blank" rel="noopener" href="https://blog.csdn.net/lpj822/article/details/82716971">https://blog.csdn.net/lpj822/article/details/82716971</a> ）</li>
+</ul>
+<p>基本流程：</p>
+<ol>
+<li>特征点 提取、匹配。特征点：图像灰度值变化剧烈或边缘交点</li>
+<li>矩阵变换</li>
+<li>点云 计算。点云：三维物体表面特性的海量点的集合。</li>
+<li>利用相机参数重建点云。主要有Exif地理位置信息。</li>
+<li>生成三维表面素材 ODM 文件结构</li>
+</ol>
+<blockquote>
+<p>modules：算法核心<br>opendm：辅助功能<br>stages：运行核心，入口，调用modules算法和opendm辅助主要文件<br>odm_app.py：程序入口，执行调度，创建数据集、执行SFM三维重建、生成图像等<br>types.py：获取图片大小、获取图片Exif信息、处理坐标信息</p>
+</blockquote>
+<p>流程：</p>
+<ol>
+<li><p>创建数据集</p>
+</li>
+<li><p>执行sfm：三维重建</p>
+</li>
+<li><p>执行mve：稠密重建点云</p>
+</li>
+<li><p>过滤点云</p>
+</li>
+<li><p>执行mesh网格划分</p>
+</li>
+<li><p>模型附上纹理（texture）</p>
+</li>
+<li><p>计算地理参考（georefeencing）</p>
+</li>
+<li><p>生成dem文件</p>
+</li>
+<li><p>生成正摄影像（orthphoto）</p>
+</li>
+</ol>
+<h4 id="10-13"><a href="#10-13" class="headerlink" title="10.13"></a>10.13</h4><p>  上课，准备算法演讲PPT，上算法课</p>
+<h4 id="10-14"><a href="#10-14" class="headerlink" title="10.14"></a>10.14</h4><p>遇到一个Cookies和Session问题：在某些较老的网站系统中，登录页面的验证码刷新时，服务器向浏览器发送一个set-cookie字段，其中包含验证码的MD5加密结果。当在本地修改Cookies缓存为1234的MD5值，验证码填写1234即可登录。尝试使用脚本语言实现这一过程，使用session保存和修改cookies信息进行请求，但未成功。</p>
+<p>准备助教实验课内容</p>
+<h4 id="10-16"><a href="#10-16" class="headerlink" title="10.16"></a>10.16</h4><p>Vue视频学习：《 2019年最全最新Vue、Vuejs教程，从入门到精通 》 基础部分</p>
+<h4 id="10-17"><a href="#10-17" class="headerlink" title="10.17"></a>10.17</h4><p>Vue视频学习：组件化开发，父子间组件通信（props、$emit）</p>
+<h4 id="10-18"><a href="#10-18" class="headerlink" title="10.18"></a>10.18</h4><p>Vue视频学习：模块化开发， ES6 Modules和webpack打包</p>
+<h4 id="下周学习计划"><a href="#下周学习计划" class="headerlink" title="下周学习计划"></a>下周学习计划</h4><ul>
+<li>继续学习webpack、Vue脚手架cli</li>
+<li>尝试用Vue渐进式重构之前的设备管理项目</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/10/05/2020-10-05-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8A%E3%80%91%E7%AC%AC%E5%85%AD%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%B1%87%E6%8A%A5/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2020-10-11 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/project/" title="project">
+                        <b>#</b> project
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/10/20/2020-10-20-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8A%E3%80%91%E7%AC%AC%E5%85%AB%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%B1%87%E6%8A%A5/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-12"><span class="toc-text">10.12</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-13"><span class="toc-text">10.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-14"><span class="toc-text">10.14</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-16"><span class="toc-text">10.16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-17"><span class="toc-text">10.17</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-18"><span class="toc-text">10.18</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E5%91%A8%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92"><span class="toc-text">下周学习计划</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

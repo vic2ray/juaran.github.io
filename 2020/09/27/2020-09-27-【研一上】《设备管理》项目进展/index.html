@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研一上】《设备管理》项目进展 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研一上】《设备管理》项目进展</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2020-09-27 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/project/" title="project">
+                    <b>#</b> project
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="《设备管理》项目进展"><a href="#《设备管理》项目进展" class="headerlink" title="《设备管理》项目进展"></a>《设备管理》项目进展</h3><h4 id="09-28"><a href="#09-28" class="headerlink" title="09.28"></a>09.28</h4><ul>
+<li>完成 JavaBean 各个类设计。主要有：Device（设备）、Battery（电池）、生产销售厂家</li>
+<li>完成“设备基本信息”（BaseInfo）的 视图模块 和数据入库（BaseInfoCreate） 控制模块</li>
+<li>完成“基本信息”的数据库表的设计</li>
+<li>实现前端数据POST提交到数据库</li>
+</ul>
+<h4 id="09-29"><a href="#09-29" class="headerlink" title="09.29"></a>09.29</h4><ul>
+<li>完成Device（设备列表）视图层，DeviceRead（设备读取）控制层</li>
+<li>完成device设备表的数据库设计</li>
+<li>实现前端index设备列表展示页面（ajax），读取device表并展示</li>
+</ul>
+<h4 id="09-30"><a href="#09-30" class="headerlink" title="09.30"></a>09.30</h4><ul>
+<li>完成baseInfo（基本信息）增加、更新操作</li>
+<li>完成device（设备）新增操作</li>
+</ul>
+<h4 id="10-02"><a href="#10-02" class="headerlink" title="10.02"></a>10.02</h4><ul>
+<li>学习Bootstrap前端框架基本知识、栅格流动布局</li>
+<li>使用Bootstrap编写“设备基本信息”录入页面</li>
+</ul>
+<h4 id="10-03"><a href="#10-03" class="headerlink" title="10.03"></a>10.03</h4><ul>
+<li>实现“设备基本信息”前端页面及后端交互（read）</li>
+<li>实现“设备基本信息”修改（update、insert）页面的更新操作</li>
+<li>实现“设备管理系统”首页（read）</li>
+</ul>
+<h4 id="10-04"><a href="#10-04" class="headerlink" title="10.04"></a>10.04</h4><ul>
+<li>实现“设备”新增（INSERT）、更新（UPDATE）功能</li>
+<li>实现“设备”删除（DELETE），级联删除“设备基本信息”</li>
+</ul>
+<h3 id="下周安排"><a href="#下周安排" class="headerlink" title="下周安排"></a>下周安排</h3><p>在上一周「设备管理系统」的实践中，初步完成了：</p>
+<ul>
+<li><p>“设备”类和“基本信息”类的模块设计（M）</p>
+</li>
+<li><p>通过JDBC与数据库交互的CRUD控制设计（C）</p>
+</li>
+<li><p>通过Servlet与前端交互的doGet&#x2F;doPost视图设计（V）</p>
+</li>
+<li><p>采用Bootstrap框前端架设计系统交互界面</p>
+</li>
+</ul>
+<p>在此过程中，发现自身有以下能力不足需要提高：</p>
+<ul>
+<li>面向对象设计时的抽象事物思维能力</li>
+<li>JavaScript、jQuery不熟悉</li>
+<li>编码效率低，固定代码掌握不牢固</li>
+</ul>
+<p>本周重点补齐jQuery的短板，了解typescript、vue等其他前端技术</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2020/09/21/2020-09-21-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8A%E3%80%91%E7%AC%AC%E5%9B%9B%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%B1%87%E6%8A%A5/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2020-09-27 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/project/" title="project">
+                        <b>#</b> project
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2020/10/05/2020-10-05-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8A%E3%80%91%E7%AC%AC%E5%85%AD%E5%91%A8%E5%AD%A6%E4%B9%A0%E6%B1%87%E6%8A%A5/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%8A%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86%E3%80%8B%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%B1%95"><span class="toc-text">《设备管理》项目进展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#09-28"><span class="toc-text">09.28</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#09-29"><span class="toc-text">09.29</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#09-30"><span class="toc-text">09.30</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-02"><span class="toc-text">10.02</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-03"><span class="toc-text">10.03</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-04"><span class="toc-text">10.04</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%91%A8%E5%AE%89%E6%8E%92"><span class="toc-text">下周安排</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

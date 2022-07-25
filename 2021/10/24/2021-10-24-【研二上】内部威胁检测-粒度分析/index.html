@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】内部威胁检测-粒度分析 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】内部威胁检测-粒度分析</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-10-24 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="GCN-内部威胁检测"><a href="#GCN-内部威胁检测" class="headerlink" title="GCN-内部威胁检测"></a>GCN-内部威胁检测</h3><blockquote>
+<p>Jiang, J., Chen, J., Gu, T., Choo, K.-K. R., Liu, C., Yu, M., … Mohapatra, P. (2019). <a href=""><em>Anomaly Detection with Graph Convolutional Networks for Insider Threat and Fraud Detection</em></a><em>. MILCOM 2019 - 2019 IEEE Military Communications Conference (MILCOM).</em></p>
+<p>doi:10.1109&#x2F;milcom47813.2019.9020760</p>
+</blockquote>
+<ul>
+<li>第一个使用GCN模型用于内部威胁检测和欺诈检测的工作</li>
+<li>提供了一种增强稀疏图节点间结构信息增强的方案（具体地，计算用户特征相似性）</li>
+<li>提供了一个基于GCN算法的异常检测系统的通用框架</li>
+</ul>
+<h4 id="异常检测框架"><a href="#异常检测框架" class="headerlink" title="异常检测框架"></a>异常检测框架</h4><p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211020191248836.png" alt="image-20211020191248836"></p>
+<ul>
+<li><p>特征提取模块：从日志数据中提取用户行为特征和内容特征，共31维：</p>
+<ul>
+<li>登录&#x2F;注销特征-3：每日登录&#x2F;注销次数，下班时间登录&#x2F;注销次数，登录&#x2F;注销的PC数量</li>
+<li>设备特征-3：每日设备连接数，下班时间设备连接数，设备连接的PC</li>
+<li>文件特征-5：每天不同类型文件数量，总文件数，下班时间操作文件数，exe文件数，操作文件的PC数量</li>
+<li>邮件特征-7：每日发送邮件数，发给外部的邮件，内部发送的邮件，平均邮件大小，接收人数，话题相关的邮件，情感相关的邮件</li>
+<li>网页特征-5：每日浏览的网页数，维基解密相关的网页，情绪相关的网页，话题相关的网页，键记录器相关的网页</li>
+</ul>
+</li>
+<li><p>图结构增强模块：直接使用邮件关系建立用户图可能会丢失重要信息，而且有些用户是孤立的。具体地，在以邮件关系为边的用户图的基础上，对于没有相互连接的两个节点，计算节点<strong>特征余弦相似度</strong>，得到边权重：</p>
+</li>
+</ul>
+<p>$$<br>A(i,j) &#x3D; \omega \ * \ cos(F_i,F_j) + (1-\omega) * C_{ij}<br>$$</p>
+<p>​        根据以上权重函数得到新的图邻接矩阵表示，以0.5为阈值将边表示分为实线和虚线，最终图结构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211020195843584.png" alt="image-20211020195843584"></p>
+<ul>
+<li>GCN设计模块：两层的GCN网络模型，输入图结构和节点特征，ReLU激活函数、softmax分类</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211020200450802.png" alt="image-20211020200450802"></p>
+<h4 id="实验及结果"><a href="#实验及结果" class="headerlink" title="实验及结果"></a>实验及结果</h4><p>数据集：CERT-r4.2，图节点和边数、数据集划分如下表，其中加权后的图为全连接图</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211020202908693.png" alt="image-20211020202908693" style="zoom:80%;" />
+
+<p>实验对比：Random Forest、Logistic Regression、SVM、CNN</p>
+<h4 id="疑问和思考"><a href="#疑问和思考" class="headerlink" title="疑问和思考"></a>疑问和思考</h4><ol>
+<li>构建图时，使用邮件关系强连接节点，使用特征相似度弱连接节点，两者结合构成加权图。如果不考虑邮件关系，仅通过节点相似度进行连接，是否会更好？因为使用特征相似度连接似乎更具有说服力</li>
+<li>文中提到对每个用户提取31维特征，但具体字段有些不清楚。原始数据特征向量化是主要工作，文末提到：</li>
+</ol>
+<blockquote>
+<p> We also thank Chenggang Jia for his contribution in the processing of the raw data from CMU dataset.</p>
+</blockquote>
+<p>负责数据处理的贾成刚同学去哪找？</p>
+<ol start="3">
+<li>作者在实验时使用训练集：160个正常节点+40个异常节点，测试集：170个正常节点+30个异常节点（看到这里时三观炸裂）。这与实际情况非常不符，如果使用数据集CERT-r6.2，3955个正常节点+5个异常节点，或使用真实数据，这篇论文毫无价值</li>
+<li>在构建图节点时，计算节点特征的余弦相似度得到带相似度权的边，是否有更好的相似度计算方法？</li>
+</ol>
+<h3 id="内部威胁数据粒度分析"><a href="#内部威胁数据粒度分析" class="headerlink" title="内部威胁数据粒度分析"></a>内部威胁数据粒度分析</h3><p>在数据预处理过程中发现了github: <a target="_blank" rel="noopener" href="https://github.com/lcd-dal/feature-extraction-for-CERT-insider-threat-test-dataset">Feature extraction for CERT insider threat test dataset</a></p>
+<p>代码指向的paper: 使用机器学习方法分析内部威胁检测数据的粒度分级</p>
+<blockquote>
+<p>D. C. Le, N. Zincir-Heywood and M. I. Heywood, “Analyzing Data Granularity Levels for Insider Threat Detection Using Machine Learning,” in <em>IEEE Transactions on Network and Service Management</em>, vol. 17, no. 1, pp. 30-44, March 2020, doi: 10.1109&#x2F;TNSM.2020.2967721.</p>
+</blockquote>
+<p><strong>Data granularity</strong>: 指的是数据的细化程度，越明细的数据包含的信息越多，同时也越难解读，所以一般根据问题需求不同会挑选不同粒度的数据来分析。</p>
+<p><strong>Insider threat</strong>：在CERT内部威胁中心最近的一份技术报告中定义为由恶意或无意的内部人员实施的威胁，他们被授权访问组织的网络、系统和数据，对组织信息、信息系统或员工的机密性、完整性、可用性或身体健康产生负面影响。与内部威胁有关的恶意活动既可由恶意的内部人士故意进行，如信息系统破坏、知识产权盗窃和披露机密信息，也可由无意的内部人士进行，如用户在使用授权资源时的疏忽。</p>
+<p><strong>研究面临的问题</strong>：</p>
+<ol>
+<li><p>与传统的入侵检测任务不同，内部威胁检测的许多挑战来自于内部人员被授权访问组织的计算机系统，并熟悉组织的安全层。</p>
+</li>
+<li><p>此外，在大多数组织中，内部人士有恶意的活动很少发生。因此，可用于描述该活动的数据通常很少见，而且没有得到很好的记录。</p>
+</li>
+<li><p>最后，内部威胁检测的挑战可能来自于需要处理和调查组织环境中的各种数据类型，从网络流量、Web和文件访问日志到电子邮件历史或员工信息。可用的数据也因组织机构的不同而有显著的不同。因此，只有一小部分组织拥有工具和（人力）资源，可以从收集到的监控数据来解释用户的行为和意图。</p>
+</li>
+</ol>
+<p>论文提出并评估了一个以用户为中心的内部威胁检测的工作流程，<u>从数据收集和预处理，到使用ML模型的数据分析，以及警报报告和分析</u>。系统流程如下：(我们重点关注数据预处理部分)</p>
+<ol>
+<li>数据收集：行为日志(实时数据)，用户信息(上下文信息)</li>
+<li>数据预处理：构造特征向量表示用户行为信息，以不同的数据粒度级别</li>
+<li>使用四种ML算法分析特征向量</li>
+<li>结果以不同的格式呈现，并向系统分析师提供了详细的分析（现实场景中是必要的）</li>
+</ol>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211022104013968.png" alt="image-20211022104013968" style="zoom:80%;" />
+
+<h4 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h4><p>特征提取：主要是各项数据的频率特征和统计特征，但不包括内容数据（出于用户隐私考虑）</p>
+<p>粒度分级：作者根据持续时间和操作次数，将数据按周、天、会话统计</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211022112401272.png" alt="image-20211022112401272" style="zoom:80%;" />
+
+<p>基于会话的数据具有隔离恶意操作的用处，因为恶意用户倾向于在特定的会话中执行恶意操作，而在同一天或一周中的其他会话可能仍然是正常的。此外，由于会话的持续时间通常比一天短得多，因此当检测到恶意实例时，这种数据类型也可以允许更快的系统响应。</p>
+<p>由于一个会话可能持续数个小时，由数百个操作组成，作者进一步探索每个会话数据实例中统计的数据量与系统对恶意行为的潜在系统响应时间之间的平衡（会话时间过长、操作过多不利于ML学习）。最终通过统计分析，得出子会话持续时间划分的超参数<code>i=&#123;2,4&#125;</code>，子会话操作次数划分的超参数<code>j=&#123;25,50&#125;</code>。</p>
+<h4 id="数据概述"><a href="#数据概述" class="headerlink" title="数据概述"></a>数据概述</h4><p>运行论文提供的代码，得到了按以上不同数据粒度级别划分的特征数据：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211022202346686.png" alt="image-20211022202346686" style="zoom: 80%;" />
+
+<p>不同粒度的数据特征按恶意场景分布如下(r5.2数据为例)。可以看出：内部威胁的场景占比极少且不同场景的数量不均衡；粒度越细，捕获的恶意场景越多；恶意场景的时间跨度、操作次数跨度不一，这意味着有些恶意操作经过较长时间执行避免被发现：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211023122111622.png" alt="image-20211023122111622" style="zoom:80%;" />
+
+<h4 id="实验设置"><a href="#实验设置" class="headerlink" title="实验设置"></a>实验设置</h4><p>现实约束：现实环境中，用于训练检测系统的标记数据是稀缺的。因此，实验应该从有限的已知标签数据中训练得到模型，然后得到模型在现实网络系统上的真实评估。由此，为了模拟现实情况，<strong>训练集由400个(20%)用户的前37周(一半)数据构成，包含18%的正常用户和34%的恶意用户</strong>。这样，模型通过少部分数据预测未知数据，以确保实验是现实可信的。</p>
+<p>作者采用了四种机器学习方法：LR、NN、RF、XG；数据集使用CERT r5.2：99个恶意用户，1901个正常用户；评估方法：DR(recall)、FPR、Pr、F1，采用f1性能指标作为模型表现能力。</p>
+<p>为了说明ML在解决现实网络世界环境问题上面临的挑战，作者对比了ML在理想情况下和现实情况下的评估结果。理想情况下实验条件是：将全部用户的50%用于训练，而模拟的现实条件是：20%的用户数据且只有前半段时间。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211024115759518.png" alt="image-20211024115759518" style="zoom:80%;" />
+
+<p>以上结果可以看出，理想情况下的模型评估显著优于现实条件。这意味着不能采用典型的全局数据分割训练方法。</p>
+<p>然后，作者分别基于用户分类和基于实例分类。即只要有一条数据实例是恶意的，那么该用户判定为恶意用户；一条数据实例预测为恶意行为，但该用户其他的数据实例可能大部分是正常的。以此来检出恶意用户和恶意行为。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/10/21/2021-10-21-Transport-Layer(3)/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-10-24 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/10/29/2021-10-29-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E5%AE%9E%E9%AA%8C/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GCN-%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B"><span class="toc-text">GCN-内部威胁检测</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6"><span class="toc-text">异常检测框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%8F%8A%E7%BB%93%E6%9E%9C"><span class="toc-text">实验及结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%96%91%E9%97%AE%E5%92%8C%E6%80%9D%E8%80%83"><span class="toc-text">疑问和思考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%95%B0%E6%8D%AE%E7%B2%92%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-text">内部威胁数据粒度分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0"><span class="toc-text">数据概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="toc-text">实验设置</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

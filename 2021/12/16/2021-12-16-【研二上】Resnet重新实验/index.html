@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】Resnet重新实验 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】Resnet重新实验</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-12-16 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>上周初步了解了无监督方法，注意到使用无监督异常检测能够达到较高的检测率。在之前的模型上已经取得一定效果，现希望能够降低检测精确度，从而提高检出异常数量，因此做了以下改进：</p>
+<h3 id="重新实验"><a href="#重新实验" class="headerlink" title="重新实验"></a>重新实验</h3><p>上个月使用Resnet在CERT r4.2数据集上进行实验，取得了初步的结果。但当时的实验做的略显粗糙，于是重新审查了下训练和测试代码，参考了别人的模型训练过程，做了以下改进：</p>
+<ol>
+<li>每个样本使用500维特征向量。之前实验仅取最重要的60维</li>
+<li>将特征向量转为20x25的二维矩阵表示。论文第一个创新点，目的是利用卷积融合多域特征</li>
+<li>提高训练集中异常数据比例。之前实验维持不平衡比例(0.3%)，训练开销大，现将比例调整为1:3</li>
+<li>按需调整学习率MultiStepLR</li>
+<li>保存最优模型(<strong>best model</strong>)和最后的模型(last model)。之前实验只取了最后一轮的模型进行测试</li>
+</ol>
+<p>以上实验方法的改进是有考虑的。首先，初始特征应该尽量保留，降维会丢失信息；其次，按异常数据比例来划分训练集和测试集，在训练时让异常与正常数据比例尽量均衡，只要模型最终在测试集上有效果，就是好的模型；最后，最后一轮得到的模型往往并是最好的模型，实际情况应该取训练过程中最好的模型。</p>
+<p>200 epochs，取召回率（检测率）评估结果：</p>
+<h3 id="Best-model-results"><a href="#Best-model-results" class="headerlink" title="Best model results"></a>Best model results</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">resnet34_no                    90.3774288</span><br><span class="line">bam_resnet34_channel        87.22384882</span><br><span class="line">bam_resnet34_spatial        90.90303229</span><br><span class="line">bam_resnet34_joint            88.51968633</span><br><span class="line">se_resnet34_channel            88.10446142</span><br><span class="line">cbam_resnet34_joint            91.08208268</span><br><span class="line">cbam_resnet34_channel        91.92799083</span><br><span class="line">cbam_resnet34_spatial        91.11320407</span><br><span class="line">resnet50_no                    84.46745562</span><br><span class="line">bam_resnet50_channel        77.66272189</span><br><span class="line">bam_resnet50_spatial        87.86982248</span><br><span class="line">bam_resnet50_joint            84.02366863</span><br><span class="line">se_resnet50_channel            81.50887573</span><br><span class="line">cbam_resnet50_joint            92.45562130</span><br><span class="line">cbam_resnet50_channel         80.91715976</span><br><span class="line">cbam_resnet50_spatial        89.05325443</span><br></pre></td></tr></table></figure>
+
+<h3 id="Last-model-results"><a href="#Last-model-results" class="headerlink" title="Last model results"></a>Last model results</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">resnet34_no: 60.05917159763313</span><br><span class="line">bam_resnet34_channel: 57.84023668639053</span><br><span class="line">bam_resnet34_spatial: 61.390532544378694</span><br><span class="line">bam_resnet34_joint: 57.100591715976336</span><br><span class="line">se_resnet34_channel: 59.171597633136095</span><br><span class="line">cbam_resnet34_joint: 62.42603550295858</span><br><span class="line">cbam_resnet34_channel: 61.98224852071006</span><br><span class="line">cbam_resnet34_spatial: 61.68639053254438</span><br><span class="line">resnet50_no: 56.80473372781065</span><br><span class="line">bam_resnet50_channel: 58.4319526627219</span><br><span class="line">bam_resnet50_spatial: 60.05917159763313</span><br><span class="line">bam_resnet50_joint: 57.692307692307686</span><br><span class="line">se_resnet50_channel: 62.278106508875744</span><br><span class="line">cbam_resnet50_joint: 64.94082840236686</span><br><span class="line">cbam_resnet50_channel: 57.100591715976336</span><br><span class="line">cbam_resnet50_spatial: 58.28402366863905</span><br></pre></td></tr></table></figure>
+
+<h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><ul>
+<li>最优模型结果有更高的检测率（recall），但误检率较高（fpr）</li>
+<li>最后模型结果检测率较低，但误检率较低，识别异常类别的精度更高</li>
+<li>加深网络深度（34层到50层）带来的收益并不高，因为特征维数并不高</li>
+<li>不同机制的注意力模块提升不同</li>
+</ul>
+<p>随着轮次的增加，模型会倾向于提高异常类别的精确度，代价是检测率的下降。因此，利用最优模型可以尽最大努力检测出异常内部威胁行为，最后的模型则保证识别出来的异常具有较高的可靠性。这两种结果能为决策者提供有价值的参考。</p>
+<h3 id="调整F1-score"><a href="#调整F1-score" class="headerlink" title="调整F1-score"></a>调整F1-score</h3><p>以上实验结果仅取了召回率作为最优模型的标准，虽然能检测出90%+的内部威胁实例，但是误检率（假阳性率）也很高。因此，使用F1-score作为最优模型的评估标准，即保证尽量多的异常实例，又保证尽量低的假阳性率：<br>$$<br>&#x3D;F1_scoreβ&#x3D;(1+β2)·Precision·Recallβ2·Precision+Recall<br>$$</p>
+<p>$$<br>F &#x3D; \frac {(1+\beta^2)Precision·Recall} { \beta^2·Precision +Recall}<br>$$</p>
+<p><em>β</em>用于调和Precision和Recall的重要性，当β&#x3D;1时代表二者同等重要。因为数据集不平衡，因此异常实例的召回率的重要性要高于检测精度。经多次实验， 取β&#x3D;4时能够保持较好的平衡。以下是Resnet34模型上的五次实验结果：</p>
+<table>
+<thead>
+<tr>
+<th>Best Model</th>
+<th></th>
+<th>Last Model</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>FPR</td>
+<td>Recall</td>
+<td>FPR</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.1828</td>
+<td>0.8200</td>
+<td>0.0705</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.2235</td>
+<td>0.8581</td>
+<td>0.0774</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.2027</td>
+<td>0.8131</td>
+<td>0.0789</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.2577</td>
+<td>0.8581</td>
+<td>0.0757</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.2259</td>
+<td>0.8512</td>
+<td>0.0702</td>
+</tr>
+</tbody></table>
+<h3 id="后续工作"><a href="#后续工作" class="headerlink" title="后续工作"></a>后续工作</h3><p>使用单维特征向量的深度神经网络进行对比实验，以证明使用二维特征进行多域信息融合的有效性</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/12/11/2021-12-11-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E6%97%A0%E7%9B%91%E7%9D%A3%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E5%AE%9E%E9%AA%8C/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-12-16 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/12/21/2021-12-21-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E6%AE%8B%E5%B7%AE%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9C%AC%E8%B4%A8%E8%A7%A3%E9%87%8A/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E5%AE%9E%E9%AA%8C"><span class="toc-text">重新实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Best-model-results"><span class="toc-text">Best model results</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Last-model-results"><span class="toc-text">Last model results</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis"><span class="toc-text">Analysis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E6%95%B4F1-score"><span class="toc-text">调整F1-score</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%B7%A5%E4%BD%9C"><span class="toc-text">后续工作</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

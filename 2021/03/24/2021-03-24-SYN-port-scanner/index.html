@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      构建一个SYN扫描器 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">构建一个SYN扫描器</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-03-24 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                    <b>#</b> 计算机网络
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/TCP/" title="TCP">
+                    <b>#</b> TCP
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="构造SYN"><a href="#构造SYN" class="headerlink" title="构造SYN"></a>构造SYN</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/socket.html#creating-sockets">Python3 socket模块官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/whatday/article/details/100559721">python3 struct模块 处理二进制 pack unpack用法</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jeanphorn/article/details/45226947">python 使用raw socket进行TCP SYN扫描</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangdaisylove/article/details/47147991">IP协议首部详细分析</a></li>
+</ul>
+<p>大致过程是：根据IP首部格式，使用<code>pack</code>打包成二进制形式的数据报，在通过<code>socket</code>发送。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20150730120353079" alt="img" style="zoom: 50%;" />
+
+<p>在pack中打包数据到二进制的格式fmt为：</p>
+<ul>
+<li>B：代表byte一个字节，8个bit即8位</li>
+<li>H：代表2字节，16位</li>
+<li>s：代表一个字符，8位。4s即32位字符4字节32位。格式化对象需为字节类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># IP 首部构造</span></span><br><span class="line">Version = <span class="number">4</span>        <span class="comment"># IPv4，版本号</span></span><br><span class="line">IHL = <span class="number">5</span> <span class="comment"># IP报文首部长度，20byte = 4byte * 5</span></span><br><span class="line">Version_IHL = (Version &lt;&lt; <span class="number">4</span>) + IHL    <span class="comment"># 版本号在高四位，首部长度在低四位</span></span><br><span class="line">TOS =  <span class="number">0</span>    <span class="comment"># Type of Service, 0代表一般服务</span></span><br><span class="line">TL = <span class="number">20</span> + <span class="number">40</span>     <span class="comment"># IP报文总长度 = 头部20字节 + 可变数据字节数</span></span><br><span class="line">Id = random.randint(<span class="number">18000</span>, <span class="number">65535</span>) <span class="comment"># 随机标识identification</span></span><br><span class="line">FFO = <span class="number">0</span>        <span class="comment"># 标志位flag+片偏移fragment offset均为0</span></span><br><span class="line">TTL = <span class="number">255</span>    <span class="comment"># Time to Live，能经过多少个路由器，最大255</span></span><br><span class="line">protocol = <span class="number">6</span>    <span class="comment"># TCP 协议号</span></span><br><span class="line">checksum = <span class="number">0</span>    <span class="comment"># 头部校验和，0不校验</span></span><br><span class="line">source_addr = socket.inet_aton(<span class="string">&#x27;x.x.x.x&#x27;</span>)        <span class="comment"># 将ip字符串转为32位二进制格式</span></span><br><span class="line">dest_addr = socket.inet_aton(<span class="string">&#x27;x.x.x.x&#x27;</span>)        <span class="comment"># 目的IP</span></span><br><span class="line"> </span><br><span class="line">IP_Header = pack(<span class="string">&#x27;!BBHHHBBH4s4s&#x27;</span>, Version_IHL, TOS, TL, Id, FFO, TTL, protocol, checksum, source_addr, dest_addr)</span><br></pre></td></tr></table></figure>
+
+<p>IHL解释：</p>
+<blockquote>
+<p>IHL(Internet Header Length 报头长度)是计算机名词，位于IP报文的第二个字段，4位，表示IP报文头部按32位字长（32位，4字节）计数的长度，也即报文头的长度等于IHL的值乘以4。</p>
+<p>由于IPv4的头部为变长，所以需要用该字段来标示IP报文头的长度，也等同于数据字段的偏移量。最小为5，即5×32 &#x3D; 160位 &#x3D; 20字节。最大为15，表示15×32 bits &#x3D; 480位 &#x3D; 60字节。</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ktanx.com/blog/p/3082">Python socket编程之构造IP首部和ICMP首部</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jeanphorn/article/details/45226947">python 使用raw socket进行TCP SYN扫描</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32998153/article/details/79680704">TCP报文段的首部格式 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15437629/article/details/79183076">TCP校验和（Checksum）的原理和实现 </a></li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20180324192146298" alt="img" style="zoom: 50%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TCP 首部创建</span></span><br><span class="line">source_port = random.randint(<span class="number">30000</span>, <span class="number">65535</span>)  <span class="comment"># 本地随机端口</span></span><br><span class="line">dest_port = <span class="number">3306</span></span><br><span class="line">seq_number = <span class="number">0</span>            <span class="comment"># 序号</span></span><br><span class="line">ack_number = <span class="number">0</span>      <span class="comment"># 确认号</span></span><br><span class="line">header_length = <span class="number">5</span>         <span class="comment"># 首部长，20字节=4字节*5</span></span><br><span class="line">reserved = <span class="number">0</span>        <span class="comment"># 保留</span></span><br><span class="line">hl_resrv = (header_length &lt;&lt; <span class="number">4</span>) + reserved  <span class="comment"># 拼接字节</span></span><br><span class="line"><span class="comment"># tcp flags 标志位</span></span><br><span class="line">urg = <span class="number">0</span></span><br><span class="line">ack = <span class="number">0</span></span><br><span class="line">psh = <span class="number">0</span></span><br><span class="line">rst = <span class="number">0</span></span><br><span class="line">syn = <span class="number">1</span>        <span class="comment"># SYN</span></span><br><span class="line">fin = <span class="number">0</span></span><br><span class="line"><span class="comment"># 拼成0x002的SYN标志位</span></span><br><span class="line">tcp_flags = fin + (syn&lt;&lt;<span class="number">1</span>) + (rst&lt;&lt;<span class="number">2</span>) + (psh&lt;&lt;<span class="number">3</span>) + (ack&lt;&lt;<span class="number">4</span>) + (urg&lt;&lt;<span class="number">5</span>)</span><br><span class="line">window = <span class="number">8192</span>    <span class="comment"># 窗口</span></span><br><span class="line">checksum = <span class="number">0</span>    <span class="comment"># 待校验</span></span><br><span class="line">urgent_pointer = <span class="number">0</span>    <span class="comment"># 紧急指针</span></span><br><span class="line"> </span><br><span class="line">tcp_header = pack(<span class="string">&#x27;!HHLLBBHHH&#x27;</span>, source_port, dest_port, seq_number, ack_number, hl_resrv, tcp_flags, window, checksum, urgent_pointer)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 伪首部12字节</span></span><br><span class="line">source_addr = socket.inet_aton(source_addr)</span><br><span class="line"><span class="built_in">print</span>(source_addr)</span><br><span class="line">dest_addr = socket.inet_aton(dest_addr)  <span class="comment"># 目的IP</span></span><br><span class="line">zeros = <span class="number">0</span></span><br><span class="line">protocol = <span class="number">6</span>  <span class="comment"># TCP 协议号</span></span><br><span class="line">tcp_length = <span class="built_in">len</span>(tcp_header)  <span class="comment"># 首部字节数</span></span><br><span class="line">pseudo_header = pack(<span class="string">&#x27;!4s4sBBH&#x27;</span>, source_addr, dest_addr, zeros, protocol, tcp_length)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 计算校验和</span></span><br><span class="line">checksum = check_sum(pseudo_header + tcp_header)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重新打包</span></span><br><span class="line">tcp_header = pack(<span class="string">&#x27;!HHLLBBHHH&#x27;</span>, source_port, dest_port, seq_number, ack_number, hl_resrv, tcp_flags, window,</span><br><span class="line">                  checksum, urgent_pointer)</span><br></pre></td></tr></table></figure>
+
+<p>计算校验和：可能是错误的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">check_sum</span>(<span class="params">msg</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    计算TCP校验和</span></span><br><span class="line"><span class="string">    :param msg:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    s = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 每次取2个字节 = 16位</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(msg), <span class="number">2</span>):</span><br><span class="line">        w = (msg[i] &lt;&lt; <span class="number">8</span>) + (msg[i+<span class="number">1</span>])</span><br><span class="line">        s = s+w</span><br><span class="line"> </span><br><span class="line">    s = (s &gt;&gt; <span class="number">16</span>) + (s &amp; <span class="number">0xffff</span>)</span><br><span class="line">    s = ~s &amp; <span class="number">0xffff</span></span><br><span class="line">    <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一个更为准确的构造：<a target="_blank" rel="noopener" href="https://gist.github.com/fffaraz/57144833c6ef8bd9d453">https://gist.github.com/fffaraz/57144833c6ef8bd9d453</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnpython.com/qa/128974"> python2.7和python3.4中的ord函数不同？</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/44380251/syn-packet-getting-no-replies-python-raw-sockets">SYN数据包没有回复（Python）原始套接字</a></li>
+</ul>
+<p>终于让我找到了！</p>
+<h3 id="Creating-a-SYN-port-scanner"><a href="#Creating-a-SYN-port-scanner" class="headerlink" title="Creating a SYN port scanner"></a>Creating a SYN port scanner</h3><p><a target="_blank" rel="noopener" href="https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-4-creating-a-syn-port-scanner/">https://inc0x0.com/tcp-ip-packets-introduction/tcp-ip-packets-4-creating-a-syn-port-scanner/</a></p>
+<blockquote>
+<p>$ sudo python3 tcp_syn.py<br>[sudo] june 的密码：<br>Port 21 is: closed<br>Port 22 is: closed<br>Port 80 is: closed<br>Port 8080 is: closed</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> struct <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Packet</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, src_ip, dest_ip, dest_port</span>):</span><br><span class="line">        <span class="comment"># https://docs.python.org/3.7/library/struct.html#format-characters</span></span><br><span class="line">        <span class="comment"># all values need to be at least one byte long (-&gt; we need to add up some values)</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">############</span></span><br><span class="line">        <span class="comment"># IP segment</span></span><br><span class="line">        self.version = <span class="number">0x4</span></span><br><span class="line">        self.ihl = <span class="number">0x5</span></span><br><span class="line">        self.type_of_service = <span class="number">0x0</span></span><br><span class="line">        self.total_length = <span class="number">0x28</span></span><br><span class="line">        self.identification = <span class="number">0xabcd</span></span><br><span class="line">        self.flags = <span class="number">0x0</span></span><br><span class="line">        self.fragment_offset = <span class="number">0x0</span></span><br><span class="line">        self.ttl = <span class="number">0x40</span></span><br><span class="line">        self.protocol = <span class="number">0x6</span></span><br><span class="line">        self.header_checksum = <span class="number">0x0</span></span><br><span class="line">        self.src_ip = src_ip</span><br><span class="line">        self.dest_ip = dest_ip</span><br><span class="line">        self.src_addr = socket.inet_aton(src_ip)</span><br><span class="line">        self.dest_addr = socket.inet_aton(dest_ip)</span><br><span class="line">        self.v_ihl = (self.version &lt;&lt; <span class="number">4</span>) + self.ihl</span><br><span class="line">        self.f_fo = (self.flags &lt;&lt; <span class="number">13</span>) + self.fragment_offset</span><br><span class="line"> </span><br><span class="line">        <span class="comment">#############</span></span><br><span class="line">        <span class="comment"># TCP segment</span></span><br><span class="line">        self.src_port = <span class="number">0x3039</span></span><br><span class="line">        self.dest_port = dest_port</span><br><span class="line">        self.seq_no = <span class="number">0x0</span></span><br><span class="line">        self.ack_no = <span class="number">0x0</span></span><br><span class="line">        self.data_offset = <span class="number">0x5</span></span><br><span class="line">        self.reserved = <span class="number">0x0</span></span><br><span class="line">        self.ns, self.cwr, self.ece, self.urg, self.ack, self.psh, self.rst, self.syn, self.fin = <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x1</span>, <span class="number">0x0</span></span><br><span class="line">        self.window_size = <span class="number">0x7110</span></span><br><span class="line">        self.checksum = <span class="number">0x0</span></span><br><span class="line">        self.urg_pointer = <span class="number">0x0</span></span><br><span class="line">        self.data_offset_res_flags = (self.data_offset &lt;&lt; <span class="number">12</span>) + (self.reserved &lt;&lt; <span class="number">9</span>) + (self.ns &lt;&lt; <span class="number">8</span>) + (</span><br><span class="line">                    self.cwr &lt;&lt; <span class="number">7</span>) + (self.ece &lt;&lt; <span class="number">6</span>) + (self.urg &lt;&lt; <span class="number">5</span>) + (self.ack &lt;&lt; <span class="number">4</span>) + (self.psh &lt;&lt; <span class="number">3</span>) + (</span><br><span class="line">                                                 self.rst &lt;&lt; <span class="number">2</span>) + (self.syn &lt;&lt; <span class="number">1</span>) + self.fin</span><br><span class="line"> </span><br><span class="line">        <span class="comment">########</span></span><br><span class="line">        <span class="comment"># packet</span></span><br><span class="line">        self.tcp_header = <span class="string">b&quot;&quot;</span></span><br><span class="line">        self.ip_header = <span class="string">b&quot;&quot;</span></span><br><span class="line">        self.packet = <span class="string">b&quot;&quot;</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">calc_checksum</span>(<span class="params">self, msg</span>):</span><br><span class="line">        s = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(msg), <span class="number">2</span>):</span><br><span class="line">            w = (msg[i] &lt;&lt; <span class="number">8</span>) + msg[i + <span class="number">1</span>]</span><br><span class="line">            s = s + w</span><br><span class="line">        <span class="comment"># s = 0x119cc</span></span><br><span class="line">        s = (s &gt;&gt; <span class="number">16</span>) + (s &amp; <span class="number">0xffff</span>)</span><br><span class="line">        <span class="comment"># s = 0x19cd</span></span><br><span class="line">        s = ~s &amp; <span class="number">0xffff</span></span><br><span class="line">        <span class="comment"># s = 0xe632</span></span><br><span class="line">        <span class="keyword">return</span> s</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_tmp_ip_header</span>(<span class="params">self</span>):</span><br><span class="line">        tmp_ip_header = pack(<span class="string">&quot;!BBHHHBBH4s4s&quot;</span>, self.v_ihl, self.type_of_service, self.total_length,</span><br><span class="line">                             self.identification, self.f_fo,</span><br><span class="line">                             self.ttl, self.protocol, self.header_checksum,</span><br><span class="line">                             self.src_addr,</span><br><span class="line">                             self.dest_addr)</span><br><span class="line">        <span class="keyword">return</span> tmp_ip_header</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_tmp_tcp_header</span>(<span class="params">self</span>):</span><br><span class="line">        tmp_tcp_header = pack(<span class="string">&quot;!HHLLHHHH&quot;</span>, self.src_port, self.dest_port,</span><br><span class="line">                              self.seq_no,</span><br><span class="line">                              self.ack_no,</span><br><span class="line">                              self.data_offset_res_flags, self.window_size,</span><br><span class="line">                              self.checksum, self.urg_pointer)</span><br><span class="line">        <span class="keyword">return</span> tmp_tcp_header</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_packet</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># IP header + checksum</span></span><br><span class="line">        final_ip_header = pack(<span class="string">&quot;!BBHHHBBH4s4s&quot;</span>, self.v_ihl, self.type_of_service, self.total_length,</span><br><span class="line">                               self.identification, self.f_fo,</span><br><span class="line">                               self.ttl, self.protocol, self.calc_checksum(self.generate_tmp_ip_header()),</span><br><span class="line">                               self.src_addr,</span><br><span class="line">                               self.dest_addr)</span><br><span class="line">        <span class="comment"># TCP header + checksum</span></span><br><span class="line">        tmp_tcp_header = self.generate_tmp_tcp_header()</span><br><span class="line">        pseudo_header = pack(<span class="string">&quot;!4s4sBBH&quot;</span>, self.src_addr, self.dest_addr, self.checksum, self.protocol,</span><br><span class="line">                             <span class="built_in">len</span>(tmp_tcp_header))</span><br><span class="line">        psh = pseudo_header + tmp_tcp_header</span><br><span class="line">        final_tcp_header = pack(<span class="string">&quot;!HHLLHHHH&quot;</span>, self.src_port, self.dest_port,</span><br><span class="line">                                self.seq_no,</span><br><span class="line">                                self.ack_no,</span><br><span class="line">                                self.data_offset_res_flags, self.window_size,</span><br><span class="line">                                self.calc_checksum(psh), self.urg_pointer)</span><br><span class="line"> </span><br><span class="line">        self.ip_header = final_ip_header</span><br><span class="line">        self.tcp_header = final_tcp_header</span><br><span class="line">        self.packet = final_ip_header + final_tcp_header</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send_packet</span>(<span class="params">self</span>):</span><br><span class="line">        s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)</span><br><span class="line">        s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, <span class="number">1</span>)</span><br><span class="line">        s.sendto(self.packet, (self.dest_ip, <span class="number">0</span>))</span><br><span class="line">        data = s.recv(<span class="number">1024</span>)</span><br><span class="line">        s.close()</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># could work with e.g. struct.unpack() here</span></span><br><span class="line"><span class="comment"># however, lazy PoC (012 = [SYN ACK]), therefore:</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_if_open</span>(<span class="params">port, response</span>):</span><br><span class="line">    cont = binascii.hexlify(response)</span><br><span class="line">    <span class="keyword">if</span> cont[<span class="number">65</span>:<span class="number">68</span>] == <span class="string">b&quot;012&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Port &quot;</span> + <span class="built_in">str</span>(port) + <span class="string">&quot; is: open&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Port &quot;</span> + <span class="built_in">str</span>(port) + <span class="string">&quot; is: closed&quot;</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> [<span class="number">21</span>, <span class="number">22</span>, <span class="number">80</span>, <span class="number">8080</span>]:</span><br><span class="line">    <span class="comment"># p = Packet(&quot;127.0.0.1&quot;, &quot;172.17.171.8&quot;, port)</span></span><br><span class="line">    p = Packet(<span class="string">&quot;172.17.171.8&quot;</span>, <span class="string">&quot;172.17.174.30&quot;</span>, port)</span><br><span class="line">    p.generate_packet()</span><br><span class="line">    result = p.send_packet()</span><br><span class="line">    check_if_open(port, result)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Port 21 is: closed<br>Port 22 is: closed<br>Port 80 is: open<br>Port 8080 is: closed</p>
+</blockquote>
+<p><strong>发包时必须指定本机ip地址，而不能用127.0.0.1。</strong></p>
+<p>tcpdump抓包：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/84996511">https://blog.csdn.net/qq_36119192/article/details/84996511</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在Windows下发不了Raw Socket，不知道什么傻原因，协议族什么的设置不对。Linux下发包很快，但最后发现结果不准确，有些响应是端口开放的ip实际上并没有开放！所以，失败！</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/03/22/2021-03-22-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E5%9B%9B%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-03-24 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                        <b>#</b> 计算机网络
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/TCP/" title="TCP">
+                        <b>#</b> TCP
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/03/29/2021-03-29-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E4%BA%94%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0SYN"><span class="toc-text">构造SYN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-a-SYN-port-scanner"><span class="toc-text">Creating a SYN port scanner</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

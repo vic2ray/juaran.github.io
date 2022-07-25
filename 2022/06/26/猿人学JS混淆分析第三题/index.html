@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      猿人学JS混淆分析第三题 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">猿人学JS混淆分析第三题</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2022-06-26 14:15:34
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="逆向分析">
+                    <b>#</b> 逆向分析
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/" title="反爬虫">
+                    <b>#</b> 反爬虫
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="题目信息"><a href="#题目信息" class="headerlink" title="题目信息"></a>题目信息</h1><ul>
+<li>题目地址：<a target="_blank" rel="noopener" href="https://match.yuanrenxue.com/match/3">https://match.yuanrenxue.com/match/3</a></li>
+<li>提交请求：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">GET</span> /api/match/<span class="number">3</span>?page=<span class="number">1</span> <span class="variable constant_">HTTP</span>/<span class="number">2</span></span><br><span class="line"><span class="title class_">Host</span>: match.<span class="property">yuanrenxue</span>.<span class="property">com</span></span><br><span class="line"><span class="title class_">Cookie</span>: sessionid=xyj86w5oy92s3yy13y8o6fbimqirhnx8</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>正确响应：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;state&quot;</span><span class="punctuation">:</span> <span class="string">&quot;success&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;data&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">2838</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span><span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">7609</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> ... <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h1><h2 id="请求重放"><a href="#请求重放" class="headerlink" title="请求重放"></a>请求重放</h2><p>这题没有debugger，但难在于在其他工具中复现请求。如果使用Python的requests库直接请求<code>/api/match/3</code>，带上<code>sessionid</code>，会得到一个script：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;script&gt;var x=&quot;div@Expires@@captcha@while@...&lt;/script&gt;</span></span><br><span class="line"><span class="comment">// 展开</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="string">&quot;div@Expires@@captcha@while@length@@...&quot;</span>.<span class="title function_">replace</span>(<span class="regexp">/@*$/</span>, <span class="string">&quot;&quot;</span>).<span class="title function_">split</span>(<span class="string">&quot;@&quot;</span>)</span><br><span class="line">    y = <span class="string">&quot;1L N=22()&#123;1i(&#x27;17.v=17.1e+17.29.1k(/[\\?...&quot;</span></span><br><span class="line">  , f = <span class="keyword">function</span>(<span class="params">x, y</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span></span><br><span class="line">      , b = <span class="number">0</span></span><br><span class="line">      , c = <span class="number">0</span>;</span><br><span class="line">    x = x.<span class="title function_">split</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">    y = y || <span class="number">99</span>;</span><br><span class="line">    <span class="keyword">while</span> ((a = x.<span class="title function_">shift</span>()) &amp;&amp; (b = a.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">77.5</span>))</span><br><span class="line">        c = (<span class="title class_">Math</span>.<span class="title function_">abs</span>(b) &lt; <span class="number">13</span> ? (b + <span class="number">48.5</span>) : <span class="built_in">parseInt</span>(a, <span class="number">36</span>)) + y * c;</span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line">&#125;</span><br><span class="line">  , z = <span class="title function_">f</span>(y.<span class="title function_">match</span>(<span class="regexp">/\w/g</span>).<span class="title function_">sort</span>(<span class="keyword">function</span>(<span class="params">x, y</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">f</span>(x) - <span class="title function_">f</span>(y)</span><br><span class="line">&#125;).<span class="title function_">pop</span>());</span><br><span class="line"><span class="keyword">while</span> (z++)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">debugger</span> ;<span class="built_in">eval</span>(y.<span class="title function_">replace</span>(<span class="regexp">/\b\w+\b/g</span>, <span class="keyword">function</span>(<span class="params">y</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> x[<span class="title function_">f</span>(y, z) - <span class="number">1</span>] || (<span class="string">&quot;_&quot;</span> + y)</span><br><span class="line">        &#125;));</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (_) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码主要由字符串数组<code>x</code>和jsfuck混淆的<code>y</code>运算后得到，几次尝试后发现取<code>z=51</code>时，生成<code>y</code>字符串能够由eval执行，但看样子是防调试代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _N=<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="string">&#x27;location.href=location.pathname+location.search.replace(/[\\?|&amp;]captcha-challenge/,\\&#x27;</span>\\<span class="string">&#x27;)&#x27;</span>,<span class="number">1500</span>);</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">cookie</span>=...</span><br></pre></td></tr></table></figure>
+
+<p>到这里再往下分析就已经入套了。我们之后再看这段代码。这里用爬虫工具直接请求<code>/api/3</code>的结果是一个<code>&lt;script&gt;eval code&lt;/script&gt;</code>，类型<code>text/html; charset=utf-8</code>，尽管这有可能将数据生成过程隐藏在其中，但正确的返回结果是<code>application/json</code>，数据并未经任何处理。</p>
+<p>我们在浏览器中重放XHR，得到了和工具请求一样的返回类型。同一个请求，服务端返回了两种不同类型的数据？</p>
+<h2 id="请求顺序"><a href="#请求顺序" class="headerlink" title="请求顺序"></a>请求顺序</h2><p>查看源码，发现在acjax请求前先进行了一次请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="variable language_">window</span>.<span class="property">url</span>,</span><br><span class="line">    <span class="attr">dataType</span>: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">    <span class="attr">async</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">data</span>: list,</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="attr">beforeSend</span>: <span class="keyword">function</span>(<span class="params">request</span>) &#123;</span><br><span class="line">        (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> httpRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">            <span class="keyword">var</span> url = <span class="string">&#x27;/jssm&#x27;</span>;</span><br><span class="line">            httpRequest.<span class="title function_">open</span>(<span class="string">&#x27;POST&#x27;</span>, url, <span class="literal">false</span>);</span><br><span class="line">            httpRequest.<span class="title function_">send</span>()</span><br><span class="line">        &#125;)()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">data</span>) &#123;</span><br><span class="line">        data = data.<span class="property">data</span>;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从<code>success</code>回调处理来看，证实了请求得到的一定是json数据，而不是script。响应结果不同只有可能是先<code>beforeSend</code>了<code>/jssm</code>。这是一个post请求，响应类型是<code>image/jpg</code>，重点在于响应头中的<code>sessionid</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">content-<span class="attr">length</span>: <span class="number">0</span></span><br><span class="line">content-<span class="attr">type</span>: image/jpg</span><br><span class="line"><span class="attr">date</span>: <span class="title class_">Sun</span>, <span class="number">26</span> <span class="title class_">Jun</span> <span class="number">2022</span> <span class="number">07</span>:<span class="number">05</span>:<span class="number">28</span> <span class="variable constant_">GMT</span></span><br><span class="line"><span class="attr">server</span>: nginx</span><br><span class="line">set-<span class="attr">cookie</span>: sessionid=sm24vffeu6tlbj17uln7m2ys79omqxwa; expires=<span class="title class_">Sun</span>, <span class="number">26</span> <span class="title class_">Jun</span> <span class="number">2022</span> <span class="number">13</span>:<span class="number">05</span>:<span class="number">28</span> <span class="variable constant_">GMT</span>; <span class="title class_">HttpOnly</span>; <span class="title class_">Max</span>-<span class="title class_">Age</span>=<span class="number">21600</span>; <span class="title class_">Path</span>=/; <span class="title class_">SameSite</span>=<span class="title class_">Lax</span></span><br><span class="line"><span class="attr">vary</span>: <span class="title class_">Cookie</span></span><br></pre></td></tr></table></figure>
+
+<p>那我们先请求<code>/jssm</code>，拿到<code>sessionid</code>，再请求<code>/api/3</code>。背后的结果令人感动：用python-requests请求结果始终没有出现<code>set-cookie</code>响应头：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;match.yuanrenxue.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;qpfccr=true; no-alert3=true&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Length&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Origin&quot;</span>: <span class="string">&quot;https://match.yuanrenxue.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;https://match.yuanrenxue.com/match/3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,en;q=0.8&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">url = <span class="string">&quot;https://match.yuanrenxue.com/jssm&quot;</span></span><br><span class="line">response = requests.get(url, headers=headers, allow_redirects=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(response.status_code)</span><br><span class="line"><span class="built_in">print</span>(response.headers)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>202</p>
+<p>{‘Server’: ‘nginx’, ‘Date’: ‘Sun, 26 Jun 2022 13:10:57 GMT’, ‘Content-Type’: ‘image&#x2F;jpg’, ‘Content-Length’: ‘0’, ‘Connection’: ‘keep-alive’}</p>
+</blockquote>
+<p>很奇怪，拿不到sessionid。那我直接用浏览器生成的sessionid到脚本中请求api呢？依旧返回错误结果。而同时在浏览器中重放&#x2F;jssm和&#x2F;api&#x2F;3，得到正确结果。完整地复制headers，在脚本中重放，失败……难道还需要在<code>beforeSend</code>页面请求？不是，因为只重放这两个就能拿到正确结果。难道是cookie不全？清空所有cookie，重放&#x2F;jssm，这回同脚本一样没有正确响应，跳转回了题目列表页；再进入第三题，逐个清除cookie后重放，几轮测试后发现只要保证cookie不为空，就能正确响应，那么也不会是cookie的原因了。难道是ip的缘故？服务端记录了正确请求的ip，保持同一TCP连接会话才会正确响应？本地发送脚本请求，与浏览器重放第一个&#x2F;jssm请求上下文时机是一致的，排除。</p>
+<h2 id="BurpSuite"><a href="#BurpSuite" class="headerlink" title="BurpSuite"></a>BurpSuite</h2><p>既然本地脚本发出的同一个请求竟然和浏览器中发出的响应结果不一样，掏出大杀器BurpSuite，开启抓包。首先是浏览器结果，这里我们移除了HTTP&#x2F;2相关的<code>Sec-*</code>和缓存控制<code>Cache-Control</code>、<code>Pragma</code>请求头：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">POST</span> /jssm <span class="variable constant_">HTTP</span>/<span class="number">2</span></span><br><span class="line"><span class="title class_">Host</span>: match.<span class="property">yuanrenxue</span>.<span class="property">com</span></span><br><span class="line"><span class="title class_">Cookie</span>: qpfccr=<span class="literal">true</span></span><br><span class="line"><span class="title class_">Content</span>-<span class="title class_">Length</span>: <span class="number">0</span></span><br><span class="line"><span class="title class_">User</span>-<span class="title class_">Agent</span>: <span class="title class_">Mozilla</span>/<span class="number">5.0</span> (<span class="title class_">Windows</span> <span class="variable constant_">NT</span> <span class="number">6.1</span>; <span class="title class_">Win64</span>; x64) <span class="title class_">AppleWebKit</span>/<span class="number">537.36</span> (<span class="variable constant_">KHTML</span>, like <span class="title class_">Gecko</span>) <span class="title class_">Chrome</span>/<span class="number">100.0</span><span class="number">.4896</span><span class="number">.60</span> <span class="title class_">Safari</span>/<span class="number">537.36</span></span><br><span class="line"><span class="title class_">Accept</span>: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Origin: https://match.yuanrenxue.com</span></span><br><span class="line"><span class="comment">Referer: https://match.yuanrenxue.com/match/3</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">HTTP/2 202 Accepted</span></span><br><span class="line"><span class="comment">Server: nginx</span></span><br><span class="line"><span class="comment">Date: Sun, 26 Jun 2022 13:33:54 GMT</span></span><br><span class="line"><span class="comment">Content-Type: image/jpg</span></span><br><span class="line"><span class="comment">Content-Length: 0</span></span><br><span class="line"><span class="comment">Vary: Cookie</span></span><br><span class="line"><span class="comment">Set-Cookie: sessionid=3xihdyaycorqp92lprmaxdoc8poy1zof; expires=Sun, 26 Jun 2022 19:33:54 GMT; HttpOnly; Max-Age=21600; Path=/; SameSite=Lax</span></span><br></pre></td></tr></table></figure>
+
+<p>右键请求，<code>Send to Repeater</code>，这样就可以在Burp中随时重放了。然后抓包Python脚本请求结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">POST</span> /jssm <span class="variable constant_">HTTP</span>/<span class="number">2</span></span><br><span class="line"><span class="title class_">Host</span>: match.<span class="property">yuanrenxue</span>.<span class="property">com</span></span><br><span class="line"><span class="title class_">User</span>-<span class="title class_">Agent</span>: <span class="title class_">Mozilla</span>/<span class="number">5.0</span> (<span class="title class_">Windows</span> <span class="variable constant_">NT</span> <span class="number">6.1</span>; <span class="title class_">Win64</span>; x64) <span class="title class_">AppleWebKit</span>/<span class="number">537.36</span> (<span class="variable constant_">KHTML</span>, like <span class="title class_">Gecko</span>) <span class="title class_">Chrome</span>/<span class="number">100.0</span><span class="number">.4896</span><span class="number">.60</span> <span class="title class_">Safari</span>/<span class="number">537.36</span></span><br><span class="line"><span class="title class_">Accept</span>-<span class="title class_">Encoding</span>: gzip, deflate</span><br><span class="line"><span class="title class_">Accept</span>: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Connection: keep-alive</span></span><br><span class="line"><span class="comment">Cookie: qpfccr=true</span></span><br><span class="line"><span class="comment">Content-Length: 0</span></span><br><span class="line"><span class="comment">Origin: https://match.yuanrenxue.com</span></span><br><span class="line"><span class="comment">Referer: https://match.yuanrenxue.com/match/3</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">HTTP/2 202 Accepted</span></span><br><span class="line"><span class="comment">Server: nginx</span></span><br><span class="line"><span class="comment">Date: Sun, 26 Jun 2022 13:39:18 GMT</span></span><br><span class="line"><span class="comment">Content-Type: image/jpg</span></span><br><span class="line"><span class="comment">Content-Length: 0</span></span><br></pre></td></tr></table></figure>
+
+<p>破案了，唯一不同地方只有请求头的顺序。我们在Repeater中尝试删除无用头、修改头次序，不断重放，测试必须请求头和优先次序，最终确定以下请求为必须：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Host</span>: match.<span class="property">yuanrenxue</span>.<span class="property">com</span></span><br><span class="line"><span class="title class_">Cookie</span>: qpfccr=<span class="literal">true</span></span><br><span class="line"><span class="title class_">Content</span>-<span class="title class_">Length</span>: <span class="number">0</span></span><br><span class="line"><span class="title class_">Accept</span>: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Referer: https://match.yuanrenxue.com/match/3</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Host</code>在第一位置，<code>Content-Length</code>、<code>Accept</code>、<code>Referer</code>、<code>Accept-Encoding</code>、<code>Accept-Language</code>五个位置次序固定不可更改，<code>Cookie</code>可出现在任意位置。这样，确定了headers顺序就可以用脚本实现了。但最大的疑惑在于，HTTP请求工具为什么会改变请求头顺序？顺序为什么和浏览器发出的不一致？</p>
+<h2 id="Python-HTTP库"><a href="#Python-HTTP库" class="headerlink" title="Python-HTTP库"></a>Python-HTTP库</h2><p>我们先来看Python-<code>requests</code>库的出现的相关问题。早2016年，在代码仓库的#3038号issue-<a target="_blank" rel="noopener" href="https://github.com/psf/requests/issues/3038">Order of request headers should be preserved when sent to origin server</a>中提到请求头次序不符合预期结果的问题，评论中有人提议使用<code>collections.OrderedDict</code>有序字典存储headers，但截至目前该方案也还是无效：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"></span><br><span class="line">headers = OrderedDict(&#123;</span><br><span class="line">        <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;match.yuanrenxue.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Content-Length&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;https://match.yuanrenxue.com/match/3&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,en;q=0.8&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;no-alert3=true&quot;</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># OrderedDict([(&#x27;Host&#x27;, &#x27;match.yuanrenxue.com&#x27;), (&#x27;Content-Length&#x27;, &#x27;0&#x27;), (&#x27;Accept&#x27;, &#x27;*/*&#x27;), (&#x27;Referer&#x27;, &#x27;https://match.yuanrenxue.com/match/3&#x27;), (&#x27;Accept-Encoding&#x27;, &#x27;gzip, deflate&#x27;), (&#x27;Accept-Language&#x27;, &#x27;zh-CN,zh;q=0.9,en;q=0.8&#x27;), (&#x27;Cookie&#x27;, &#x27;no-alert3=true&#x27;)])</span></span><br></pre></td></tr></table></figure>
+
+<p>在Python3.8版本以后所有字典默认为有序字典，因此这个做法和默认dict效果是一样的，传入后仍然被requests重新排序。另一个评论提到，<code>urllib3</code>实际上确实保留了请求标头的顺序。尝试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;match.yuanrenxue.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Content-Length&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;https://match.yuanrenxue.com/match/3&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,en;q=0.8&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;no-alert3=true&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line">http = urllib3.PoolManager()</span><br><span class="line">r = http.request(<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;https://match.yuanrenxue.com/jssm&#x27;</span>, headers=headers)</span><br><span class="line">r.headers</span><br><span class="line"><span class="comment"># HTTPHeaderDict(&#123;&#x27;Server&#x27;: &#x27;nginx&#x27;, &#x27;Date&#x27;: &#x27;Sun, 26 Jun 2022 14:17:14 GMT&#x27;, &#x27;Content-Type&#x27;: &#x27;image/jpg&#x27;, &#x27;Content-Length&#x27;: &#x27;0&#x27;, &#x27;Connection&#x27;: &#x27;keep-alive&#x27;, &#x27;Vary&#x27;: &#x27;Cookie&#x27;, &#x27;Set-Cookie&#x27;: &#x27;sessionid=72rrmphsrt9pnuwdrop5n6dlzkql6wy9; expires=Sun, 26 Jun 2022 20:17:14 GMT; HttpOnly; Max-Age=21600; Path=/; SameSite=Lax&#x27;&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p>的确如此！<code>urllib3</code>内部并没有修改请求头顺序。那么requests是否有解决方案？<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/59795562/having-trouble-maintaining-order-of-session-headers-when-making-a-request">having-trouble-maintaining-order-of-session-headers-when-making-a-request</a>对这个问题解释是源于内部设置了默认headers，而解决方案很简单，就是使用<code>requests.session</code>并将替换掉默的<code>session.headers</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">session = requests.session()</span><br><span class="line">session.headers = &#123;</span><br><span class="line">        <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;match.yuanrenxue.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Content-Length&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;https://match.yuanrenxue.com/match/3&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,en;q=0.8&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;no-alert3=true&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line">r = session.post(<span class="string">&#x27;https://match.yuanrenxue.com/jssm&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.headers[<span class="string">&#x27;Set-Cookie&#x27;</span>])</span><br><span class="line"><span class="comment"># sessionid=f9pm05ixxxwyvzmlm844qg52n6xfx82s; expires=Sun, 26 Jun 2022 20:27:45 GMT; HttpOnly; Max-Age=21600; Path=/; SameSite=Lax</span></span><br></pre></td></tr></table></figure>
+
+<p>这么简单！？是的，原以为维持一个会话进行多个请求时才需要使用<code>requests.session</code>，只一个请求时使用session也大有用处。所以，在使用requests时，养成习惯优先使用<code>requests.session</code>，因为重新赋值<code>session.headers</code>将替换掉内部的默认请求头，也就没有默认排序。这也是<a target="_blank" rel="noopener" href="https://requests.readthedocs.io/en/latest/user/advanced/?highlight=headers#header-ordering">官方文档</a>中的解决方案。</p>
+<p>另一个解决方案是，自制一个<code>dict.items</code>对象传入，因为普通的<code>dict_items</code>和<code>OrderedDict</code>对象都会被修改，那么传一个不一样类型，但值一样的dict进去，就不会被更改了。我们先看前面俩长什么样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>headers.items()</span><br><span class="line">dict_items([(<span class="string">&#x27;Host&#x27;</span>, <span class="string">&#x27;match.yuanrenxue.com&#x27;</span>), (<span class="string">&#x27;Content-Length&#x27;</span>, <span class="string">&#x27;0&#x27;</span>), (<span class="string">&#x27;Accept&#x27;</span>, <span class="string">&#x27;*/*&#x27;</span>),...])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>orderedDictHeaders.items()</span><br><span class="line">OrderedDict([(<span class="string">&#x27;Host&#x27;</span>, <span class="string">&#x27;match.yuanrenxue.com&#x27;</span>), (<span class="string">&#x27;Content-Length&#x27;</span>, <span class="string">&#x27;0&#x27;</span>), (<span class="string">&#x27;Accept&#x27;</span>, <span class="string">&#x27;*/*&#x27;</span>), ...])</span><br></pre></td></tr></table></figure>
+
+<p>本质上结构都是tuple list，那么构建一个类，方法<code>items</code>返回元组列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HeaderItems</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">items</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> [(<span class="string">&#x27;Host&#x27;</span>, <span class="string">&#x27;match.yuanrenxue.com&#x27;</span>), (<span class="string">&#x27;Content-Length&#x27;</span>, <span class="string">&#x27;0&#x27;</span>), (<span class="string">&#x27;Accept&#x27;</span>, <span class="string">&#x27;*/*&#x27;</span>), (<span class="string">&#x27;Referer&#x27;</span>, <span class="string">&#x27;https://match.yuanrenxue.com/match/3&#x27;</span>), (<span class="string">&#x27;Accept-Encoding&#x27;</span>, <span class="string">&#x27;gzip, deflate&#x27;</span>), (<span class="string">&#x27;Accept-Language&#x27;</span>, <span class="string">&#x27;zh-CN,zh;q=0.9,en;q=0.8&#x27;</span>), (<span class="string">&#x27;Cookie&#x27;</span>, <span class="string">&#x27;no-alert3=true&#x27;</span>)]</span><br><span class="line">HeaderItems().items()</span><br><span class="line"></span><br><span class="line">[(<span class="string">&#x27;Host&#x27;</span>, <span class="string">&#x27;match.yuanrenxue.com&#x27;</span>),</span><br><span class="line"> (<span class="string">&#x27;Content-Length&#x27;</span>, <span class="string">&#x27;0&#x27;</span>),</span><br><span class="line"> (<span class="string">&#x27;Accept&#x27;</span>, <span class="string">&#x27;*/*&#x27;</span>),</span><br><span class="line"> (<span class="string">&#x27;Referer&#x27;</span>, <span class="string">&#x27;https://match.yuanrenxue.com/match/3&#x27;</span>),</span><br><span class="line"> (<span class="string">&#x27;Accept-Encoding&#x27;</span>, <span class="string">&#x27;gzip, deflate&#x27;</span>),</span><br><span class="line"> (<span class="string">&#x27;Accept-Language&#x27;</span>, <span class="string">&#x27;zh-CN,zh;q=0.9,en;q=0.8&#x27;</span>),</span><br><span class="line"> (<span class="string">&#x27;Cookie&#x27;</span>, <span class="string">&#x27;no-alert3=true&#x27;</span>)]</span><br></pre></td></tr></table></figure>
+
+<p>样子和普通字典和有序字典一样。传入headers试一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">req = requests.post(<span class="string">&#x27;https://match.yuanrenxue.com/jssm&#x27;</span>, headers=HeaderItems())</span><br><span class="line"><span class="built_in">print</span>(req.headers[<span class="string">&#x27;Set-Cookie&#x27;</span>])</span><br><span class="line"><span class="comment"># sessionid=x92oi2jwf5s75c56h4jnpu16hebcgkya; expires=Sun, 26 Jun 2022 20:54:41 GMT; HttpOnly; Max-Age=21600; Path=/; SameSite=Lax</span></span><br></pre></td></tr></table></figure>
+
+<p>成功拿到sessioid！说明顺序正确，自己构造的字典管用。不过，还是建议使用官方推荐的session大法。</p>
+<h2 id="Nodejs-HTTP库"><a href="#Nodejs-HTTP库" class="headerlink" title="Nodejs-HTTP库"></a>Nodejs-HTTP库</h2><p>有了正确顺序且有其他语言库的实现，那么在node中就可以测试哪些库不会默认重新排序。测试库使用目前流行下载较多的：<code>node:https</code>、<code>node-fetch</code>（Weekly Downloads: 33,313,303）、<code>axios</code>（Weekly Downloads: 28,369,028），<code>request</code>（Weekly Downloads: 19,414,422），尽管request库在2020年就停止更新，但至今仍有很大的使用量。</p>
+<p>首先是node内置库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">    <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;match.yuanrenxue.com&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Length&quot;</span>: <span class="string">&quot;0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;https://match.yuanrenxue.com/match/3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Encoding&quot;</span>: <span class="string">&quot;gzip, deflate&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,en;q=0.8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Cookie&quot;</span>: <span class="string">&quot;no-alert3=true&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> req = https.<span class="title function_">request</span>(options, <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">statusCode</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">headers</span>[<span class="string">&#x27;set-cookie&#x27;</span>], <span class="string">&#x27;from node:https&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">req.<span class="title function_">write</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">req.<span class="title function_">end</span>()</span><br></pre></td></tr></table></figure>
+
+<p>成功拿到sessioid。接着测试<code>node-fetch</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://match.yuanrenxue.com/jssm&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: headers</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">headers</span>, <span class="string">&#x27;from node-fetch&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>失败。在仓库issue中发现该问题并目前未解决：<a target="_blank" rel="noopener" href="https://github.com/node-fetch/node-fetch/issues/1569">Keep headers order while sending them</a>。然后是<code>axios</code>、<code>request</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// axios</span></span><br><span class="line">axios.<span class="title function_">post</span>(<span class="string">&#x27;https://match.yuanrenxue.com/jssm&#x27;</span>, &#123;&#125;, &#123; headers &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">headers</span>[<span class="string">&#x27;set-cookie&#x27;</span>], <span class="string">&#x27;from axios&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// request</span></span><br><span class="line"><span class="keyword">let</span> options2 = &#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;https://match.yuanrenxue.com/jssm&#x27;</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: headers</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title function_">request</span>(options2, <span class="function">(<span class="params">_, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">headers</span>[<span class="string">&#x27;set-cookie&#x27;</span>], <span class="string">&#x27;from request&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>axios失败，request成功。不过在axios仓库issue找到了解决方案：<a target="_blank" rel="noopener" href="https://github.com/axios/axios/issues/4611">Can I put the ‘User-Agent’ header before ‘Accept’ and ‘Content-Type’</a>，就是清空实例对象的默认请求头后再请求（类似request.session）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> instance = axios.<span class="title function_">create</span>(&#123;</span><br><span class="line">    <span class="attr">baseURL</span>: <span class="string">&quot;https://match.yuanrenxue.com&quot;</span>,</span><br><span class="line">    <span class="attr">timeout</span>: <span class="number">2000</span>,</span><br><span class="line">&#125;);</span><br><span class="line">instance.<span class="property">defaults</span>.<span class="property">headers</span> = &#123;&#125;;</span><br><span class="line">instance.<span class="title function_">post</span>(<span class="string">&#x27;/jssm&#x27;</span>, &#123;&#125;, &#123; headers &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">headers</span>, <span class="string">&#x27;from axios instance&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="复盘回顾"><a href="#复盘回顾" class="headerlink" title="复盘回顾"></a>复盘回顾</h1><p>这个问题的根本在于浏览器发出请求和HTTP库发出请求的顺序不同。尽管在浏览器控制台中看到请求头的顺序似乎是按照a-z有序排列的，但在服务端收到的顺序才是浏览器真正发出请求的顺序。我们在服务器上小撸一个flask来测试一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> request</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">print</span>(request.headers)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello flask&#x27;</span></span><br><span class="line"></span><br><span class="line">app.run(<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">8080</span>)</span><br></pre></td></tr></table></figure>
+
+<p>使用Chrome浏览器访问，得到打印结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Host: myserver:<span class="number">8080</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">6.1</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">100.0</span><span class="number">.4896</span><span class="number">.60</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="number">0.8</span>,application/signed-exchange;v=b3;q=<span class="number">0.9</span></span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=<span class="number">0.9</span>,en;q=<span class="number">0.8</span></span><br><span class="line">Cache-Control: <span class="built_in">max</span>-age=<span class="number">0</span></span><br><span class="line">Cookie: ...</span><br><span class="line">Upgrade-Insecure-Requests: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用Mozilla Firefox的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Host: myserver:<span class="number">8080</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">6.1</span>; Win64; x64; rv:<span class="number">101.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">101.0</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,*/*;q=<span class="number">0.8</span></span><br><span class="line">Accept-Language: zh-CN,zh;q=<span class="number">0.8</span>,zh-TW;q=<span class="number">0.7</span>,zh-HK;q=<span class="number">0.5</span>,en-US;q=<span class="number">0.3</span>,en;q=<span class="number">0.2</span></span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Upgrade-Insecure-Requests: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>除了请求头的Accept等值各个浏览器发出的不一样，两者发出的<code>Accept-Language</code>和<code>Accept-Encoding</code>顺序也不同。但<code>Host</code>始终在HTTP请求首行之后的第一行，尽管控制台中不显示该请求头（实际上是合并到了URL中展示），<code>User-Agent</code>始终在<code>Accept</code>头之前，紧随<code>Host</code>之后，这几乎是所有浏览器遵循的次序，也是最容易区分爬虫工具的地方。</p>
+<p>然而，还有一个最容易忽略的工具，那就是抓包工具。抓包工具作为本地HTTP代理服务器，转发浏览器发出的所有请求，必然会以自己的实现方式来拦截、修改、重放请求，且作为HTTPS代理时，对服务器来说完全是和抓包工具在交换秘钥及数据通信。我们看一下BurpSuite代理Firefox的请求：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Host: myserver:<span class="number">8080</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">6.1</span>; Win64; x64; rv:<span class="number">101.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">101.0</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,*/*;q=<span class="number">0.8</span></span><br><span class="line">Accept-Language: zh-CN,zh;q=<span class="number">0.8</span>,zh-TW;q=<span class="number">0.7</span>,zh-HK;q=<span class="number">0.5</span>,en-US;q=<span class="number">0.3</span>,en;q=<span class="number">0.2</span></span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: <span class="number">1</span></span><br><span class="line">Pragma: no-cache</span><br><span class="line">Cache-Control: no-cache</span><br></pre></td></tr></table></figure>
+
+<p>发出的请求头和flask端看到的结果一致，修改了<code>Connection</code>并增加了<code>no-cache</code>，证实了抓包工具默认也会修改一些请求头设置，但基本上保持了和浏览器发出请求的头顺序。由此，如果遇到服务器校验请求头次序导致爬虫不通过（对于完全相同的一个请求，浏览器和库模拟请求结果不一致时首先怀疑属于此类问题），从浏览器中复制出来的headers顺序其实也是错的（a-z有序展示），如果没有服务端的控制权，抓包工具中的结果能尽可能还原真实的请求头次序。</p>
+<p>解决问题过程中的其他参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/baiduomai/archive/2012/10/19/2730673.html">http请求头的顺序</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Eeyhan/p/15292983.html">python爬虫 - js逆向之猿人学第三题请求顺序验证+请求头验证</a></li>
+<li><a target="_blank" rel="noopener" href="https://sansec.io/research/http-header-order-is-important">Why ordering HTTP headers is important</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/curlconverter/curlconverter/issues/79">Headers should be in an ordered dict (Python)</a></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/06/24/%E7%8C%BF%E4%BA%BA%E5%AD%A6JS%E6%B7%B7%E6%B7%86%E5%88%86%E6%9E%90%E7%AC%AC%E4%BA%8C%E9%A2%98/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2022-06-26 14:15:34
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" title="逆向分析">
+                        <b>#</b> 逆向分析
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%8F%8D%E7%88%AC%E8%99%AB/" title="反爬虫">
+                        <b>#</b> 反爬虫
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/06/28/%E7%8C%BF%E4%BA%BA%E5%AD%A6JS%E6%B7%B7%E6%B7%86%E5%88%86%E6%9E%90%E7%AC%AC%E5%9B%9B%E9%A2%98/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="toc-text">题目信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="toc-text">解题过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E9%87%8D%E6%94%BE"><span class="toc-text">请求重放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E9%A1%BA%E5%BA%8F"><span class="toc-text">请求顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BurpSuite"><span class="toc-text">BurpSuite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-HTTP%E5%BA%93"><span class="toc-text">Python-HTTP库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nodejs-HTTP%E5%BA%93"><span class="toc-text">Nodejs-HTTP库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E7%9B%98%E5%9B%9E%E9%A1%BE"><span class="toc-text">复盘回顾</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

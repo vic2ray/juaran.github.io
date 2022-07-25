@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】Resnet变体模型解释 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】Resnet变体模型解释</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-12-28 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>上周论文<strong>Residual networks behave like ensembles of relatively shallow networks</strong>(2016)首次用实验验证了残差连接属于Ensemble模型的猜想。后续的论文研究了不同的ResNet改进版本，进一步探索了极深网络，也尝试解释残差连接的有效性：</p>
+<h3 id="Resnet变体"><a href="#Resnet变体" class="headerlink" title="Resnet变体"></a><strong>Resnet变体</strong></h3><ul>
+<li>FractalNet 分形网络，2017年，引用765</li>
+</ul>
+<blockquote>
+<p>Gustav Larsson, Michael Maire, &amp; Gregory Shakhnarovich (2017). FractalNet: Ultra-Deep Neural Networks without Residuals.. International Conference on Learning Representations.</p>
+</blockquote>
+<p>受残差网络中跳过连接(skip connection)的启发，论文提出了跳过路径(drop path)，对连接路径进行随机丢弃，用正则方法提高模型表单能力</p>
+<ol>
+<li>论文的实验说明了路径长度才是训练深度网络的需要的基本组件，而不单单是残差块</li>
+<li>分形网络和残差网络都有很大的网络深度，但是在训练的时候都具有更短的有效的梯度传播路径</li>
+<li>本质是将ResNet以一种规则展开，侧面证明了ResNet的Ensemble的本质</li>
+</ol>
+<hr>
+<ul>
+<li>ResNet with stochastic depth 随机深度残差网络，2016年，引用1440</li>
+</ul>
+<blockquote>
+<p>Huang G, Sun Y, Liu Z, et al. Deep networks with stochastic depth[C]&#x2F;&#x2F;European conference on computer vision. Springer, Cham, 2016: 646-661.</p>
+</blockquote>
+<p>清华大学黄高(也是DenseNet的提出者)在EECV会议上提出了Stochastic Depth（随机深度网络）。这个网络主要是针对ResNet训练时做了一些优化，即随机丢掉一些层，优化了速度和性能。</p>
+<p>作者的解释是，不激活一部分block事实上实现了一种隐性的<strong>模型融合</strong>（<strong>Implicit model ensemble</strong>），由于训练时模型的深度随机，预测时模型的深度确定，事实上是在测试时把不同深度的模型融合了起来。</p>
+<hr>
+<ul>
+<li><strong>DenseNet</strong>，2017年，引用21144</li>
+</ul>
+<blockquote>
+<p>Huang G, Liu Z, Van Der Maaten L, et al. Densely connected convolutional networks[C]&#x2F;&#x2F;Proceedings of the IEEE conference on computer vision and pattern recognition. 2017: 4700-4708.</p>
+</blockquote>
+<p>densenet 论文核心思想：对前每一层都加一个单独的shortcut，使得任意两层网络都可以直接“沟通”（Resnet中只有残差块内的网络能够连接）。<strong>这样使得浅层和深层的特征域可以更自由的组合</strong>，使模型的结果具有更好的鲁棒性。</p>
+<hr>
+<p>以上论文是使用不同方式在深度神经网络上提升性能的尝试，除此之外还有Wide resnet等，正是ResNet开创了极深度网络的先河。从中我们可以得出一些结论：</p>
+<ol>
+<li>Ensemble是Resnet及其改进模型的成功的重要原因</li>
+<li>这意味着极深网络只是看上去很深，实际上用短路连接、丢弃路径等方式绕开了深度网络难训练的问题，训练的仍是浅层网络</li>
+<li>提升Ensemble中的基础网络能够提升整个网络性能</li>
+</ol>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liaohuiqiang/p/9218445.html">FractalNet: Ultra-Deep Neural Networks without Residuals</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1582021">https://cloud.tencent.com/developer/article/1582021</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31200098">Deep Networks with Stochastic Depth</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/malefactor/article/details/67637785">极深网络（ResNet&#x2F;DenseNet）: Skip Connection为何有效及其它</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/37189203">DenseNet：比ResNet更优的CNN模型</a></p>
+<h3 id="总结目前工作"><a href="#总结目前工作" class="headerlink" title="总结目前工作"></a><strong>总结目前工作</strong></h3><ol>
+<li><strong>实验</strong>：首先，我们使用残差网络在内部威胁数据集上进行了实验，实验结果表明其检测性能优于基于统计的方法、图聚类方法、传统机器学习方法，以及图神经网络模型</li>
+<li><strong>理论</strong>：其次，我们探究了残差模型有效性的理论解释，其多个变体模型验证了resnet是多个浅层网络集成(融合)的猜想。我们希望利用残差连接的这一性质，融合多域特征以学习到不同的内部威胁行为</li>
+</ol>
+<h3 id="理论缺陷"><a href="#理论缺陷" class="headerlink" title="理论缺陷"></a><strong>理论缺陷</strong></h3><p>但我发现另一个欠缺的理论解释是，<strong>为什么可以使用CNN进行内部威胁检测？</strong>目前还没有研究使用CNN在内部威胁数据集上建模。我们不能简单地将表格数据视为图像，因此需要找到在表格数据上进行卷积的实践。</p>
+<p>与语音和图像数据相比，数据的重要信息以特征的顺序嵌入，而大多数表格型数据（tabluar data，或称结构化数据，一个样本对应一维特征向量）是异构数据，这些特征之间的相关性比图像或语音数据中的空间或语义关系弱。</p>
+<p>一种做法是使用1D CNN，但是，一维卷积层也需要特征之间的空间局部相关性，即卷积核期望连续的列在空间上是相关的（例如，时序数据），而大部分的表格数据集往往无空间关联。</p>
+<p><strong>我们将单维的日志数据特征重构成二维序列(域-特征)，直觉上增强了不同域的上下文联系，以期通过卷积融合异构数据，这样的做法是否具有说服力？</strong></p>
+<h3 id="寻找实践"><a href="#寻找实践" class="headerlink" title="寻找实践"></a><strong>寻找实践</strong></h3><p>在Kaggle的竞赛中，有团队使用了论文DeepInsight中的方法，将非图像数据转为图像形式并进行卷积，在MoA预测中取得第一名。这个竞赛需要由药物特征预测药物机理，类似威胁检测任务。引用论文:</p>
+<blockquote>
+<p>Sharma A, Vans E, Shigemizu D, et al. DeepInsight: A methodology to transform a non-image data to an image for convolution neural network architecture[J]. Scientific reports, 2019, 9(1): 1-7.</p>
+</blockquote>
+<img src="https://storage.googleapis.com/kaggle-markpeng/MoA/deepinsight_architecture.png" alt="https://storage.googleapis.com/kaggle-markpeng/MoA/deepinsight_architecture.png" style="zoom: 25%;" />
+
+<hr>
+<p>第二名团队通过重新排序(reshape)这些特征后进行一维卷积，网络中也添加了跳过连接，这种方法和我们的做法相似。作者的想法是：</p>
+<ul>
+<li>CNN 结构在特征提取方面表现良好，但在表格数据中很少使用，因为正确的特征排序是未知的</li>
+<li>一个简单的想法是将数据直接reshape成多通道图像格式，通过反向传播使用FC层学习正确排序</li>
+</ul>
+<p>引用论文：Arık S O, Pfister T. Tabnet: Attentive interpretable tabular learning[J]. arXiv, 2020.</p>
+<img src="https://miro.medium.com/max/875/1*MqIpbeDxONYe3moaam9s9w.png" alt="https://miro.medium.com/max/875/1*MqIpbeDxONYe3moaam9s9w.png" style="zoom:67%;" />
+
+<p>参考：</p>
+<p>Deep Neural Networks and Tabular Data: A Survey 深度神经网络和表格数据综述</p>
+<p><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2021-11-13-4">异构表格数据的挑战，深度神经网络如何解？</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2017-12-04-7">如何用深度学习处理结构化数据？</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/spikelab/convolutional-neural-networks-on-tabular-datasets-part-1-4abdd67795b6">表格数据集上的卷积神经网络</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/lish-moa">https://www.kaggle.com/c/lish-moa</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/349911032">Mechanisms of Action (MoA) Prediction top解法总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.kaggle.com/c/lish-moa/discussion/202256">https://www.kaggle.com/c/lish-moa/discussion/202256</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/12/21/2021-12-21-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E6%AE%8B%E5%B7%AE%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9C%AC%E8%B4%A8%E8%A7%A3%E9%87%8A/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-12-28 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/01/06/2022-01-06-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91%E5%8F%91%E7%8E%B0%E8%A1%A8%E6%A0%BC%E5%9E%8B%E6%95%B0%E6%8D%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Resnet%E5%8F%98%E4%BD%93"><span class="toc-text">Resnet变体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E7%9B%AE%E5%89%8D%E5%B7%A5%E4%BD%9C"><span class="toc-text">总结目前工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%AE%BA%E7%BC%BA%E9%99%B7"><span class="toc-text">理论缺陷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E5%AE%9E%E8%B7%B5"><span class="toc-text">寻找实践</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

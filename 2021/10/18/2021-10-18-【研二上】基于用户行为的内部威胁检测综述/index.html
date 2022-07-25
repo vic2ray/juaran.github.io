@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】基于用户行为的内部威胁检测综述 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】基于用户行为的内部威胁检测综述</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-10-18 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="基于用户行为日志的内部威胁检测综述"><a href="#基于用户行为日志的内部威胁检测综述" class="headerlink" title="基于用户行为日志的内部威胁检测综述"></a>基于用户行为日志的内部威胁检测综述</h3><blockquote>
+<p>张有,王开云,张春瑞,等. 基于用户行为日志的内部威胁检测综述[J]. 计算机时代,2020(9):45-49. DOI:<a target="_blank" rel="noopener" href="http://dx.chinadoi.cn/10.16644/j.cnki.cn33-1094/tp.2020.09.012">10.16644&#x2F;j.cnki.cn33-1094&#x2F;tp.2020.09.012</a>.</p>
+</blockquote>
+<p><strong>摘要：</strong> 内部人员威胁会对企业和组织造成重大损失,内部威胁检测对于维护企业信息安全是必要的.概述了基于用户行为日志的内部威胁检测的一般思路和难点,介绍了常见的用户行为日志数据集和预处理方法,分析了内部威胁检测机制的评估指标和常见的内部威胁检测技术,最后给出未来的内部威胁检测研究的发展方向</p>
+<p><strong>用户行为数据集</strong>：Cert数据集是典型的用户行为日志数据集。Cert 数据集来源于卡耐基梅隆大学的CERT内部威胁中心，模拟大型企业或政府组织中分布在4400台计算机上的基于主机的传感器在500天左右收集的日志。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211014154336914.png" alt="image-20211014154336914" style="zoom: 60%;" />
+
+<p>CERT数据集来源页：<a target="_blank" rel="noopener" href="https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=508099">https://resources.sei.cmu.edu/library/asset-view.cfm?assetid=508099</a></p>
+<p>下载页：<a target="_blank" rel="noopener" href="https://kilthub.cmu.edu/articles/dataset/Insider_Threat_Test_Dataset/12841247/1">https://kilthub.cmu.edu/articles/dataset/Insider_Threat_Test_Dataset/12841247/1</a></p>
+<p><strong>内部威胁检测方法</strong>：</p>
+<ul>
+<li>基于统计模型的方法：HMM、GMM</li>
+<li>基于图聚类的方法：日志数据处理成属性图，子空间聚类</li>
+<li>基于机器学习的方法：LSTM、DT</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211014154651184.png" alt="image-20211014154651184" style="zoom:70%;" />
+
+<h3 id="CERT数据集上的属性图聚类方法-2017"><a href="#CERT数据集上的属性图聚类方法-2017" class="headerlink" title="CERT数据集上的属性图聚类方法(2017)"></a>CERT数据集上的属性图聚类方法(2017)</h3><blockquote>
+<p>Gamachchi, A., &amp; Boztas, S. (2017). <em>Insider Threat Detection Through Attributed Graph Clustering. 2017 IEEE Trustcom&#x2F;BigDataSE&#x2F;ICESS.</em><br>DOI:10.1109&#x2F;Trustcom&#x2F;BigDataSE&#x2F;ICESS.2017.227</p>
+</blockquote>
+<p>论文将CERT数据集高维异构的日志数据处理成无向无加权的属性图g后，采用“edcar”和“gamer”算法对图g进行<strong>子空间聚类，产生一组子图和子空间</strong>，再利用“GOutRank”方法的评分函数在子空间中进行异常值计算，得分较高的用户被视为正常用户，因为他们对应于一组属性的密集连通子图；而得分较低的用户被认为是可疑用户，他们与大多数用户存在偏差。</p>
+<p><strong>本文方法</strong>：</p>
+<ol>
+<li><p>图构建：数据集包含1000个员工的六种日志（HTTP、Email、登录、设备、文件、心理），将员工构建为图中的顶点，将员工上下级关系和邮件往来记录构建为边，形成同构无向无权图</p>
+</li>
+<li><p>属性提取：统计日志中各种活动记录的最大、最小、平均值作为员工属性。包括：用户角色部门属性、时间属性、文件访问属性等。这些高维异构数据将作为后续离群检测的依据</p>
+</li>
+<li><p>子图和子空间提取：我们的目的是识别具有属性值显著偏离所在社群的其他节点的<strong>离群节点</strong>，主要使用两种图聚类算法将原图划分成属性相似度较高的紧密连接子图</p>
+</li>
+<li><p>离群排序：没有聚集或作为非常小、稀疏连接的社区的一部分聚集的顶点被认为是明确的异常值</p>
+</li>
+</ol>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211015114555695.png" alt="image-20211015114555695" style="zoom:80%;" />
+
+<p>结果：本文方法在CERT-r4.2数据集上取得了AUC&#x3D;0.7648的准确率，也就是在70个异常值中识别出了37个。</p>
+<p><strong>参考意义</strong>：本文对用户行为日志的异构数据属性提取可以作为GNN中节点特征提取的特征参考，能否提取出有效、相关性强的日志特征将对内部威胁检测问题起到关键作用。以下列出该论文提取的属性：</p>
+<ul>
+<li>电子邮件相关属性<ul>
+<li>邮件收件人数量、邮件大小、附件数量</li>
+<li>每日发送的电子邮件数量(全部时间all、上班时间Business Hour、下班时间After Hour)</li>
+<li>邮件发送时间</li>
+<li>用于电子邮件活动的设备数量、电子邮件地址的数量</li>
+<li>通过电子邮件连接的内部用户数量、外部用户数量</li>
+</ul>
+</li>
+<li>用户角色相关属性<ul>
+<li>岗位、单元、部门、团队</li>
+</ul>
+</li>
+<li>登录相关属性<ul>
+<li>登录时间、注销时间</li>
+<li>每日登录次数、每日注销次数、每日用于登录&#x2F;注销活动的设备数</li>
+</ul>
+</li>
+<li>设备使用相关<ul>
+<li>每日使用的可移动存储设备数、移动存储设备使用时间</li>
+<li>用于可移动介质的设备数量、总使用天数</li>
+</ul>
+</li>
+<li>文件操作相关<ul>
+<li>文件拷贝时长、拷贝天数、拷贝文件数量</li>
+<li>文件类型、用于文件复制的设备数量</li>
+</ul>
+</li>
+</ul>
+<h3 id="尝试：CERT数据特征提取"><a href="#尝试：CERT数据特征提取" class="headerlink" title="尝试：CERT数据特征提取"></a>尝试：CERT数据特征提取</h3><p>参考上一篇论文构建日志数据图的方法：</p>
+<ul>
+<li>图：顶点为员工，边为邮件、上下属关系</li>
+<li>特征：提取六个日志数据中各项指标的平均值、最值</li>
+<li>标签：员工分为正常员工和威胁员工两类，具有威胁的员工有以下几种情形：</li>
+</ul>
+<blockquote>
+<p>1.以前未使用可移动驱动器或工作后的用户在几小时后开始登录的用户，使用可移动驱动器，并将数据上传到Wikileaks.org。此后不久离开本组织。</p>
+<p>2.用户开始冲浪就业网站并从竞争对手征求就业。在离开公司之前，他们使用拇指驱动器（比其前一项活动明显更高的速率）来窃取数据。</p>
+<p>3.系统管理员变得不安。下载Keylogger并使用拇指驱动器将其传送到他的主管机器。第二天，他使用收集的键歌登录为他的主管，并发出令人担忧的大众电子邮件，导致组织恐慌。他立即离开了组织。</p>
+<p>4.用户登录另一个用户的计算机并搜索有趣的文件，通过电子邮件发送到他们的家庭电子邮件。此行为在3个月内越来越频繁地发生。</p>
+<p>5.由裁员抽取的组成员将文档上传到Dropbox，计划使用它们进行个人收益。</p>
+</blockquote>
+<p><strong>发现问题</strong>：在处理数据过程中发现有些属性特征实际上与威胁检测关联性较小，与最终的分类情形并无相关性，例如：发送邮件数量、大小等并不能说明该人员具有威胁性，一个管理人员可能发送给下属员工大量通知邮件。</p>
+<p>此外，论文构建图的方法是通过邮件联系、上下级关系组成同构图，如果使用GNN进行关联发现，这将是一个失败的尝试，因为危险内部人员与其上下级、邮件联系人无直接关系，一个危险人员的上级或下属并不会倾向于共同犯罪。而图的构建应该是：同一个员工的多种活动日志数据组成的异构网络图，这个活动轨迹图形成了危险活动的情形，从而判定该人员为具有威胁的内部员工。</p>
+<p>另外，该论文不包含对日志文本内容特征的提取，也就是没有包括邮件通信、网络访问的内容分析。邮件内容往往包含员工的工作情绪、活动意向，HTTP日志内容包含员工可能访问其他公司的求职信息等。因此，在CERT数据集上进行子图聚类的尝试到此为止。</p>
+<h3 id="针对内部威胁检测的深度学习：审查、挑战和机遇-2020"><a href="#针对内部威胁检测的深度学习：审查、挑战和机遇-2020" class="headerlink" title="针对内部威胁检测的深度学习：审查、挑战和机遇(2020)"></a>针对内部威胁检测的深度学习：审查、挑战和机遇(2020)</h3><blockquote>
+<p>Yuan, S., &amp; Wu, X. (2021). <em>Deep learning for insider threat detection: Review, challenges and opportunities. Computers &amp; Security, 104, 102221.</em> doi:10.1016&#x2F;j.cose.2021.102221</p>
+</blockquote>
+<p>这篇综述论文梳理了内部威胁检测领域的深度学习的最新文献，前面的综述论文主要概述了传统机器学习的方法。作者指出目前还没有全面的真实数据集公开，使用最广泛的是CMU大学的模拟数据集CERT r4.2和r6.2两个版本。r4.2包括1000个用户，其中有70个内鬼(insider)，较为“密集”；r6.2版本4000个用户中只有5个内鬼，较“稀疏”：</p>
+<blockquote>
+<p>总之，内部威胁检测是一项类似于大海捞针的任务，因此手动定义特征或使用浅层机器学习模型来检测内部威胁通常是不可行的。</p>
+</blockquote>
+<p>基于深度学习的内部威胁检测论文分类：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211019194123347.png" alt="image-20211019194123347" style="zoom:78%;" />
+
+<p>其中代表性的两篇GNN相关文献：</p>
+<ul>
+<li>图卷积方法(2019)：通过电子邮件、共同使用设备连接用户节点形成的同构网络<ul>
+<li><em>Anomaly Detection with Graph Convolutional Networks for Insider Threat and Fraud Detection.</em></li>
+</ul>
+</li>
+<li>图嵌入方法(2019)：将审计数据各种活动表示为节点、活动联系为边形成的异构网络图<ul>
+<li><em>Log2vec: A Heterogeneous Graph Embedding Based Approach for Detecting Cyber Threats within Enterprise.</em></li>
+</ul>
+</li>
+</ul>
+<p><strong>面临的挑战</strong>：</p>
+<ul>
+<li>数据及其不平衡：恶意活动发生极少，且在现实中辨别恶意内部人员是不可行的</li>
+<li>忽略时间性：目前研究主要关注用户活动之间的关联性，但忽略了活动的时间</li>
+<li>异构信息融合：尚且没有对不同数据源信息有效融合的好的方法</li>
+<li>威胁往往是微妙的：难以划分良性活动和异常活动的阈值</li>
+<li>威胁自适应：基于学习的模型只能检测已知威胁，敌手很容易改变策略躲过检测</li>
+<li>细粒度检测、早期检测、可解释性、缺乏真实试验、缺乏合理评估指标</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/10/13/2021-10-13-Transport-Layer(2)/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-10-18 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/10/21/2021-10-21-Transport-Layer(3)/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E6%97%A5%E5%BF%97%E7%9A%84%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E7%BB%BC%E8%BF%B0"><span class="toc-text">基于用户行为日志的内部威胁检测综述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CERT%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8A%E7%9A%84%E5%B1%9E%E6%80%A7%E5%9B%BE%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95-2017"><span class="toc-text">CERT数据集上的属性图聚类方法(2017)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%EF%BC%9ACERT%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="toc-text">尝试：CERT数据特征提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9%E5%86%85%E9%83%A8%E5%A8%81%E8%83%81%E6%A3%80%E6%B5%8B%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%AE%A1%E6%9F%A5%E3%80%81%E6%8C%91%E6%88%98%E5%92%8C%E6%9C%BA%E9%81%87-2020"><span class="toc-text">针对内部威胁检测的深度学习：审查、挑战和机遇(2020)</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

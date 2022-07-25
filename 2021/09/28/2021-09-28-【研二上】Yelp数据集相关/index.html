@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研二上】Yelp数据集相关 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研二上】Yelp数据集相关</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-09-28 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="Yelp"><a href="#Yelp" class="headerlink" title="Yelp"></a>Yelp</h3><p>美国最大的点评网站，成立于2004年，从2005年便开始应用过滤系统移除可疑或虚假的评论，门店主页显示系统推荐的评论，同时也可以通过页面底部的链接查看过滤&#x2F;不推荐的评论：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210927093754046.png" alt="image-20210927093754046" style="zoom: 50%;" />
+
+<blockquote>
+<p><em><a target="_blank" rel="noopener" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiwj-vJo-rOAhUH2BoKHX7IA0UQFggcMAA&url=https://www.aaai.org/ocs/index.php/ICWSM/ICWSM13/paper/download/6006/6380&usg=AFQjCNEaT55wVWuin3v07jJBFjybxOFT4g">What Yelp fake review filter might be doing?</a></em> A. Mukherjee, V. Venkataraman, B. Liu, and N. S. Glance, ICWSM, 2013.</p>
+</blockquote>
+<p>文章首次在真实的商业网站Yelp中实施虚假评论检测工作。</p>
+<p>这篇文章主要探究了Yelp点评网站的评论审查系统如何过滤虚假评论。因为Yelp的算法是商业机密的，只能通过现有的方法来训练Yelp评论数据，而现有方法主要对AMT(一个众包平台)的伪虚假评论检测，实验发现在Yelp真实评论上，基于行为特征的检测很有效，但基于语言特征的检测效果不佳。</p>
+<p>作者首先使用了使用<strong>语言分词模型</strong>，发现远低于模型在伪虚假评论上的准确率，原因是Yelp上的虚假评论和真实评论具有几乎相同的单词分布，这可能是由于这些虚假评论有意对抗过滤系统的审查机制，让它们看起来像是真实评论，但在语言心理学上分析漏洞明显。</p>
+<p>然后对评论者的<strong>异常行为进行分析</strong>，发现行为特征检测效果远好于语言特征。例如：评论数、好评占比、内容长度、<strong>评分偏差程度</strong>、内容相似度等。且这些特征数据是容易获得的，对诸如账户IP地址、点击行为等特征无法进行尝试。因此，这是通用的SPAM评论检测方法。</p>
+<h3 id="YelpCHI"><a href="#YelpCHI" class="headerlink" title="YelpCHI"></a>YelpCHI</h3><p>Yelp上的评论太多，YelpCHI是收集自Chicago酒店和餐厅的 67,395 条评论的数据集。评论包括门店和用户信息、时间戳、评级和纯文本评论。该数据集包含38,063 名评论者对 201 家酒店和餐厅的评论。原数据集来自论文：</p>
+<blockquote>
+<p>Rayana, S., &amp; Akoglu, L. (2015). <em>Collective Opinion Spam Detection:Bridging Review Networks and Metadata. Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining - KDD ’15.</em> doi:10.1145&#x2F;2783258.2783370</p>
+</blockquote>
+<p>阅读参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/C-W-K/p/13846305.html">https://www.cnblogs.com/C-W-K/p/13846305.html</a></p>
+<p>文章提出一个无监督框架，它利用来自所有元数据（文本、时间戳、评级)以及关系数据(网络）的信息，并在一个统一的框架下集体利用它们来发现可疑的用户和评论。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210928105037985.png" alt="image-20210928105037985" style="zoom: 80%;" />
+
+<p>这个框架和GNN做的事情是一样的，利用图网络、节点特征（元数据）、节点标签得到节点嵌入。论文结果中同样得出，基于语言特征的检测效果远不如基于行为特征。特别是<strong>评分偏差程度</strong>和评分极端化特征。</p>
+<p>使用该数据集的论文：</p>
+<ul>
+<li>Graph-Consis网络（上周看的）</li>
+</ul>
+<blockquote>
+<p>Liu, Z., Dou, Y., Yu, P. S., Deng, Y., &amp; Peng, H. (2020). <em>Alleviating the Inconsistency Problem of Applying Graph Neural Network to Fraud Detection. Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval.</em> doi:10.1145&#x2F;3397271.3401253</p>
+</blockquote>
+<ul>
+<li>CARE-GNN网络</li>
+</ul>
+<blockquote>
+<p>Dou, Y., Liu, Z., Sun, L., Deng, Y., Peng, H., &amp; Yu, P. S. (2020). <em>Enhancing Graph Neural Network-based Fraud Detectors against Camouflaged Fraudsters. Proceedings of the 29th ACM International Conference on Information &amp; Knowledge Management.</em> doi:10.1145&#x2F;3340531.3411903</p>
+</blockquote>
+<ul>
+<li>数据集中review特征的提取</li>
+</ul>
+<blockquote>
+<p>Zhang, S., Yin, H., Chen, T., Hung, Q. V. N., Huang, Z., &amp; Cui, L. (2020). GCN-Based User Representation Learning for Unifying Robust Recommendation and Fraudster Detection. Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval. doi:10.1145&#x2F;3397271.3401165</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/09/24/2021-09-24-Web-and-HTTP/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-09-28 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/10/03/2021-10-03-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91GraphConsis%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Yelp"><span class="toc-text">Yelp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#YelpCHI"><span class="toc-text">YelpCHI</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

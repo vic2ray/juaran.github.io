@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      DNS——互联网的目录 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">DNS——互联网的目录</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-10-03 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                    <b>#</b> 计算机网络
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/DNS/" title="DNS">
+                    <b>#</b> DNS
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>内容摘自：<em>Computer Networking: A Top-Down Approach, 6th</em> <em>ed.,</em> J.F. Kurose and K.W. Ross</p>
+<p>Chapter <strong>2.5</strong> <strong>DNS—The Internet’s Directory Service</strong></p>
+</blockquote>
+<p>网络中计算机的身份证：</p>
+<ul>
+<li>hostname：不定长度，包含有限的可能有意义的身份信息</li>
+<li>IP address：固定长度，通过路由器传递下一跳(next hoop)信息</li>
+</ul>
+<h3 id="Services-Provided-by-DNS"><a href="#Services-Provided-by-DNS" class="headerlink" title="Services Provided by DNS"></a>Services Provided by DNS</h3><p>我们需要这样一个可以将hostname转换为IP地址的<strong>目录服务</strong>，它叫域名系统(Domain Name System)，它是：</p>
+<ul>
+<li>具有分层结构的分布式数据库</li>
+<li>用于主机查询分布式数据库的应用层协议</li>
+</ul>
+<p><strong>DNS server</strong>通常是运行BIND(Berkeley Internet Name Domain)软件的计算机，BIND 9下载地址：<a target="_blank" rel="noopener" href="https://www.isc.org/download/#BIND%E3%80%82DNS%E5%8D%8F%E8%AE%AE%E5%9F%BA%E4%BA%8EUDP%E5%8D%8F%E8%AE%AE%EF%BC%8C%E9%BB%98%E8%AE%A4%E7%9B%91%E5%90%AC53%E7%AB%AF%E5%8F%A3%E3%80%82DNS%E5%8D%8F%E8%AE%AE%E9%80%9A%E5%B8%B8%E5%9C%A8%E5%85%B6%E4%BB%96%E5%8D%8F%E8%AE%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%8C%85%E6%8B%AC%EF%BC%9AHTTP%E3%80%81SMTP%E3%80%81FTP%E7%AD%89%EF%BC%8C%E7%94%A8%E4%BA%8E%E8%BD%AC%E6%8D%A2hostname%E4%B8%BAIP">https://www.isc.org/download/#BIND。DNS协议基于UDP协议，默认监听53端口。DNS协议通常在其他协议中使用，包括：HTTP、SMTP、FTP等，用于转换hostname为IP</a> address，以便于创建TCP连接——这意味着DNS带来了额外的查询延时。</p>
+<p>除了域名解析，DNS还用于其他应用场景：</p>
+<ul>
+<li>主机别名：一个固定IP address的主机可以解析到不同的别名</li>
+<li>邮件服务器别名：163邮箱的真实域名为：163mx02.mxmail.netease.com，但解析到163.com更便捷</li>
+<li><strong>负载分发</strong>：同一个域名关联到一组IP地址，使用多个Web服务器均衡负载；或使用在CDN中分发内容。</li>
+</ul>
+<h3 id="Overview-of-How-DNS-Works"><a href="#Overview-of-How-DNS-Works" class="headerlink" title="Overview of How DNS Works"></a>Overview of How DNS Works</h3><p>从总体来看，DNS为其他应用层服务如HTTP提供域名-IP地址解析服务，或通过<code>gethostbyname()</code>函数调用，本地DNS客户端收到解析请求后，发送一条UDP数据报查询DNS数据库得到响应报文，然后转发结果给调用方。</p>
+<p>一个简单的设计是，将所有的hostname-IP address映射放在一台中心DNS服务器中，这显然是最糟糕的设计：</p>
+<ul>
+<li>单点服务器的最大弱点是，一旦宕机全部玩完</li>
+<li>流量限制、距离限制、难以维护和扩展</li>
+</ul>
+<h4 id="A-Distributed-Hierarchical-Database"><a href="#A-Distributed-Hierarchical-Database" class="headerlink" title="A Distributed, Hierarchical Database"></a><strong>A Distributed, Hierarchical Database</strong></h4><p>实际中有大量的DNS服务器，通过分层的方式组织起来，并分布在世界各地。分层形式如图所示：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004152815418.png" alt="image-20211004152815418" style="zoom:80%;" />
+
+<ul>
+<li>Root DNS servers: 分布在全球各地的“13”个根DNS服务器，用于存储TLD服务器的映射信息。实际上出于安全性考虑，每个根域名服务器都多个备份服务器。其中大部分在北美</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004155244910.png" alt="image-20211004155244910" style="zoom: 80%;" />
+
+<ul>
+<li>Top-level domain (TLD) servers: 顶级域名服务器：com,org,net,edu,gov,us,fr,cn,jp…由非盈利组织监管</li>
+<li>Authoritative DNS servers：权威DNS服务器。在互联网中具有公开访问主机的组织机构都必须提供公开的DNS记录（否则用户无法访问），机构DNS服务器中包含了主机的映射。大多数大学和大公司实现并维护他们自己的主和次（备份）权威DNS服务器</li>
+</ul>
+<p>尽管严格意义上来说，<strong>Local DNS server</strong>并不属于以上DNS的分层结构中，但本地DNS服务器依然是DNS架构中的核心部分。本地DNS服务器往往是ISP提供的，例如手机网络运营商有自己的域名服务系统，校园网教育网有自己的DNS服务器，阿里巴巴等大公司也有自己的DNS服务器。在电脑的网络适配器中可以指定DNS服务器的IP地址，这些DNS服务器往往距离主机最近，以获得最快的查询响应。Local DNS server更主要的作用是在主机进行DNS查询时，<strong>充当代理</strong>将查询转发到DNS层级结构中。</p>
+<h4 id="Recursive-queries-and-iterative-queries"><a href="#Recursive-queries-and-iterative-queries" class="headerlink" title="Recursive queries and iterative queries"></a>Recursive queries and iterative queries</h4><p>在实际中，即使用递归也使用迭代查询：从请求主机到本地DNS服务器的查询是递归的，其余的查询是迭代的（左图模式）。这样本地DNS服务器承担了局部网络的大部分的查询压力，减轻了层级域名服务器的压力。</p>
+<table><tr><td>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004161718223.png" style="zoom: 67%" />
+</td><td>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004161749555.png" -image/raw/master/typora/image-20211004161718223.png" style="zoom: 67%" />
+</td></tr></table>
+
+<h4 id="DNS-Caching"><a href="#DNS-Caching" class="headerlink" title="DNS Caching"></a>DNS Caching</h4><p>上一章我们深入理解了Web caching机制，同样的，DNS缓存的目的是为了降低请求延迟和减少整个网络中重复的DNS查询。通常在Local DNS server中启用缓存，并设置缓存更新频率。</p>
+<h3 id="DNS-Records-and-Messages"><a href="#DNS-Records-and-Messages" class="headerlink" title="DNS Records and Messages"></a>DNS Records and Messages</h3><h4 id="DNS-records"><a href="#DNS-records" class="headerlink" title="DNS records"></a>DNS records</h4><p>DNS服务器中存储的是资源记录（RRs, resource records），也就是主机到IP地址的映射记录，DNS响应消息中携带了一条或多条这样的记录。每一条资源记录都是四元组组成：<code>(Name, Value, Type, TTL)</code>. 其中TTL(time to live)是记录的存活时间，到0时会从缓存中删除。我们重点关注Name, Value和Type：</p>
+<ul>
+<li>Type&#x3D;A：标准的hostname-to-IP address映射</li>
+<li>Type&#x3D;NS：提供domain-to-authorized DNS server映射，例：(fzu.edu.cn, func.fzu.edu.cn, NS)</li>
+<li>Type&#x3D;CNAME：Canonical 规范主机名的Alias 别名解析</li>
+<li>Type&#x3D;MX：邮件服务器的别名解析，例：(163.com, 163mx00.mxmail.netease.com, MX)</li>
+</ul>
+<p>Unix主机使用<code>nslookup</code>命令可以进入查询交互。</p>
+<h4 id="DNS-Messages"><a href="#DNS-Messages" class="headerlink" title="DNS Messages"></a><strong>DNS Messages</strong></h4><p>DNS查询和响应的报文格式是一样的：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004170729358.png" alt="image-20211004170729358" style="zoom: 67%;" />
+
+<p>Wireshark抓包：</p>
+<table><tr><td>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004172204416.png" alt="image-20211004172204416" style="zoom:67%;" />
+</td><td>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20211004172426338.png" alt="image-20211004172426338" style="zoom:67%;" />
+</td></tr></table>
+### Summary
+
+<p>DNS是计算机网络中最重要的基础服务设施之一，多年来针对DNS服务器的DDoS、中间人攻击等的成功防御都证明了DNS在面临攻击时的强大抵抗力，这得益于其三层分级结构和分布式部署，以及本地DNS服务器的缓冲保护。</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/bbwangj/article/details/82079405">DNS(bind)服务器的安装与配置</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/10/03/2021-10-03-%E3%80%90%E7%A0%94%E4%BA%8C%E4%B8%8A%E3%80%91GraphConsis%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-10-03 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                        <b>#</b> 计算机网络
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/DNS/" title="DNS">
+                        <b>#</b> DNS
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/10/08/2021-10-08-Transport-Layer/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Services-Provided-by-DNS"><span class="toc-text">Services Provided by DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overview-of-How-DNS-Works"><span class="toc-text">Overview of How DNS Works</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-Distributed-Hierarchical-Database"><span class="toc-text">A Distributed, Hierarchical Database</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Recursive-queries-and-iterative-queries"><span class="toc-text">Recursive queries and iterative queries</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-Caching"><span class="toc-text">DNS Caching</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-Records-and-Messages"><span class="toc-text">DNS Records and Messages</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-records"><span class="toc-text">DNS records</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-Messages"><span class="toc-text">DNS Messages</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

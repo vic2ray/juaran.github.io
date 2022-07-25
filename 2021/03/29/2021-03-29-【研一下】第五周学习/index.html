@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研一下】第五周学习汇报 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研一下】第五周学习汇报</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-03-29 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="Day-01"><a href="#Day-01" class="headerlink" title="Day 01"></a>Day 01</h1><h3 id="卷积神经网络（Convolutional-Neural-Network）"><a href="#卷积神经网络（Convolutional-Neural-Network）" class="headerlink" title="卷积神经网络（Convolutional Neural Network）"></a>卷积神经网络（Convolutional Neural Network）</h3><p>理解：卷积神经网络结构主要分成卷积和下采样（池化）操作。</p>
+<p>对于输入特征为高维的数据如图像（28*28*1长、宽、通道数），将其拉伸为一维向量（784个像素）并建立模型进行分类，训练效果必然有所缺陷，存在拉伸后像素之间的纹理等关联性丢失等问题，在图像很复杂的情况下不适合用此方式。</p>
+<p>在卷积网络结构中，输入特征往往以高维张量表示，通过与多个卷积核（filter）作矩阵运算（卷积操作）可提取图像的边缘信息、纹理信息等（视不同算子而定），这些算子往往是1*1、3*3、5*5的带有不同权重Weight信息的矩阵，图像经过一次卷积后得到一个比原图像“小一圈”的图像结构（feature map），可看做一个神经元；但此时图像依然很大，下采样（sub sampling）通过提取图像局部像素（如四邻域）的最大值（称为最大池化）或平均值（称为均值池化）将图像最大限度的降低维数，但依然保留了图像的基本特征。重复卷积和池化的过程，每一个过程都可以看做一个隐藏层，将图像从最初输入时的高维度降到输出时的低维度，最终经过激活函数到输出层，可以理解为图像越变越小，但越叠越厚。</p>
+<h3 id="tf-nn-conv2d"><a href="#tf-nn-conv2d" class="headerlink" title="tf.nn.conv2d"></a>tf.nn.conv2d</h3><ul>
+<li>input    输入图像，格式为float32、64<ul>
+<li>[batch, height, width, channels]    四维</li>
+</ul>
+</li>
+<li>filter    卷积核，[3, 3, 1, 1]，3*3卷积核，输入图像通道1，卷积核个数1</li>
+<li>strides  步长，[1, stride, stride, 1]，横向纵向移动步长</li>
+<li>padding  零填充<ul>
+<li>“SAME”    遇到边缘填充</li>
+<li>“VALID”    边缘不填充</li>
+</ul>
+</li>
+</ul>
+<p>卷积示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"> </span><br><span class="line">plt.imshow(train_x[<span class="number">0</span>], cmap=<span class="string">&quot;Greys&quot;</span>)</span><br><span class="line">input_img = train_x[<span class="number">0</span>]</span><br><span class="line">input_img.shape</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>(28, 28)    输入图像28*28</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input_img = input_img.reshape([<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line">input_img.shape</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>(1, 28, 28, 1)     2D图像转为4D输入格式</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sobel = tf.constant(value=[[-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>], [-<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>], [-<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>]], shape=(<span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">sobel.shape</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>TensorShape([3, 3, 1, 1])    定义sobel轮廓提取算子</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">strides = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line">padding = <span class="string">&quot;SAME&quot;</span></span><br><span class="line">out_img = tf.nn.conv2d(<span class="built_in">input</span>=input_img, filters=sobel, strides=strides, padding=padding)</span><br><span class="line">out_img = tf.reshape(out_img, (<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">plt.imshow(out_img, cmap=<span class="string">&#x27;Greys&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>卷积得到结果为(1, 28, 28, 1)，转为二维特征图像显示</p>
+</blockquote>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210330102909254.png" alt="image-20210330102909254" style="zoom:50%;" />
+
+<h3 id="tf-nn-max-pool"><a href="#tf-nn-max-pool" class="headerlink" title="tf.nn.max_pool"></a>tf.nn.max_pool</h3><ul>
+<li>value 同conv2d的input图像输入</li>
+<li>ksize  池化窗口大小，[1, ksize, ksize, 1]</li>
+<li>strides  步长，[1,2, 2,1] 步长大小一般与池化窗口大小一致，使最终图像只有一半维度</li>
+<li>padding  填充，同卷积</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 池化操作</span></span><br><span class="line">pool_img = tf.nn.max_pool(out_img, ksize=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], strides=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], padding=<span class="string">&quot;SAME&quot;</span>)</span><br><span class="line">pool_img.shape        <span class="comment"># (1, 14, 14, 1)</span></span><br><span class="line">pool_img = tf.reshape(pool_img, (<span class="number">14</span>, <span class="number">14</span>))</span><br><span class="line">plt.imshow(pool_img, cmap=<span class="string">&#x27;Greys&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如图，分别为原图、卷积、池化得特征图像，保留了原图像的特征同时大大降低了维度！</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210330104400679.png" alt="image-20210330104400679" style="zoom:50%;" />
+
+<p>参考：</p>
+<p>tensorflow sobel算子实现 <a target="_blank" rel="noopener" href="https://blog.csdn.net/miss_yan/article/details/90813029">https://blog.csdn.net/miss_yan/article/details/90813029</a></p>
+<h1 id="Day-02"><a href="#Day-02" class="headerlink" title="Day 02"></a>Day 02</h1><h3 id="使用CNN进行MNIST训练"><a href="#使用CNN进行MNIST训练" class="headerlink" title="使用CNN进行MNIST训练"></a>使用CNN进行MNIST训练</h3><p>模型结构如图所示。通过两次卷积、两次最大池化、两次全连接层。第一次卷积使用32个5*5的卷积核，第二次卷积使用64个5*5的卷积核，步长为1且填充保证输出特征图大小一致；池化大小为2*2、步长为2使池化后图像大小缩小一倍。最后一次池化后通过扁平化<strong>Flaten</strong>将7*7*64的高维图像转为一维的3136像素的特征向量，然后经过一次1024个节点（神经元）的全连接层，采用<strong>dropout</strong>策略随机丢弃部分节点不去“学习”以增加泛化能力防止过拟合，最终经过softmax输出为1*1*10的预测值。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20190326102325207.png" alt="在这里插入图片描述" style="zoom:50%;" />
+
+<h3 id="构建模型"><a href="#构建模型" class="headerlink" title="构建模型"></a>构建模型</h3><h4 id="卷积后全连接方式"><a href="#卷积后全连接方式" class="headerlink" title="卷积后全连接方式"></a>卷积后全连接方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers</span><br><span class="line"> </span><br><span class="line">inputs = layers.Input(shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))    <span class="comment"># 输入图像大小28*28*1通道</span></span><br><span class="line"><span class="comment"># 第一次卷积池化，5*5*32卷积核</span></span><br><span class="line">conv1 = layers.Conv2D(filters=<span class="number">32</span>, kernel_size=<span class="number">5</span>, strides=<span class="number">1</span>, padding=<span class="string">&quot;SAME&quot;</span>, activation=<span class="string">&quot;relu&quot;</span>)(inputs)</span><br><span class="line">pool1 = layers.MaxPool2D(pool_size=<span class="number">2</span>, strides=<span class="number">2</span>)(conv1)  <span class="comment"># 14 * 14 * 32</span></span><br><span class="line"><span class="comment"># 第二次卷积池化，5*5*64卷积核</span></span><br><span class="line">conv2 = layers.Conv2D(filters=<span class="number">64</span>, kernel_size=<span class="number">5</span>, strides=<span class="number">1</span>, padding=<span class="string">&quot;SAME&quot;</span>, activation=<span class="string">&quot;relu&quot;</span>)(inputs)</span><br><span class="line">pool2 = layers.MaxPool2D(pool_size=<span class="number">2</span>, strides=<span class="number">2</span>)(conv2)  <span class="comment"># 7 * 7 * 64</span></span><br><span class="line"><span class="comment"># 扁平化，7*7*64 -&gt; 1*1*3136</span></span><br><span class="line">flat = layers.Flatten()(pool2)</span><br><span class="line"><span class="comment"># 全连接层，3136 -&gt; 1024</span></span><br><span class="line">fullc = layers.Dense(<span class="number">1024</span>, activation=<span class="string">&quot;relu&quot;</span>)(flat)</span><br><span class="line"><span class="comment"># 丢弃部分节点防止过拟合</span></span><br><span class="line">keep_prob = <span class="number">0.5</span>     <span class="comment"># 保留率</span></span><br><span class="line">dropout = layers.Dropout(rate=keep_prob)(fullc)</span><br><span class="line"><span class="comment"># 第二个全连接层（可以不使用）</span></span><br><span class="line">fullc2 = layers.Dense(<span class="number">1024</span>, activation=<span class="string">&quot;relu&quot;</span>)(dropout)</span><br><span class="line">dropout2 = layers.Dropout(rate=keep_prob)(fullc2)</span><br><span class="line"><span class="comment"># 输出层, 1024 -&gt; 10</span></span><br><span class="line">outputs = layers.Dense(<span class="number">10</span>, activation=<span class="string">&quot;softmax&quot;</span>)(dropout2)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>layers.Conv2D：filters&#x3D;卷积核个数，kernel_size&#x3D;卷积核大小，strides&#x3D;步长，activation&#x3D;激活函数，padding&#x3D;填充</li>
+<li>layers.MaxPool2D：poolsize&#x3D;池化窗口大小，strides&#x3D;池化步长</li>
+<li>layers.Flaten()：扁平化</li>
+<li>layers.Dense()：units&#x3D;全连接神经元数量&#x2F;节点，activation&#x3D;激活函数</li>
+<li>layers.Dropout()：rate&#x3D;保留率</li>
+</ul>
+<h4 id="全局池化方式"><a href="#全局池化方式" class="headerlink" title="全局池化方式"></a>全局池化方式</h4><p>在第二次池化后，得到7*7*64大小的feature map，使用一个10层（因为输出为10）的卷积核对其卷积得到7*7*10的feature map，再经过7*7大小和步长的平均池化，最终得到1*1*10大小的feature map，最后进行维度变换：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ... pool2</span></span><br><span class="line"><span class="comment"># 方式二：最后一层采用全局平均池化层</span></span><br><span class="line">conv3 = layers.Conv1D(filters=<span class="number">10</span>, kernel_size=<span class="number">5</span>, strides=<span class="number">1</span>, padding=<span class="string">&quot;SAME&quot;</span>, activation=<span class="string">&quot;relu&quot;</span>)(pool2)</span><br><span class="line">pool3 = layers.AvgPool2D(pool_size=<span class="number">7</span>, strides=<span class="number">7</span>)(conv3)</span><br><span class="line"><span class="built_in">print</span>(pool3.shape)</span><br><span class="line">outputs = tf.reshape(pool3, shape=[-<span class="number">1</span>, <span class="number">10</span>])</span><br></pre></td></tr></table></figure>
+
+<p>使用此模型时采用Adagrad优化器效果明显。</p>
+<h3 id="模型优化"><a href="#模型优化" class="headerlink" title="模型优化"></a>模型优化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立模型，输入为layers.Input()对象，输出为构建模型的输出层</span></span><br><span class="line">model = tf.keras.Model(inputs=inputs, outputs=outputs)</span><br><span class="line"><span class="comment"># 定义优化器参数：优化器类型、学习率、损失函数、评估列表</span></span><br><span class="line">model.<span class="built_in">compile</span>(optimizer=tf.keras.optimizers.SGD(learning_rate=<span class="number">0.3</span>), loss=<span class="string">&#x27;SparseCategoricalCrossentropy&#x27;</span>, metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>keras.Model    建立模型对象，参数为输入层和输出层</li>
+<li>model.compile  配置优化器参数，损失和评估指标<ul>
+<li>loss    <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/losses">https://tensorflow.google.cn/api_docs/python/tf/keras/losses</a></li>
+<li>optimizer <a target="_blank" rel="noopener" href="https://tensorflow.google.cn/api_docs/python/tf/keras/optimizers">https://tensorflow.google.cn/api_docs/python/tf/keras/optimizers</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="模型训练和评估"><a href="#模型训练和评估" class="headerlink" title="模型训练和评估"></a>模型训练和评估</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型训练</span></span><br><span class="line">model.fit(x=train_x, y=train_y, batch_size=<span class="number">100</span>, epochs=<span class="number">10</span>)</span><br><span class="line"><span class="comment"># 模型评估</span></span><br><span class="line">loss, accuracy = model.evaluate(x=test_x, y=test_y)</span><br><span class="line"><span class="built_in">print</span>(loss, accuracy)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>model.fit     训练模型，x&#x3D;输入，y&#x3D;输出，batch_size&#x3D;批次，epochs&#x3D;轮数</li>
+<li>model.evaluate   模型评估，x&#x3D;测试输入，y&#x3D;测试输出</li>
+</ul>
+<blockquote>
+<p>Epoch 1&#x2F;5 600&#x2F;600 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] 132s 220ms&#x2F;step - loss: 0.1072 - accuracy: 0.9691<br>Epoch 2&#x2F;5 600&#x2F;600 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 116s 194ms&#x2F;step - loss: 0.0785 - accuracy: 0.9764<br>Epoch 3&#x2F;5 600&#x2F;600 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 115s 192ms&#x2F;step - loss: 0.0698 - accuracy: 0.9784<br>Epoch 4&#x2F;5 600&#x2F;600 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 117s 194ms&#x2F;step - loss: 0.0666 - accuracy: 0.9811<br>Epoch 5&#x2F;5 600&#x2F;600 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 117s 194ms&#x2F;step - loss: 0.0632 - accuracy: 0.9827<br>313&#x2F;313 [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;] - 5s 15ms&#x2F;step - loss: 0.1233 - accuracy: 0.9655 0.12332648038864136 0.965499997138977</p>
+</blockquote>
+<h3 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h3><ul>
+<li>model.predict：x&#x3D;待预测输入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取一张图片输入，转为四维，对应Inputs格式</span></span><br><span class="line">x_predict = tf.reshape(x_test[<span class="number">0</span>], shape=[-<span class="number">1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line"><span class="comment"># 执行预测，输出结果与Outputs格式相同</span></span><br><span class="line">y_predict = model.predict(x=x_predict)[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(tf.argmax(y_predict).numpy())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>7</p>
+</blockquote>
+<p>参考博客：</p>
+<p>深度学习手记（七）之MNIST实现CNN模型 <a target="_blank" rel="noopener" href="https://blog.csdn.net/llh_1178/article/details/88817072">https://blog.csdn.net/llh_1178/article/details/88817072</a></p>
+<p>tensorflow——MNIST（CNN实现） <a target="_blank" rel="noopener" href="https://blog.csdn.net/u012198575/article/details/96316436">https://blog.csdn.net/u012198575/article/details/96316436</a></p>
+<p>CNN手写数字代码实现：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wt411C75s?p=43">https://www.bilibili.com/video/BV1Wt411C75s?p=43</a></p>
+<h1 id="Day-03"><a href="#Day-03" class="headerlink" title="Day 03"></a>Day 03</h1><p><strong>全局平均池化</strong>是为了替代传统<strong>全连接层</strong>，在卷积神经网络中，隐含层经过多次卷积、池化后，得到的特征图feature map大小越来越小，但通道数（厚度）越来越大，传统的全连接层方式是通过flaten扁平化操作将其“拉伸”成一维特征向量，二全局平均池化的做法是取最后一个特征图每一层（通道）的平均值，即是一维数据。</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/20180201141956028.jpg" alt="img" style="zoom:50%;" />
+
+<p>卷积网络在ImageNet比赛对比：</p>
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210331152420456.png" alt="image-20210331152420456" style="zoom:80%;" />
+
+<p>可以看出层数越来越多，另一个显著差别就是全连接层数量大幅降低，原因是全连接层参数过多计算量大，替换为全局平均池化效率将显著提高，因此在神经网络中应尽量减少全连接层的使用。</p>
+<h3 id="其他卷积网络"><a href="#其他卷积网络" class="headerlink" title="其他卷积网络"></a>其他卷积网络</h3><ul>
+<li>图像<strong>目标检测</strong><ul>
+<li>Yolo：GoogleNet + bounding boxes</li>
+<li>Faster-RCNN：VGG, RestNet</li>
+<li>SSD：VGG+region proposals</li>
+</ul>
+</li>
+</ul>
+<h3 id="疑惑"><a href="#疑惑" class="headerlink" title="疑惑"></a>疑惑</h3><p>关于训练时的调参问题，发现虽然已经构建好模型，但不同的loss算法、学习率所得结果大相径庭，有时候即使相同的loss算法，学习率0.3时可以收敛，但学习率0.9时却不能……对模型的最后一层的处理方式，全连接处理时的dropout学习保留率不同、全连接层数都会影响训练，或使用全局平均池化方式替代全连接反而不能得到有效训练结果……</p>
+<p>似乎找到正确的学习参数比构建模型本身更困难！</p>
+<p>调参技巧：不设置学习率，让Keras的Model会自动找到合适学习率。</p>
+<ul>
+<li>网络结构<ul>
+<li>全连接 –&gt; 卷积、池化</li>
+<li>激活函数：relu、softmax、sigmoid</li>
+<li>深度（层数）、卷积核大小、数量</li>
+<li>dropout保留率大小</li>
+</ul>
+</li>
+<li>损失函数<ul>
+<li>SGD</li>
+<li>Adam</li>
+<li>Adagrad …</li>
+</ul>
+</li>
+<li>学习率</li>
+</ul>
+<p>如果训练时精度卡住，换一种损失函数试试，再考虑调整网络结构等。</p>
+<h1 id="Day-04"><a href="#Day-04" class="headerlink" title="Day 04"></a>Day 04</h1><p><strong>数据归一化</strong>：样本中某些特征值过大过过小，计算误差时标准差是其他数据的几个量级，直接影响到数据的预测结果偏差大。归一化将全部样本值归一到0~1区间内，减弱少数极端样本对整体结果的影响。归一化公式：<br>$$<br>X^{‘} &#x3D; \frac{x - min}{max - min}  \<br>X^{‘’} &#x3D; X’(mx - mi) + mi \ (mx通常取1，mi通常取0)<br>$$<br>缺陷：受最大最小值影响大，如果最值为异常点，则仍受到干扰。<strong>鲁棒性</strong>差，即稳定性较差，只适合传统精确的小数据场景，在数据中含有异常数据时效果差。</p>
+<p><strong>数据标准化</strong>：将原始数据变换为<strong>标准正态分布</strong>，即变换到均值为0，标准差为1的范围内。标准化公式：mean数据平均值，sigma数据标准差<br>$$<br>X’ &#x3D; \frac{x - mean} {σ}<br>$$<br>标准化鲁棒性强，少量异常点对平均值的影响不大，从而方差受影响小。</p>
+<p><strong>K-NN算法</strong>：如果一个特征空间中的k个最相似（最近邻）的样本属于某一类别，则判定该样本也属于这个类别。关键在于计算样本距离和K值选择（多少个最近邻居）。简单、易理解、无需训练，计算量大内存开销大，性能低，K值选择是关键，针对小数据场景。</p>
+<p><strong>超参数</strong>：在分类等算法中需要手动指定的参数，如K-NN中的K值。网格搜索做的就是遍历一组超参数得到不同参数下的预估结果。</p>
+<p><strong>朴素贝叶斯</strong>Naive Bayes：古典数学理论，稳定的分类器，算法简单，常用于文本分类，准确度高、速度快。缺点是too naive，仅在样本属性独立性的假设前提下有效。</p>
+<h1 id="Day-05"><a href="#Day-05" class="headerlink" title="Day 05"></a>Day 05</h1><h3 id="验证码识别"><a href="#验证码识别" class="headerlink" title="验证码识别"></a>验证码识别</h3><p>用到Python的图像处理库pillow，数值分析库numpy，绘图库matplotlib，光学符号识别库pytesseract。</p>
+<p>思路是先将验证码转为灰度图，再转换为ndarray的二维数组，删除背景噪声像素（与文字像素相比值更大，颜色更浅偏白）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"> </span><br><span class="line">img = Image.<span class="built_in">open</span>(<span class="string">&#x27;captcha2.jpg&#x27;</span>)</span><br><span class="line">img = img.convert(<span class="string">&#x27;L&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"> </span><br><span class="line">img = np.array(img)</span><br><span class="line">plt.imshow(img, cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403191739099.png" alt="image-20210403191739099" style="zoom:50%;" />
+
+<p>遍历像素，将超过灰度值超过120的置为255，即白色；灰度值低于120的置为0，即黑色：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">height = img.shape[<span class="number">0</span>]</span><br><span class="line">width = img.shape[<span class="number">1</span>]</span><br><span class="line">threshold = <span class="number">120</span>  <span class="comment"># 像素阈值</span></span><br><span class="line"><span class="keyword">for</span> h <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">        <span class="keyword">if</span> img[h][w] &gt; threshold:</span><br><span class="line">            img[h][w] = <span class="number">255</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            imgp[h][w] = <span class="number">0</span></span><br><span class="line">plt.imshow(img, cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210403210530113.png" style="zoom:50%;" />
+
+<p>效果看起来不错，存在锯齿现象，但问题不大。</p>
+<p>在使用pyteserract前需要先安装好tesseract，其带有识别程序和文字数据，自带有eng.traindata代表英文数字识别数据包。在使用前先设置可执行teserract的安装路径。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"> </span><br><span class="line">pytesseract.pytesseract.tesseract_cmd = <span class="string">r&quot;C:\Users\TempProgram\Tesserocr\tesseract.exe&quot;</span></span><br><span class="line">pytesseract.image_to_string(im).strip().lower()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>‘z2zh’</p>
+</blockquote>
+<p>能准确识别出Z和2，下载几张新的图片均能够准确识别。看来这验证码难度不大，不需要再做CNN神经网络训练任务。</p>
+<p>将以上验证码处理识别程序和前面的模拟登录结合，唯一的遗憾是整个Python程序外还需要安装tesseract软件。</p>
+<p><strong>下周计划</strong>：使用CNN卷积神经网络识别验证码，与传统的OCR识别效果对比。</p>
+<p>分析：数字0-9，小写字母a-z，大写字母A-Z，一共62个类别，不采用图像分割方式完整识别四个字符一组的验证码，可能需要大量批注工作。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/03/24/2021-03-24-SYN-port-scanner/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-03-29 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/04/03/2021-04-03-unified-login/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-01"><span class="toc-text">Day 01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Convolutional-Neural-Network%EF%BC%89"><span class="toc-text">卷积神经网络（Convolutional Neural Network）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tf-nn-conv2d"><span class="toc-text">tf.nn.conv2d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tf-nn-max-pool"><span class="toc-text">tf.nn.max_pool</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-02"><span class="toc-text">Day 02</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8CNN%E8%BF%9B%E8%A1%8CMNIST%E8%AE%AD%E7%BB%83"><span class="toc-text">使用CNN进行MNIST训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="toc-text">构建模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%90%8E%E5%85%A8%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">卷积后全连接方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%B1%A0%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-text">全局池化方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96"><span class="toc-text">模型优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%92%8C%E8%AF%84%E4%BC%B0"><span class="toc-text">模型训练和评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B"><span class="toc-text">模型预测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-03"><span class="toc-text">Day 03</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C"><span class="toc-text">其他卷积网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%96%91%E6%83%91"><span class="toc-text">疑惑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-04"><span class="toc-text">Day 04</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-05"><span class="toc-text">Day 05</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB"><span class="toc-text">验证码识别</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

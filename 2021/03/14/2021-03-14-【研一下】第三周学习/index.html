@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研一下】第三周学习汇报 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研一下】第三周学习汇报</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-03-14 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="Day-01"><a href="#Day-01" class="headerlink" title="Day 01"></a>Day 01</h1><p>对机器学习的初步理解。机器学习分为监督学习，无监督学习，强化学习。监督学习的典型问题有：回归、分类，无监督学习的问题主要有聚类，强化学习例如Google的围棋，自己与自己下棋获得学习能力。</p>
+<h3 id="Step-1-Model模型：函数集合function-set"><a href="#Step-1-Model模型：函数集合function-set" class="headerlink" title="Step 1 Model模型：函数集合function set"></a>Step 1 Model模型：函数集合function set</h3><p>以”预估房价“这一典型回归问题为例，机器学习的过程可以看做：Y &#x3D; f(X) 求解最佳 f 的过程，在训练过程中，X为房子户型，户型有多个特征如：面积、高度……，Y为已知历史房价；在无限个可能的function当中，找出最适合的、能最大程度拟合房价分布的曲线，这些所有可能的函数集合也被称为<strong>假设空间</strong>。</p>
+<h3 id="Step-2-策略：Loss损失函数"><a href="#Step-2-策略：Loss损失函数" class="headerlink" title="Step 2 策略：Loss损失函数"></a>Step 2 策略：Loss损失函数</h3><p>由于假设空间太大，需要选择其中的“最优解”，Loss函数的作用就是为了寻找与输入数据相吻合的一条曲线f。损失函数是评估假设空间中函数“好坏”的函数，损失率越大，该函数拟合效果越差，对训练样本的拟合程度越低，训练误差大，称为<strong>欠拟合</strong>；损失率越低，对训练集拟合程度越高，但可能对测试数据预测偏差大，测试误差大，称为<strong>过拟合</strong>。</p>
+<p>为了平衡欠拟合与过拟合的情况，采用<strong>正则化</strong>的方式降低参数对输出的影响程度。</p>
+<h3 id="Step-3-算法：Gradient-Descent梯度下降"><a href="#Step-3-算法：Gradient-Descent梯度下降" class="headerlink" title="Step 3 算法：Gradient Descent梯度下降"></a>Step 3 算法：Gradient Descent梯度下降</h3><p>梯度下降是为了找到最优的Loss函数，即找到损失最小时的假设空间函数f。梯度下降可以简单看做更新微积分项的过程，在曲线“陡峭”的地方，“下降”的步伐越大，曲线“平缓”的地方，“下降”的步伐越小，逐步接近极小值。<strong>学习速率</strong>是为了控制下降速度的一个参数。</p>
+<h1 id="Day-02"><a href="#Day-02" class="headerlink" title="Day 02"></a>Day 02</h1><p>对于分类问题的机器学习方法，通常采用<strong>逻辑回归</strong>的做法。线性回归用于预测离散数值的大小，其假设空间函数是线性的；逻辑回归用于分类，如人脸识别、手写字体检测、声音识别等，其假设空间函数通常是离散的概率分布函数，比如识别猫还是狗，利用<strong>贝叶斯公式</strong>计算出在某种情况下该类别发生的可能性。<strong>生成模型</strong>Generation Model即可以根据已知输入得到的贝叶斯概率，生成未知离散点的概率，从而预测该事件发生的概率。</p>
+<p>神经网络Neural Network的假设空间可以看做是Neural Structure神经结构，每一层有多个Neuron神经元组成，每个Neuron由初始的输入层X和权重Weight、偏差Bias矩阵运算得到，经过中间多个隐藏层全连接Full connection layer得到输出层Y。机器学习第二步是判断神经结构的“好坏”，这需要调整每个神经元的参数W和b，是参数优化的过程。</p>
+<p>卷积神经网络Converlutional Neural Network在神经网络的基础上，减少了很多的“连接”，不再是Full Connection，做法是将输入层内积多个不同的Filter，得到新的神经元，进行Max Pooling池化，即选出卷积后的最大值，不断重复内积和池化的过程，将输出结果在再作为全连接层神经网络的输入。以图像输入为例，每次卷积得到的层会使得不同纹理的区域分开，但又共享各个纹理的参数，所以下次卷积得到两种纹理叠加的形态，最终输出更加完整的图像。</p>
+<h1 id="Day-03"><a href="#Day-03" class="headerlink" title="Day 03"></a>Day 03</h1><p>回归实验：使用回归方法预测大学城附近二手房售价。</p>
+<h2 id="一、数据准备"><a href="#一、数据准备" class="headerlink" title="一、数据准备"></a>一、数据准备</h2><h3 id="1-1-二手房信息"><a href="#1-1-二手房信息" class="headerlink" title="1.1 二手房信息"></a>1.1 二手房信息</h3><p>数据来源：安居客福州市闽侯区大学城二手房信息。</p>
+<p>主要抓取<strong>面积-售价</strong>数据，在作回归分析时将面积作为输入X，房售价为输出Y。</p>
+<p>剔除其中面积高于500平的数据。一共获取到<strong>2577</strong>条数据，面积单位平方米，价格单位万元。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318165424127.png" alt="image-20210318165424127"><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318165450452.png" alt="image-20210318165450452"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_page_data</span>(<span class="params">page</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Getting page&quot;</span>, page)</span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 链接来源：安居客福州市闽侯区大学城二手房信息</span></span><br><span class="line">    url = <span class="string">&quot;https://fz.anjuke.com/sale/minhou-q-dxch/o2-p&#123;&#125;/&quot;</span>.<span class="built_in">format</span>(page)</span><br><span class="line">    res = requests.get(url, headers=headers)</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 解析二手房面积和价格</span></span><br><span class="line">    tree = etree.HTML(res.text)</span><br><span class="line">    areas = tree.xpath(<span class="string">&#x27;//*[@id=&quot;__layout&quot;]/div/section/section[3]/section[1]/section[2]/div/a/div[2]/div[1]/section/div[1]/p[2]/text()&#x27;</span>)</span><br><span class="line">    areas = [area.strip().rstrip(<span class="string">&#x27;㎡&#x27;</span>) <span class="keyword">for</span> area <span class="keyword">in</span> areas]</span><br><span class="line">    prices = tree.xpath(<span class="string">&#x27;//*[@id=&quot;__layout&quot;]/div/section/section[3]/section[1]/section[2]/div/a/div[2]/div[2]/p[1]/span[1]/text()&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(prices) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] Data not found! &quot;</span>)</span><br><span class="line"> </span><br><span class="line">    samples = <span class="built_in">list</span>(<span class="built_in">zip</span>(areas, prices))</span><br><span class="line"> </span><br><span class="line">    header = [<span class="string">&#x27;area&#x27;</span>, <span class="string">&#x27;price&#x27;</span>]</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;data.csv&#x27;</span>, mode=<span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        writer = csv.writer(f)</span><br><span class="line">        writer.writerows(samples)</span><br><span class="line"> </span><br><span class="line">    time.sleep(<span class="number">10</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建 csv 数据文件并添加表头</span></span><br><span class="line">header = [<span class="string">&#x27;area&#x27;</span>, <span class="string">&#x27;price&#x27;</span>]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;data.csv&#x27;</span>, mode=<span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>)    <span class="keyword">as</span> f:</span><br><span class="line">    writer = csv.writer(f)</span><br><span class="line">    writer.writerow(header)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">46</span>):  <span class="comment"># 遍历全部页面，手动翻页到46结束</span></span><br><span class="line">    get_page_data(page)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-数据分类"><a href="#1-2-数据分类" class="headerlink" title="1.2 数据分类"></a>1.2 数据分类</h3><p>随机抽取577条数据作为测试数据<strong>test.csv</strong>，剩余2000条作为训练数据<strong>train.csv</strong>：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318170019936.png" alt="image-20210318170019936"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"> </span><br><span class="line">header = [<span class="string">&#x27;area&#x27;</span>, <span class="string">&#x27;price&#x27;</span>]</span><br><span class="line">f_read = <span class="built_in">open</span>(<span class="string">&#x27;data.csv&#x27;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">f_test = <span class="built_in">open</span>(<span class="string">&#x27;test.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">f_train = <span class="built_in">open</span>(<span class="string">&#x27;train.csv&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, newline=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">csv_read =  csv.reader(f_read)</span><br><span class="line">csv_test = csv.writer(f_test)</span><br><span class="line">csv_test.writerow(header)</span><br><span class="line">csv_train = csv.writer(f_train)</span><br><span class="line">csv_train.writerow(header)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 随机抽取不重复577条数据</span></span><br><span class="line">random_index = random.sample(<span class="built_in">range</span>(<span class="number">2577</span>), <span class="number">577</span>)</span><br><span class="line"><span class="keyword">for</span> i, row <span class="keyword">in</span> <span class="built_in">enumerate</span>(csv_read):</span><br><span class="line">    <span class="keyword">if</span> i <span class="keyword">in</span> random_index:</span><br><span class="line">        csv_test.writerow(row)  <span class="comment"># 写入测试数据</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        csv_train.writerow(row)  <span class="comment"># 写入训练数据</span></span><br><span class="line"> </span><br><span class="line">f_test.close()</span><br><span class="line">f_train.close()</span><br><span class="line">f_read.close()</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-可视化"><a href="#1-3-可视化" class="headerlink" title="1.3 可视化"></a>1.3 可视化</h3><p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318170914561.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318170854066.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> MultipleLocator</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 读取训练数据</span></span><br><span class="line">train_data = pd.read_csv(<span class="string">&#x27;train.csv&#x27;</span>)[<span class="number">1</span>:][::-<span class="number">1</span>]</span><br><span class="line"><span class="comment"># Series转为list类型</span></span><br><span class="line">x = train_data[<span class="string">&#x27;area&#x27;</span>].tolist()  <span class="comment"># X轴：area</span></span><br><span class="line">y = train_data[<span class="string">&#x27;price&#x27;</span>].tolist()  <span class="comment"># Y轴：price</span></span><br><span class="line"> </span><br><span class="line">plt.scatter(x, y, color=<span class="string">&#x27;dodgerblue&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取测试数据</span></span><br><span class="line">test_data = pd.read_csv(<span class="string">&#x27;test.csv&#x27;</span>)[<span class="number">1</span>:][::-<span class="number">1</span>]</span><br><span class="line"><span class="comment"># Series转为list类型</span></span><br><span class="line">x_test = test_data[<span class="string">&#x27;area&#x27;</span>].tolist()  <span class="comment"># X轴：area</span></span><br><span class="line">y_test = test_data[<span class="string">&#x27;price&#x27;</span>].tolist()  <span class="comment"># Y轴：price</span></span><br><span class="line"> </span><br><span class="line">plt.scatter(x_test, y_test, color=<span class="string">&#x27;aquamarine&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、回归"><a href="#二、回归" class="headerlink" title="二、回归"></a>二、回归</h2><h3 id="2-1-模型一"><a href="#2-1-模型一" class="headerlink" title="2.1 模型一"></a>2.1 模型一</h3><p>第一步，选择模型。首先选用最简单的<strong>线性模型</strong>：<br>$$<br>f(x) &#x3D; y &#x3D; w·x + b<br>$$<br>y代表售价，x代表面积，w和b为待求参数，可以看做权重和偏差。根据不同w和b组成的所有函数集合构成模型的<strong>假设空间</strong>。</p>
+<p>第二步，选择策略。定义<strong>损失函数</strong>Loss用于评估一个模型函数f对样本点的拟合程度：<br>$$<br>L(f) &#x3D; L(w, b) &#x3D; \sum_{i&#x3D;1}^n (y^i - (w · x^i + b))^2<br>$$<br>其中y(i)代表第i个样本点的售价，x(i)代表第i个样本点面积。是最常见的平方损失函数。如果L(f)越大，说明该f对所有样本的拟合程度越低，反之L(f)越小，拟合程度越高。</p>
+<p>第三步，梯度下降算法。由于假设空间无限大，需要利用梯度下降算法找到损失最小的函数。原理是分别对损失函数中的w和b作偏微分，并以此更新下一次w和b的值，迭代数次之后将得到最优解。<br>$$<br>w^1 &#x3D; w^0 - \eta \frac{dL}{dw} |_{w &#x3D; w^0}<br>$$</p>
+<p>$$<br>b^1 &#x3D; b^0 - \eta \frac{dL}{dw} |_{b &#x3D; b^0}<br>$$</p>
+<p>其中eta为学习速率，也即梯度下降的速率，体现在参数增加或减少的大小。</p>
+<p>最终计算得到的最优函数为：<br>$$<br>y &#x3D; w·x + y , w &#x3D; 2.19, b &#x3D; -0.05<br>$$<br>训练和测试结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318180053672.png" alt="image-20210318180053672"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318180236140.png" alt="image-20210318180236140"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由损失函数计算error值</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_loss_model_1</span>(<span class="params">w, b, points</span>):</span><br><span class="line">    total_error = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(points)):</span><br><span class="line">        xi, yi = <span class="built_in">float</span>(points[i][<span class="number">0</span>]), <span class="built_in">float</span>(points[i][<span class="number">1</span>])</span><br><span class="line">        total_error = total_error + (yi - (w * xi + b)) ** <span class="number">2</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> total_error / <span class="built_in">float</span>(<span class="built_in">len</span>(points))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># compute gradient</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">step_gradient</span>(<span class="params">b_current, w_current, points, learningRate</span>):</span><br><span class="line">    b_gradient, w_gradient = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(points)):</span><br><span class="line">        xi,yi = <span class="built_in">float</span>(points[i][<span class="number">0</span>]), <span class="built_in">float</span>(points[i][<span class="number">1</span>])</span><br><span class="line">        b_gradient += <span class="number">2</span> * ((w_current * xi) + b_current - yi)</span><br><span class="line">        w_gradient += <span class="number">2</span> * xi * ((w_current * xi) + b_current - yi)</span><br><span class="line">    b_gradient = b_gradient / <span class="built_in">float</span>(<span class="built_in">len</span>(points))</span><br><span class="line">    w_gradient = w_gradient / <span class="built_in">float</span>(<span class="built_in">len</span>(points))</span><br><span class="line">    new_b = b_current - (learningRate * b_gradient)</span><br><span class="line">    new_w = w_current - (learningRate * w_gradient)</span><br><span class="line"><span class="comment">#     print(new_b, new_w)</span></span><br><span class="line">    <span class="keyword">return</span> new_b, new_w</span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gradient_descent_runner</span>(<span class="params">points, starting_b, starting_w, learning_rate, num_iterations</span>): <span class="comment"># num_iteration 迭代次数</span></span><br><span class="line">    b, w = starting_b, starting_w</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num_iterations):</span><br><span class="line">        b, w = step_gradient(b, w, points, learning_rate)</span><br><span class="line"><span class="comment">#         print(&quot;Loss&quot;, get_loss_model_1(w, b, points))</span></span><br><span class="line">    <span class="keyword">return</span> w, b</span><br><span class="line"> </span><br><span class="line">learning_rate = <span class="number">0.00001</span>  <span class="comment"># 学习速率</span></span><br><span class="line">initial_w = <span class="number">2.0</span>  <span class="comment"># weight</span></span><br><span class="line">initial_b = <span class="number">0</span>  <span class="comment"># bias</span></span><br><span class="line">num_iterations = <span class="number">100</span>  <span class="comment"># 梯度下降次数</span></span><br><span class="line">points = <span class="built_in">list</span>(<span class="built_in">zip</span>(x, y))  <span class="comment"># 点集</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Starting gradient descent at b = <span class="subst">&#123;initial_b&#125;</span>, w = <span class="subst">&#123;initial_w&#125;</span>, error = <span class="subst">&#123;get_loss_model_1(initial_w, initial_b, points)&#125;</span>&quot;</span>)</span><br><span class="line">w, b = gradient_descent_runner(points, initial_b, initial_w, learning_rate, num_iterations)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;After <span class="subst">&#123;num_iterations&#125;</span> iterations at b = <span class="subst">&#123;b&#125;</span>, w = <span class="subst">&#123;w&#125;</span>, error = <span class="subst">&#123;get_loss_model_1(w, b, points)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Starting gradient descent at b = 0, w = 2.0, error = 13242.886893446723</span><br><span class="line">After 100 iterations at b = -0.05052018426808582, w = 2.1934384452528293, error = 12503.517684126853</span><br></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示训练数据和拟合曲线</span></span><br><span class="line">plt.scatter(x, y, color=<span class="string">&#x27;dodgerblue&#x27;</span>)</span><br><span class="line">x_line = x</span><br><span class="line">y_line = [w * x + b <span class="keyword">for</span> x <span class="keyword">in</span> x_line]</span><br><span class="line">plt.plot(x_line, y_line, color=<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示测试数据和拟合曲线</span></span><br><span class="line"> </span><br><span class="line">test_points = <span class="built_in">list</span>(<span class="built_in">zip</span>(x_test, y_test))  <span class="comment"># 点集</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Test loss at b = <span class="subst">&#123;b&#125;</span>, w = <span class="subst">&#123;w&#125;</span>, error = <span class="subst">&#123;get_loss_model_1(w, b, test_points)&#125;</span>&quot;</span>)</span><br><span class="line"> </span><br><span class="line">plt.scatter(x_test, y_test, color=<span class="string">&#x27;aquamarine&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">x_major_locator = MultipleLocator(<span class="number">100</span>)</span><br><span class="line">y_major_locator = MultipleLocator(<span class="number">200</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.xaxis.set_major_locator(x_major_locator)</span><br><span class="line">ax.yaxis.set_major_locator(y_major_locator)</span><br><span class="line"> </span><br><span class="line">x_line = x_test</span><br><span class="line">y_line = [w * x + b <span class="keyword">for</span> x <span class="keyword">in</span> x_line]</span><br><span class="line">plt.plot(x_line, y_line, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"> </span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-模型二"><a href="#2-2-模型二" class="headerlink" title="2.2 模型二"></a>2.2 模型二</h3><p>模型一欠拟合，训练误差和测试误差都很大。考虑增加x平方项的函数空间：<br>$$<br>f(x) &#x3D; y &#x3D; w_1·x + w_2·x^2 + b<br>$$<br>损失函数L：<br>$$<br>L(f) &#x3D; L(w_1, w_2, b) &#x3D; \sum_{i&#x3D;1}^n (y^i - (w_1 · x^i + w_2 · (x^i)^2 + b))^2<br>$$<br>梯度下降时计算微分项稍有不同。</p>
+<p>最终计算得到最优函数：<br>$$<br>y&#x3D; w_1·x + w_2 · x^2 + y , w_1 &#x3D; 2.35, w_2 &#x3D; 0.006, b &#x3D; 97<br>$$<br>训练和测试结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318193550265.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318194348273.png" alt="image-20210318193550265"></p>
+<h3 id="2-3-模型三"><a href="#2-3-模型三" class="headerlink" title="2.3 模型三"></a>2.3 模型三</h3><p>考虑增加x三次方项的函数空间：<br>$$<br>f(x) &#x3D; y &#x3D; w_1·x + w_2·x^2 + w_3 · x^3 + b<br>$$<br>损失函数L：<br>$$<br>L(f) &#x3D; L(w_1, w_2, w_3, b) &#x3D; \sum_{i&#x3D;1}^n (y^i - (w_1 · x^i + w_2 · (x^i)^2 + w_3 · (x^i)^3 + b))^2<br>$$<br>梯度下降时计算微分项稍有不同。</p>
+<p>训练和测试结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318193642373.png" alt="image-20210318194348273"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210318194432245.png" alt="image-20210318194432245"></p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://mathor.blog.csdn.net/article/details/103698507">https://mathor.blog.csdn.net/article/details/103698507</a> 用Numpy实现线性回归</p>
+<h2 id="三、结论"><a href="#三、结论" class="headerlink" title="三、结论"></a>三、结论</h2><p>综上，模型二对该样本空间的拟合较为准确，训练误差和测试误差都较低，可以作为依据面积预测二手房售价问题的预测模型。</p>
+<h1 id="Day-04"><a href="#Day-04" class="headerlink" title="Day 04"></a>Day 04</h1><p>Scikit-learn(sklearn)是机器学习中常用的第三方模块，对常用的机器学习方法进行了封装，包括回归(Regression)、降维(Dimensionality Reduction)、分类(Classfication)、聚类(Clustering)等方法。</p>
+<p>利用sklearn模块内置的回归方法对昨天的数据做回归分析，模型如下：</p>
+<ul>
+<li>Linear Regression（线性回归）</li>
+<li>Decision Tree Regressor（决策树回归）</li>
+<li>SVM Regressor（支持向量机回归）</li>
+<li>K Neighbors Regressor（K近邻回归）</li>
+<li>Random Forest Regressor（随机森林回归）</li>
+<li>Adaboost Regressor（Adaboost 回归）</li>
+<li>Gradient Boosting Random Forest Regressor（梯度增强随机森林回归）</li>
+<li>bagging Regressor（bagging 回归）</li>
+<li>ExtraTree Regressor（ExtraTree 回归）</li>
+</ul>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ChenVast/article/details/82107490">https://blog.csdn.net/ChenVast/article/details/82107490</a> 一些常用的回归模型实战（9种回归模型）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42731853/article/details/110917315">https://blog.csdn.net/weixin_42731853/article/details/110917315</a> 机器学习入门之7种经典回归模型</p>
+<h1 id="Day-05"><a href="#Day-05" class="headerlink" title="Day 05"></a>Day 05</h1><p>学习numpy、pandas、matplotlib库的基本用法。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/03/12/2021-03-12-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E4%BA%8C%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-03-14 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/03/22/2021-03-22-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E5%9B%9B%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-01"><span class="toc-text">Day 01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-Model%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%87%BD%E6%95%B0%E9%9B%86%E5%90%88function-set"><span class="toc-text">Step 1 Model模型：函数集合function set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-%E7%AD%96%E7%95%A5%EF%BC%9ALoss%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-text">Step 2 策略：Loss损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-%E7%AE%97%E6%B3%95%EF%BC%9AGradient-Descent%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-text">Step 3 算法：Gradient Descent梯度下降</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-02"><span class="toc-text">Day 02</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-03"><span class="toc-text">Day 03</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="toc-text">一、数据准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BA%8C%E6%89%8B%E6%88%BF%E4%BF%A1%E6%81%AF"><span class="toc-text">1.1 二手房信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%95%B0%E6%8D%AE%E5%88%86%E7%B1%BB"><span class="toc-text">1.2 数据分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-text">1.3 可视化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%9E%E5%BD%92"><span class="toc-text">二、回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%A8%A1%E5%9E%8B%E4%B8%80"><span class="toc-text">2.1 模型一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%A8%A1%E5%9E%8B%E4%BA%8C"><span class="toc-text">2.2 模型二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%A8%A1%E5%9E%8B%E4%B8%89"><span class="toc-text">2.3 模型三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E8%AE%BA"><span class="toc-text">三、结论</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-04"><span class="toc-text">Day 04</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-05"><span class="toc-text">Day 05</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>

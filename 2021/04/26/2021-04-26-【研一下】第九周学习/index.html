@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Vic2ray" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      【研一下】第九周学习 
+      
+      
+      |
+    
+     Vic2ray&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  
+<link rel="stylesheet" href="/css/color-scheme.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+<link rel="stylesheet" href="/css/comments.css">
+
+
+  <!-- jquery3.3.1 -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- fancybox -->
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <script async src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js"></script>
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Vic2ray</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">【研一下】第九周学习</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="更新时间"></i>
+          2021-04-26 16:00:00
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="分类"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                    <b>#</b> 机器学习
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="标签"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                    <b>#</b> 周报
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="BMP"><a href="#BMP" class="headerlink" title="BMP"></a>BMP</h2><p>BMP取自位图（Bitmap）的缩写，也称DIB（Device Idependent Bitmap与设备无关位图），是Microsoft开发的一种独立于显示器的数字图像文件格式。</p>
+<p>BMP的常见颜色深度有：单色（1bit）、16色（4bit）、256色（8bit）、1670 万色（24bit），即每个像素使用多少bit来表示。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210429214212253.png" alt="image-20210429214212253"></p>
+<p>位图文件通常是不压缩的，例如，一张512x512的8位灰度位图所占空间约为：512x512x8bit&#x2F;8&#x2F;1024&#x3D;256KB，若为24位彩色图则约为768KB，比相同情况下的压缩格式图像文件（jpeg等）消耗更多的存储空间。也正因为位图数据未经压缩，适合用于图像处理实验。</p>
+<p>前面计算的位图文件大小仅仅是数据所占空间，位图文件还包括文件头（Bitmap File Header，14字节）、位图信息数据头（Bitmap Information Header，40字节）、调色板（颜色深度8bit以下不需要）。<br>$$<br>BMP\ size &#x3D; 54 + 4 · 2^n + \frac {width · heigth · n} {8}<br>$$<br>以下使用512x512x8位灰度位图<code>lena512.bmp</code>实验，使用的二进制数据查看工具为WinHex.exe：</p>
+<h3 id="文件头"><a href="#文件头" class="headerlink" title="文件头"></a>文件头</h3><table>
+<thead>
+<tr>
+<th align="center">偏移                     量</th>
+<th align="center">大               小</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0000h</td>
+<td align="center">2字节</td>
+<td align="left">用于标识BMP和DIB文件的魔数，一般为0x42 0x4D，即ASCII的BM。以下为可能的取值：<strong>BM</strong> – Windows 3.1x, 95, NT, … etc</td>
+</tr>
+<tr>
+<td align="center">0002h</td>
+<td align="center">4字节</td>
+<td align="left">BMP文件的大小（单位为字节）</td>
+</tr>
+<tr>
+<td align="center">0006h</td>
+<td align="center">2字节</td>
+<td align="left">保留；实际值因创建程序而异</td>
+</tr>
+<tr>
+<td align="center">0008h</td>
+<td align="center">2字节</td>
+<td align="left">保留；实际值因创建程序而异</td>
+</tr>
+<tr>
+<td align="center">000Ah</td>
+<td align="center">4字节</td>
+<td align="left">位图数据（像素数组）的地址偏移，也就是起始地址。</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210429220625454.png" alt="image-20210429220625454"></p>
+<p>二进制数据按照little endian方式读取，因此文件大小为：00-04-04-36H，数据开始偏移地址为：00-00-04-36H，相减得到数据大小为：00-04-00-00H&#x3D;512x512字节。</p>
+<h3 id="数据头"><a href="#数据头" class="headerlink" title="数据头"></a>数据头</h3><table>
+<thead>
+<tr>
+<th align="center">偏移量</th>
+<th align="center">大小（字节）</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0Eh</td>
+<td align="center">4</td>
+<td align="left">该头结构的大小（40字节）</td>
+</tr>
+<tr>
+<td align="center">12h</td>
+<td align="center">4</td>
+<td align="left">位图宽度，单位为像素（有符号整数）</td>
+</tr>
+<tr>
+<td align="center">16h</td>
+<td align="center">4</td>
+<td align="left">位图高度，单位为像素（有符号整数）</td>
+</tr>
+<tr>
+<td align="center">1Ah</td>
+<td align="center">2</td>
+<td align="left">色彩平面数；只有1为有效值</td>
+</tr>
+<tr>
+<td align="center">1Ch</td>
+<td align="center">2</td>
+<td align="left">每个像素所占位数，即图像的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%89%B2%E6%B7%B1">色深</a>。典型值为1、4、8、16、24和32</td>
+</tr>
+<tr>
+<td align="center">1Eh</td>
+<td align="center">4</td>
+<td align="left">所使用的压缩方法，可取值见下表。</td>
+</tr>
+<tr>
+<td align="center">22h</td>
+<td align="center">4</td>
+<td align="left">图像大小。指原始位图数据的大小（详见后文），与文件大小不是同一个概念。</td>
+</tr>
+<tr>
+<td align="center">26h</td>
+<td align="center">4</td>
+<td align="left">图像的横向分辨率，单位为像素每米（有符号整数）</td>
+</tr>
+<tr>
+<td align="center">2Ah</td>
+<td align="center">4</td>
+<td align="left">图像的纵向分辨率，单位为像素每米（有符号整数）</td>
+</tr>
+<tr>
+<td align="center">2Eh</td>
+<td align="center">4</td>
+<td align="left">调色板的颜色数，为0时表示颜色数为默认的2<em>色深</em>个</td>
+</tr>
+<tr>
+<td align="center">32h</td>
+<td align="center">4</td>
+<td align="left">重要颜色数，为0时表示所有颜色都是重要的；通常不使用本项</td>
+</tr>
+</tbody></table>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210429221604330.png" alt="image-20210429221604330"></p>
+<p>数据头大小：28H&#x3D;54，宽度：02-00H&#x3D;512，高度：02-00H&#x3D;512，位图深度：08H&#x3D;8位，数据大小：04-00-00-00H，与文件大小-偏移地址计算所得一致。</p>
+<p>由数据头1E~21偏移地址，调色板颜色数：01-00H&#x3D;256种颜色，每种颜色采用4字节存储，因此8位位图的调色板大小为：4·256&#x3D;1024bit，颜色表示从00-00-00-00至FF-FF-FF-00。</p>
+<h3 id="像素数据"><a href="#像素数据" class="headerlink" title="像素数据"></a>像素数据</h3><p>由之前分析数据，文件头+数据头+调色板一共占用54+1024&#x3D;1078字节，从偏移量04-36H开始为数据部分，至04-04-35H结束，其中每512个字节代表图像中的一行像素值，共512行。</p>
+<p>但是，在分析像素数组时，发现图像第一行位于文件的最后一行，图像的最后一行位于文件的第一行。即图像的原点在左下角而不是左上角。</p>
+<blockquote>
+<p>原因是BMP格式最早是由IBM的一帮人开发的。IBM的那帮人比较学院派，认为按通常CG的习惯，坐标原点都应该在图形的左下角，x轴向右，y轴向上。于是就这么定义了BMP的文件格式。只是一个历史的巧合罢了，没有什么深刻的含义。</p>
+</blockquote>
+<p>[1] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25119530">浅谈图像格式 .bmp</a></p>
+<p>[2] BMP维基百科 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/BMP">https://zh.wikipedia.org/wiki/BMP</a></p>
+<p>[3] 标准测试图Lena：<a target="_blank" rel="noopener" href="https://www.ece.rice.edu/~wakin/images/lena512.bmp">https://www.ece.rice.edu/~wakin/images/lena512.bmp</a></p>
+<p>[4] <a target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/30234158">为什么位图的图像像素数据（大多数）时候是倒过来</a></p>
+<h2 id="LSB"><a href="#LSB" class="headerlink" title="LSB"></a>LSB</h2><p>[1] <a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S003132030300284X">Chi-KwongChan, L.M.Cheng. Hiding data in images by simple LSB substitution. Pattern Recognition, Volume 37, Issue 3, March 2004, Pages 469-474.</a></p>
+<h3 id="隐密算法"><a href="#隐密算法" class="headerlink" title="隐密算法"></a>隐密算法</h3><ol>
+<li>以8-bit灰度图为例，将原始载体图像表示为C：</li>
+</ol>
+<p>$$<br>C &#x3D; {x_{ij}|0 \leqslant i &lt; M_c; \ 0 \leqslant j_i &lt; N_c; x_{ij} \in {0, 1, …, 255} }<br>$$</p>
+<p>Mc、Nc分别代表图像的高度和宽度，xij代表像素矩阵中(i, j)位置的像素值。</p>
+<ol start="2">
+<li>M代表n-bit的秘密信息，表示为：</li>
+</ol>
+<p>$$<br>M &#x3D; { m_i \ | \ 0 \leqslant i &lt; n, \ m_i \in {0, 1}  }<br>$$</p>
+<p>mi代表n比特流中第i个比特位的值。</p>
+<ol start="3">
+<li>假设n-bit的秘密信息M将要嵌入载体图像C的<strong>最右边k位最低比特位</strong>中。首先，将M重新排列组成k-bit的虚拟图像M’：</li>
+</ol>
+<p>$$<br>M’ &#x3D; { m’ \ | \ 0 \leqslant i &lt; n’, m’ \in { 0, 1, …, 2^k-1 } }<br>$$</p>
+<p>其中n’ &lt; Mc x Nc，原消息M&#x3D;{mi}与待嵌入消息M’&#x3D;{mi’}的映射关系定义为：<br>$$<br>m_i’ &#x3D; \sum_{j&#x3D;0}^{k-1}m_{i \times k+j} \times 2^{k-1-j}<br>$$<br>例如：M&#x3D;{0, 1, 1, 1, 1, 0}，当k&#x3D;1时，M’&#x3D;{0, 1, 1, 1, 1, 0}；当k&#x3D;2时，M’&#x3D;{01b, 11b}；当k&#x3D;3时，M‘&#x3D;{011b, 110b}；…</p>
+<ol start="4">
+<li>从载体图像C中选取n’个像素{xl1, xl2, …, xkn’}的预定义序列，则嵌入秘密信息M’的过程是将xli的k-bit的最低有效位替换为mi’。这个选取像素值xli存储秘密信息mi’修改为xli’组成隐密图像的数学表示为：</li>
+</ol>
+<p>$$<br>x_{l_i}’ &#x3D; x_{l_i} - x_{l_i} mod \ 2 ^ k \ + \ m_i’<br>$$</p>
+<h3 id="解密算法"><a href="#解密算法" class="headerlink" title="解密算法"></a>解密算法</h3><p>给定隐密图像S，嵌入信息可以很容易地提取，而不需要参考原始图像。使用和嵌入过程相同位置的像素序列，取出隐藏了秘密信息的n’个像素集合{xl1’, xl2, …, xln’’}。通过提取每个像素的k-bit最低有效位的值mi’，将M’线性排列即可重构出原始秘密信息M。数学表示这个提取过程为：<br>$$<br>m_i’ &#x3D; x_{l_i}’ mod \ 2^k<br>$$</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="1-加密"><a href="#1-加密" class="headerlink" title="1. 加密"></a>1. 加密</h4><p>在8-bit灰度位图lena512.bmp中，在从第一个像素开始嵌入秘密信息<code>Hello World</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">LSB_substitution</span>(<span class="params">cover_img, message, k, offset=<span class="number">0</span></span>):</span><br><span class="line">    cover = Image.<span class="built_in">open</span>(cover_img)</span><br><span class="line">    height, width = cover.size</span><br><span class="line">    im = np.array(cover).flatten()     <span class="comment"># 像素数组展平</span></span><br><span class="line">    <span class="comment"># ASCII字符转为二进制序列，每个字符用8bit表示</span></span><br><span class="line">    M = <span class="string">&#x27;&#x27;</span>.join([ <span class="string">&#x27;&#123;:0&gt;8&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">format</span>(<span class="built_in">ord</span>(m), <span class="string">&#x27;b&#x27;</span>)) <span class="keyword">for</span> m <span class="keyword">in</span> message ])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Message:&#x27;</span>, M)</span><br><span class="line">    n = math.ceil( <span class="built_in">len</span>(M) / k )  <span class="comment"># M重排列分组长度</span></span><br><span class="line">    M_ = [ M[i*k:(i+<span class="number">1</span>)*k] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n) ]    <span class="comment"># k-bit分组序列M</span></span><br><span class="line">    <span class="comment"># print(M_)</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        M_[i] = M_[i].ljust(k, <span class="string">&#x27;0&#x27;</span>)       <span class="comment"># 最后一个分组可能不满k-bit，向低位补零</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Offset: <span class="subst">&#123;offset+i&#125;</span>, pixel:<span class="subst">&#123;<span class="built_in">format</span>(im[offset+i], <span class="string">&#x27;b&#x27;</span>)&#125;</span>, embed:<span class="subst">&#123;M_[i]&#125;</span>&quot;</span>, end=<span class="string">&#x27; -&gt; &#x27;</span>)</span><br><span class="line">        im[offset+i] = im[offset+i] - im[offset+i] % <span class="number">2</span>**k + <span class="built_in">int</span>(M_[i], <span class="number">2</span>)   <span class="comment"># LSB替换公式</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">format</span>(im[offset+i], <span class="string">&#x27;b&#x27;</span>))</span><br><span class="line">    im = im.reshape(height, width)</span><br><span class="line">    stego = Image.fromarray(im)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> stego</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">cover_img = <span class="string">&#x27;lena512.bmp&#x27;</span></span><br><span class="line">message = <span class="string">&#x27;Hello World&#x27;</span></span><br><span class="line">stego = LSB_substitution(cover_img, message, <span class="number">4</span>, <span class="number">0</span>)</span><br><span class="line">stego.save(<span class="string">&#x27;stego.bmp&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Message: 0100100001100101011011000110110001101111001000000101011101101111011100100110110001100100<br>Offset: 0, pixel:10100010, embed:0100 -&gt; 10100100<br>Offset: 1, pixel:10100010, embed:1000 -&gt; 10101000<br>Offset: 2, pixel:10100010, embed:0110 -&gt; 10100110<br>Offset: 3, pixel:10100001, embed:0101 -&gt; 10100101<br>Offset: 4, pixel:10100010, embed:0110 -&gt; 10100110<br>Offset: 5, pixel:10011101, embed:1100 -&gt; 10011100<br>Offset: 6, pixel:10100011, embed:0110 -&gt; 10100110<br>Offset: 7, pixel:10100001, embed:1100 -&gt; 10101100<br>Offset: 8, pixel:10100110, embed:0110 -&gt; 10100110<br>Offset: 9, pixel:10100010, embed:1111 -&gt; 10101111<br>Offset: 10, pixel:10100010, embed:0010 -&gt; 10100010<br>Offset: 11, pixel:10100000, embed:0000 -&gt; 10100000<br>Offset: 12, pixel:10011011, embed:0101 -&gt; 10010101<br>Offset: 13, pixel:10100011, embed:0111 -&gt; 10100111<br>Offset: 14, pixel:10100000, embed:0110 -&gt; 10100110<br>Offset: 15, pixel:10011011, embed:1111 -&gt; 10011111<br>Offset: 16, pixel:10011101, embed:0111 -&gt; 10010111<br>Offset: 17, pixel:10011100, embed:0010 -&gt; 10010010<br>Offset: 18, pixel:10100001, embed:0110 -&gt; 10100110<br>Offset: 19, pixel:10100001, embed:1100 -&gt; 10101100<br>Offset: 20, pixel:10011010, embed:0110 -&gt; 10010110<br>Offset: 21, pixel:10011100, embed:0100 -&gt; 10010100</p>
+</blockquote>
+<p>以上实验中，<code>Hello World</code>共11个字符，每个字符以8bit二进制表示，长度位88bit，以最低有效位数<code>k=4</code>嵌入到偏移量开始为0的图像中，改变了<code>88/4=22</code>个像素值。将得到的隐密图像<code>stego.bmp</code>与原图对比，发生改变的像素值如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/juaran/juaran.github.io@image/typora/image-20210430145841115.png" alt="image-20210430145841115"></p>
+<h4 id="2-解密"><a href="#2-解密" class="headerlink" title="2. 解密"></a>2. 解密</h4><p>根据stego隐密图像解密时需要知道信息长度、隐密最低有效位数和偏移量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LSB_extraction</span>(<span class="params">stego_img, message_length, k, offset=<span class="number">0</span></span>):</span><br><span class="line">    stego = Image.<span class="built_in">open</span>(stego_img)</span><br><span class="line">    im = np.array(stego).flatten()</span><br><span class="line">    n = math.ceil(message_length*<span class="number">8</span> / k)</span><br><span class="line">    message = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        m = im[offset+i] % <span class="number">2</span>**k     <span class="comment"># LSB提取公式</span></span><br><span class="line">        message = message + <span class="built_in">format</span>(m, <span class="string">&#x27;b&#x27;</span>).rjust(<span class="number">4</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Offset: <span class="subst">&#123;offset+i&#125;</span>, embedded: <span class="subst">&#123;<span class="built_in">format</span>(m, <span class="string">&#x27;b&#x27;</span>).rjust(k, <span class="string">&#x27;0&#x27;</span>)&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;M:&#x27;</span>, message)</span><br><span class="line">    message = <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(<span class="built_in">int</span>(message[i*<span class="number">8</span>:(i+<span class="number">1</span>)*<span class="number">8</span>], <span class="number">2</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(message_length)])</span><br><span class="line">    <span class="keyword">return</span> message</span><br><span class="line"> </span><br><span class="line">message = LSB_extraction(<span class="string">&#x27;stego.bmp&#x27;</span>, <span class="number">11</span>, <span class="number">4</span>, <span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(message)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Offset: 0, embedded: 0100 Offset: 1, embedded: 1000 Offset: 2, embedded: 0110 Offset: 3, embedded: 0101 Offset: 4, embedded: 0110 Offset: 5, embedded: 1100 Offset: 6, embedded: 0110 Offset: 7, embedded: 1100 Offset: 8, embedded: 0110 Offset: 9, embedded: 1111 Offset: 10, embedded: 0010 Offset: 11, embedded: 0000 Offset: 12, embedded: 0101 Offset: 13, embedded: 0111 Offset: 14, embedded: 0110 Offset: 15, embedded: 1111 Offset: 16, embedded: 0111 Offset: 17, embedded: 0010 Offset: 18, embedded: 0110 Offset: 19, embedded: 1100 Offset: 20, embedded: 0110 Offset: 21, embedded: 0100 M: 0100100001100101011011000110110001101111001000000101011101101111011100100110110001100100<br>Hello World</p>
+</blockquote>
+<h3 id="隐密二维码"><a href="#隐密二维码" class="headerlink" title="隐密二维码"></a>隐密二维码</h3><p>二维码的特性是像素只由0和255组成，可以很容易归一化为0和1嵌入到载体图像的末位中，而二维码识别所得链接所指向的信息可以是文本、图像、网页等扩展信息。将以上隐藏字符串的实验代码稍作更改使其用于隐密二维码：</p>
+<p><strong>隐写二维码</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cover_img = <span class="string">&#x27;lena512.bmp&#x27;</span></span><br><span class="line">secret_img = <span class="string">&#x27;QRCode.bmp&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">LSB_substitution</span>(<span class="params">cover_img, secret_img, k, offset=<span class="number">0</span></span>):</span><br><span class="line">    <span class="comment"># 载体图像</span></span><br><span class="line">    cover = Image.<span class="built_in">open</span>(cover_img)</span><br><span class="line">    c_height, c_width = cover.size</span><br><span class="line">    c_im = np.array(cover)     <span class="comment"># 像素数组展平</span></span><br><span class="line">    <span class="comment"># 秘密图像</span></span><br><span class="line">    secret = Image.<span class="built_in">open</span>(secret_img)</span><br><span class="line">    s_height, s_width = secret.size</span><br><span class="line">    s_im = np.array(secret) // <span class="number">255</span>      <span class="comment"># 二维码只有0,255，直接转为逻辑值0,1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(s_height):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(s_width):</span><br><span class="line">            <span class="comment"># LSB隐密公式</span></span><br><span class="line">            c_im[i][j] = c_im[i][j] - c_im[i][j] % <span class="number">2</span>**k + s_im[i][j]</span><br><span class="line">    stego = Image.fromarray(c_im)</span><br><span class="line">    <span class="keyword">return</span> stego</span><br><span class="line"> </span><br><span class="line">stego = LSB_substitution(cover_img, secret_img, k=<span class="number">1</span>)</span><br><span class="line">stego.save(<span class="string">&#x27;stego.bmp&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>提取隐密信息</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LSB_extraction</span>(<span class="params">stego_img, k, offset=<span class="number">0</span></span>):</span><br><span class="line">    stego = Image.<span class="built_in">open</span>(stego_img)</span><br><span class="line">    height, width = stego.size</span><br><span class="line">    im = np.array(stego)</span><br><span class="line">    secret_im = np.ones((height, width), dtype=<span class="built_in">int</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            secret_im[i][j] = (im[i][j] % <span class="number">2</span>**k) *<span class="number">255</span>   <span class="comment"># LSB提取公式</span></span><br><span class="line">    <span class="comment"># plt.imshow(secret_im, cmap=&#x27;Greys&#x27;)</span></span><br><span class="line">    secret = Image.fromarray(secret_im).convert(<span class="string">&#x27;L&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> secret</span><br><span class="line"> </span><br><span class="line">stego_img = <span class="string">&#x27;stego.bmp&#x27;</span></span><br><span class="line">secret = LSB_extraction(stego_img, <span class="number">1</span>)</span><br><span class="line">secret.save(<span class="string">&#x27;extract.bmp&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210430184950233.png" alt="image-20210430184950233"></p>
+<p>结果依次为：原图、载密图、嵌入二维码、提取结果。</p>
+<h2 id="图像质量"><a href="#图像质量" class="headerlink" title="图像质量"></a>图像质量</h2><p>隐写后的图像相比原图改变的是某些像素点的灰度值，当隐写的最低有效位数k越大时，前后像素值相差越大，从而使图像质量下降。人的视觉能分辨的彩色值约为100w种，RGB彩色共有1670w种，颜色值发生细微变化时肉眼难以察觉；当图像出现人眼可察觉到的模糊时，可以怀疑图像存在较高有效位的隐写。为了避免隐写后图像变化过大，隐写者需要考虑图像质量变化不应太大。以下是两种评判图像质量标准的方法。</p>
+<h3 id="MSE"><a href="#MSE" class="headerlink" title="MSE"></a>MSE</h3><p>Mean Square Error，均方误差公式：<br>$$<br>MSE &#x3D; \frac {\sum_{m&#x3D;1}^M \sum_{n&#x3D;1}^N [d(m, n)]^2} {M\times N}<br>$$<br>其中，d(m, n)是位置(m, n)处隐写前后像素差值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"> </span><br><span class="line">cover = Image.<span class="built_in">open</span>(<span class="string">&#x27;lena512.bmp&#x27;</span>)</span><br><span class="line">stego = Image.<span class="built_in">open</span>(<span class="string">&#x27;stego.bmp&#x27;</span>)</span><br><span class="line">width, height = cover.width, cover.height</span><br><span class="line">MSE = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">         c_pixel = cover.getpixel((x, y))</span><br><span class="line">         s_pixel = stego.getpixel((x, y))</span><br><span class="line">         MSE = MSE + (c_pixel-s_pixel)**<span class="number">2</span></span><br><span class="line">MSE = MSE / (width*height)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;MSE:&#x27;</span>, MSE)</span><br></pre></td></tr></table></figure>
+
+<p>对上面实验隐藏二维码的隐秘图像和原载体图像求均方误差，结果为：</p>
+<blockquote>
+<p>MSE: 0.11022567749023438</p>
+</blockquote>
+<p>考虑<strong>最坏情况</strong>，当载体图像所有的最低k个有效位均被替换为0：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LSB_substitution_worst_MSE</span>(<span class="params">cover_img, k</span>):</span><br><span class="line">    <span class="comment"># 载体图像</span></span><br><span class="line">    cover = Image.<span class="built_in">open</span>(cover_img)</span><br><span class="line">    height, width = cover.size</span><br><span class="line">    im = np.array(cover)     <span class="comment"># 像素数组展平</span></span><br><span class="line">    MSE = <span class="number">0</span></span><br><span class="line">    stego = np.ones((height, width), dtype=<span class="built_in">int</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># LSB隐密公式</span></span><br><span class="line">            stego[i][j] = im[i][j] - im[i][j] % <span class="number">2</span>**k + <span class="number">0</span></span><br><span class="line">            MSE = MSE + (im[i][j]-stego[i][j])**<span class="number">2</span></span><br><span class="line">    Image.fromarray(stego).convert(<span class="string">&#x27;L&#x27;</span>).save(<span class="string">f&#x27;stego_worst_<span class="subst">&#123;k&#125;</span>.bmp&#x27;</span>)</span><br><span class="line">    MSE = MSE / (width*height)</span><br><span class="line">    <span class="keyword">return</span> MSE</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">    MSE = LSB_substitution_worst_MSE(cover_img, k)</span><br><span class="line">    <span class="built_in">print</span>(MSE)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>k</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSE</td>
+<td>0.50</td>
+<td>3.5</td>
+<td>17.45</td>
+<td>77.96</td>
+<td>324.75</td>
+</tr>
+</tbody></table>
+<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210501101226377.png" alt="image-20210501101226377"></p>
+<p>当k&#x3D;4时图像质量急剧下降，且均方误差以指数级增长，开始出现肉眼可见的模糊，k&#x3D;5时与原图差异明显。</p>
+<h3 id="PSNR"><a href="#PSNR" class="headerlink" title="PSNR"></a>PSNR</h3><p>峰值信噪比（Peak signal-to noise ratio）用于衡量图像处理前后图像质量变化程度。<br>$$<br>PSNR &#x3D; 10 \times log_{10} \frac {(2^n-1)^2} {MSE}<br>$$<br>在颜色深度为8bit的图像中，灰度最大值为255。计算MSE实验中最坏情况下的隐写图像和原图像的PSNR如下：</p>
+<table>
+<thead>
+<tr>
+<th>k</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSE</td>
+<td>0.50</td>
+<td>3.5</td>
+<td>17.45</td>
+<td>77.96</td>
+<td>324.75</td>
+</tr>
+<tr>
+<td>PSNR</td>
+<td>51.13</td>
+<td>42.68</td>
+<td>35.71</td>
+<td>29.21</td>
+<td>23.01</td>
+</tr>
+</tbody></table>
+<p>峰值信噪比越低，说明处理后的图像与原图差异越大；信噪比越高，与原图越相近，失真越小。单位是dB。</p>
+<h3 id="像素调节"><a href="#像素调节" class="headerlink" title="像素调节"></a>像素调节</h3><p>像素调节过程（pixel adjustment process，简称PAP）指的是通过调节像素值来提升图像质量的方法。在隐写中，隐写位数较高时往往容易使图像失真，使用PAP降低图像的MSE，使隐写图像更不容易被发现。在上述LSB替换论文中，作者给出了最优像素调整过程（OPAP）的方法，使用少量的计算即可将原MSE降低50%以上，大致思路为：计算原图与载体图像对应像素的差值d(m,n)，如果差值过大，则将其缩小一个bit级，否则不变。</p>
+<p>例如：原图像素11001111，隐写像素11000000，隐写最高位k&#x3D;4，计算差值为1111&gt;2^k&#x3D;1000，则将隐写像素提升为11000111，所得差值由原来的1111降低至1000，因此可以降低最终计算的MSE值。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/04/24/2021-04-24-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E3%80%8A%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%90%86%E8%AE%BA%E4%B8%8E%E6%8A%80%E6%9C%AF%E3%80%8B%E5%AE%9E%E9%AA%8C/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>上一页</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="更新时间"></i>
+              2021-04-26 16:00:00
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="分类"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">
+                        <b>#</b> 机器学习
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="标签"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%91%A8%E6%8A%A5/" title="周报">
+                        <b>#</b> 周报
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/05/02/2021-05-02-%E3%80%90%E7%A0%94%E4%B8%80%E4%B8%8B%E3%80%91%E7%AC%AC%E5%8D%81%E5%91%A8%E5%AD%A6%E4%B9%A0/" target="_self">
+                <span>下一页</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BMP"><span class="toc-text">BMP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4"><span class="toc-text">文件头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%B4"><span class="toc-text">数据头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE"><span class="toc-text">像素数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LSB"><span class="toc-text">LSB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-text">隐密算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-text">解密算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E5%AF%86"><span class="toc-text">1. 加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%A7%A3%E5%AF%86"><span class="toc-text">2. 解密</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%AF%86%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="toc-text">隐密二维码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F"><span class="toc-text">图像质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MSE"><span class="toc-text">MSE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PSNR"><span class="toc-text">PSNR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%83%8F%E7%B4%A0%E8%B0%83%E8%8A%82"><span class="toc-text">像素调节</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5701baa041ba27d28c94',
+      clientSecret: '87f7280a5901e8c3d5f84bd9ee65f993bdf43640',
+      repo: 'juaran.github.io',
+      owner: 'Juaran',
+      admin: ['Juaran'],
+      id: decodeURI(location.pathname),
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/juaran">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/juaran">Copyright © 2022 Vic2ray</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+
+      </div>
+    </div>
+  </body>
+</html>
